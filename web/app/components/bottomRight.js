@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 export default class LeftMenu extends Component {
   render() {
     return (
-      <div style={{gridRow:'2', gridColumn:'1'}}>
-        <div>Left</div>
+      <div style={{gridRow:'3', gridColumn:'3 / 3'}}>
+        <div>Bottom Right</div>
       </div>
     )
   }
