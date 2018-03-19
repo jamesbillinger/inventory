@@ -26,9 +26,9 @@ class App extends Component {
         <MuiThemeProvider muiTheme={getMuiTheme(materialTheme)}>
           <BrowserRouter>
             <div style={{height:'100%', width:'100%', display:'grid', gridTemplateColumns:'300px 1fr', gridTemplateRows:'64px 1fr'}}>
-              <BottomMiddle />
+                <BottomMiddle />
                 <BottomRight />
-              <LeftBottom />
+                <LeftBottom />
                 <LeftMiddle />
                 <MiddleMiddle />
                 <MiddleRight />

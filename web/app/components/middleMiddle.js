@@ -5,6 +5,7 @@ export default class Main extends Component {
     return (
       <div style={{gridRow:'2 / 3', gridColumn:'2 / 3'}}>
         <div>Middle Middle</div>
+        <div>Giant cats</div>
       </div>
     );
   }
