@@ -49,7 +49,7 @@ let manifest = require(__dirname + '/files/dist/assets.json');
 
 let admin = require('firebase-admin');
 let firebase = require('firebase');
-const config = require('./config');
+const config = require('../shared/config');
 const firebaseApp = firebase.initializeApp(config.firebase);
 const firebaseRef = firebaseApp.database().ref();
 /*let serviceAccount = require('./haysbaseballclub.json');

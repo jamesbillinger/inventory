@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-import config from '../config.json';
+import config from './config.json';
 import pick from 'lodash/pick';
 import moment from 'moment';
 
