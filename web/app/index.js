@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import {Route, BrowserRouter, Link, Redirect, Switch} from 'react-router-dom';
+import {Provider} from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import materialTheme from './materialTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -17,41 +17,40 @@ import LeftMiddle from 'components/leftMiddle';
 import 'public/styles/theme.css';
 import configureStore from 'shared/store';
 
-const store  = configureStore({});
+const store = configureStore({});
 
 class App extends Component {
   render() {
-      return <Provider store={store}>
-          <MuiThemeProvider muiTheme={getMuiTheme(materialTheme)}>
-              <BrowserRouter>
-                  <div
-                      style={{
-                          height: '50%',
-                          width: '50%',
-                          display: 'grid',
-                          gridAutoColumns: '',
-                          gridAutoRows: ''
-                      }}>
-                    <LeftTop/> //put this and the next two lines in order to allow highlighting without being weird
-                    <MiddleTop/>
-                    <TopRight/>
-                      <BottomMiddle/>
-                      <BottomRight/>
-                      <LeftBottom/>
-                      <LeftMiddle/>
-                      <MiddleMiddle/>
-                      <MiddleRight/>
+    return <Provider store={store}>
+      <MuiThemeProvider muiTheme={getMuiTheme(materialTheme)}>
+        <BrowserRouter>
+          <div
+            style={{
+              height: '50%',
+              width: '50%',
+              display: 'grid',
+              gridAutoColumns: '',
+              gridAutoRows: ''
+            }}>
+            <LeftTop/> //put this and the next two lines in order to allow highlighting without being weird
+            <MiddleTop/>
+            <TopRight/>
+            <BottomMiddle/>
+            <BottomRight/>
+            <LeftBottom/>
+            <LeftMiddle/>
+            <MiddleMiddle/>
+            <MiddleRight/>
 
 
-
-                  </div>
-              </BrowserRouter>
-          </MuiThemeProvider>
-      </Provider>;
+          </div>
+        </BrowserRouter>
+      </MuiThemeProvider>
+    </Provider>;
   }
 }
 
 ReactDOM.render(
-  <App />,
+  <App/>,
   document.getElementById('root')
 );
