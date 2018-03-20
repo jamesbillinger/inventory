@@ -21,25 +21,30 @@ const store  = configureStore({});
 
 class App extends Component {
   render() {
-    return (
-      <Provider store={store}>
-        <MuiThemeProvider muiTheme={getMuiTheme(materialTheme)}>
-          <BrowserRouter>
-            <div style={{height:'100%', width:'100%', display:'grid', gridTemplateColumns:'300px 1fr', gridTemplateRows:'64px 1fr'}}>
-                <BottomMiddle />
-                <BottomRight />
-                <LeftBottom />
-                <LeftMiddle />
-                <MiddleMiddle />
-                <MiddleRight />
-                <MiddleTop />
-                <TopRight />
-                <LeftTop />
-            </div>
-          </BrowserRouter>
-        </MuiThemeProvider>
-      </Provider>
-    );
+      return <Provider store={store}>
+          <MuiThemeProvider muiTheme={getMuiTheme(materialTheme)}>
+              <BrowserRouter>
+                  <div
+                      style={{
+                          height: '100%',
+                          width: '100%',
+                          display: 'grid',
+                          gridTemplateColumns: '',
+                          gridTemplateRows: ''
+                      }}>
+                      <BottomMiddle/>
+                      <BottomRight/>
+                      <LeftBottom/>
+                      <LeftMiddle/>
+                      <MiddleMiddle/>
+                      <MiddleRight/>
+                      <MiddleTop/>
+                      <TopRight/>
+                      <LeftTop/>
+                  </div>
+              </BrowserRouter>
+          </MuiThemeProvider>
+      </Provider>;
   }
 }
 
