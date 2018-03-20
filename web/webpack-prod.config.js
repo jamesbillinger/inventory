@@ -4,7 +4,7 @@ var argv = require('yargs');
 var AssetsPlugin = require('assets-webpack-plugin');
 
 var include = [
-  path.resolve(__dirname, 'config.json'),
+  path.resolve(__dirname, '../shared/config.json'),
   path.resolve(__dirname, 'app'),
   path.resolve(__dirname, 'public/images')
 ];

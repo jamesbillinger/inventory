@@ -4,7 +4,7 @@ var argv = require('yargs');
 var os = require('os');
 
 var include = [
-  path.resolve(__dirname, 'config.json'),
+  path.resolve(__dirname, '../shared/config.json'),
   path.resolve(__dirname, 'app'),
   path.resolve(__dirname, 'public/images')
 ];
@@ -15,7 +15,7 @@ var cssInclude = [
   path.resolve(__dirname, 'node_modules/react-virtualized')
 ];
 
-var config = require('./config.json');
+var config = require('../shared/config.json');
 
 var globals = {
   'process.env.NODE_ENV': '"development"',
