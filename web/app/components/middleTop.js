@@ -6,11 +6,6 @@ export default class TopMenu extends Component {
             <div style={{gridRow:'1', gridColumn:'2'}}>
                 <div>middle top</div>
                 <div>middle top</div>
-                <div>middle top</div>
-                <div>middle top</div>
-                <div>middle top</div>
-
-
             </div>
         )
     }

@@ -26,21 +26,24 @@ class App extends Component {
               <BrowserRouter>
                   <div
                       style={{
-                          height: '100%',
-                          width: '100%',
+                          height: '50%',
+                          width: '50%',
                           display: 'grid',
-                          gridTemplateColumns: '',
-                          gridTemplateRows: ''
+                          gridAutoColumns: '',
+                          gridAutoRows: ''
                       }}>
+                    <LeftTop/> //put this and the next two lines in order to allow highlighting without being weird
+                    <MiddleTop/>
+                    <TopRight/>
                       <BottomMiddle/>
                       <BottomRight/>
                       <LeftBottom/>
                       <LeftMiddle/>
                       <MiddleMiddle/>
                       <MiddleRight/>
-                      <MiddleTop/>
-                      <TopRight/>
-                      <LeftTop/>
+
+
+
                   </div>
               </BrowserRouter>
           </MuiThemeProvider>
