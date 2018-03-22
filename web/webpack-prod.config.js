@@ -50,9 +50,11 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.css'],
     alias: {
-      app: path.join(__dirname, '/app'),
-      files: '../files',
-      components: 'components',
+      app: path.resolve(__dirname, 'app'),
+      public: './public',
+      shared: '../shared',
+      files: './files',
+      components: './app/components',
     },
     modules: ['node_modules', path.join(__dirname, '/app')]
   },

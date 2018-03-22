@@ -39,8 +39,6 @@ if (intfs && intfs.en0 && intfs.en0.length > 0) {
 if (!address) {
   address = '127.0.0.1';
 }
-console.log('binding to ' + address, config.proxyPort);
-console.log(path.resolve(__dirname, 'app'));
 
 module.exports = {
   mode: 'development',
@@ -65,8 +63,8 @@ module.exports = {
       app: path.resolve(__dirname, 'app'),
       public: '../public',
       shared: '../../shared',
-      files: '../files',
-      components: 'components',
+      files: '.,/files',
+      components: './components',
     },
     modules: [
       path.resolve(__dirname, 'node_modules'),

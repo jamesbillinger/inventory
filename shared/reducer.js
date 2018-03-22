@@ -37,6 +37,7 @@ function inventory(state = initialState, action) {
   }
 }
 
+
 const rootReducer = combineReducers({
   inventory,
   form: formReducer
