@@ -113,7 +113,6 @@ export function onAuthStateChanged(firebaseUser) {
           }
         });
       });
-      loadAgeGroups(dispatch);
     } else {
       dispatch({
         type: 'UPDATE_AUTH',

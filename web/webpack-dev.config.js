@@ -61,10 +61,10 @@ module.exports = {
     extensions: ['.js', '.jsx', '.css'],
     alias: {
       app: path.resolve(__dirname, 'app'),
-      public: '../public',
-      shared: '../../shared',
-      files: '.,/files',
-      components: './components',
+      public: path.resolve(__dirname, 'public'),
+      shared: path.resolve(__dirname, '../shared'),
+      files: path.resolve(__dirname, 'files'),
+      components: path.resolve(__dirname, 'app/components'),
     },
     modules: [
       path.resolve(__dirname, 'node_modules'),
