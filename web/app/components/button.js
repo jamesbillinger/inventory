@@ -7,6 +7,6 @@ import FlatButton from 'material-ui/FlatButton';
 export default class Button extends Component {
   render() {
     const { onClick, ...props } = this.props;
-    return <FlatButton onTouchTap={onClick} {...props} />;
+    return <FlatButton onClick={onClick} {...props} />;
   }
 }

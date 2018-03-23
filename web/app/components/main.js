@@ -71,7 +71,7 @@ class Main extends Component {
     if (inventory.user) {
       return (
         <div style={{height:'100%', width:'100%', display:'grid', backgroundColor:'rgba(207,216,220,0.2)',
-                     gridTemplateColumns:'256px 1fr', gridTemplateRows:'auto 1fr 32px'}}>
+                     gridTemplateColumns:'auto 1fr', gridTemplateRows:'auto 1fr 32px'}}>
           <div style={{gridRow:'1', gridColumn:'1 / 3'}}>
             <div style={{display:'flex', alignItems:'center', justifyContent:'space-between',
                          backgroundColor:'#607d8b', color:'white', padding:'0 20px'}}>

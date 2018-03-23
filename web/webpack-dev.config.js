@@ -6,10 +6,12 @@ var os = require('os');
 var include = [
   path.resolve(__dirname, '../shared/config.json'),
   path.resolve(__dirname, 'app'),
+  path.resolve(__dirname, 'public/fonts'),
   path.resolve(__dirname, 'public/images')
 ];
 
 var cssInclude = [
+  path.resolve(__dirname, 'public/fonts'),
   path.resolve(__dirname, 'public/styles'),
   path.resolve(__dirname, 'node_modules/react-select'),
   path.resolve(__dirname, 'node_modules/react-virtualized')

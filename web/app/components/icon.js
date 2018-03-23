@@ -9,7 +9,7 @@ export default class Icon extends Component {
   focus() { }
 
   render() {
-    const {tooltip, style, children, onClick, onTouchTap, primary, secondary, to, href, target, iconStyle, className, ...props} = this.props;
+    const {tooltip, style, children, onClick, primary, secondary, to, href, target, iconStyle, className, ...props} = this.props;
 
     let newIconStyle = {};
     if (style && style.fontSize) {
@@ -37,13 +37,13 @@ export default class Icon extends Component {
       width: 'unset',
       height: 'unset'
     };
-    if (props.onClick || props.onTouchTap) {
+    if (props.onClick) {
       newStyle.cursor = 'pointer';
     }
     Object.assign(newStyle, style);
 
     let button = (
-      <IconButton {...props} iconClassName={iconClassName} onTouchTap={onClick || onTouchTap} style={newStyle}
+      <IconButton {...props} iconClassName={iconClassName} onClick={onClick} style={newStyle}
                   iconStyle={newIconStyle} tooltip={tooltip}>
         {props.icon || props.glyph || children}
       </IconButton>

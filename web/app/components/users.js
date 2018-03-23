@@ -7,6 +7,7 @@ import Icon from 'components/icon';
 import Toggle from 'material-ui/Toggle';
 import orderBy from 'lodash/orderBy';
 import isEqual from 'lodash/isEqual';
+import { AutoSizer } from 'react-virtualized';
 
 class Users extends Component {
   constructor() {
@@ -19,13 +20,15 @@ class Users extends Component {
   }
 
   componentDidMount() {
-    const { inventory } = this.props;
+    const { inventory, actions } = this.props;
     if (inventory.users) {
       this.setState({
         users: orderBy(Object.keys(inventory.users || {}).map((k) => inventory.users[k]), (u) => (
           (u.name && u.name.indexOf(' ') > -1) ? u.name.split(' ')[1] : u.email
         ), 'asc')
       });
+    } else {
+      actions.fetchUsers();
     }
   }
 
@@ -122,21 +125,26 @@ class Users extends Component {
   }
 
   render() {
-    const { inventory, width, height } = this.props;
+    const { inventory } = this.props;
     const { users } = this.state;
     return (
-      <Table width={width} height={height} headerHeight={20} rowHeight={30} rowCount={(users || []).length}
-             rowGetter={({ index }) => users[index]} rowStyle={{cursor:'pointer'}}
-             rowClassName={this._rowClassName} headerClassName='headerColumn' onRowClick={::this.userClick}>
-        <Column label='' dataKey='uid' width={30} flexGrow={0}
-                cellRenderer={this.deleteRenderer.bind(this, 'User')} />
-        <Column label='Name' dataKey='name' width={100} flexGrow={1}/>
-        <Column width={200} label='Email' dataKey='email' flexGrow={1} />
-        <Column width={100} label='Phone' dataKey='phone' flexGrow={1} />
-        <Column width={80} label='Verified' dataKey='emailVerified' flexGrow={0} cellRenderer={::this.verifiedRenderer} />
-        <Column width={80} label='Admin' dataKey='uid' flexGrow={0} cellRenderer={::this.adminRenderer}/>
-        <Column width={80} label='+ Coach' dataKey='willingToCoach' flexGrow={0} cellRenderer={::this.toggleRenderer} />
-      </Table>
+      <div style={{flex:'1 1 auto', backgroundColor:'white', borderRadius:'6px', maxWidth:'800px'}}>
+        <AutoSizer>
+          {({height, width}) =>
+            <Table width={width} height={height} headerHeight={20} rowHeight={30} rowCount={(users || []).length}
+                   rowGetter={({index}) => users[index]} rowStyle={{cursor:'pointer'}}
+                   rowClassName={this._rowClassName} headerClassName='headerColumn' onRowClick={::this.userClick}>
+              <Column label='' dataKey='uid' width={30} flexGrow={0}
+                      cellRenderer={this.deleteRenderer.bind(this, 'User')}/>
+              <Column label='Name' dataKey='name' width={100} flexGrow={1}/>
+              <Column width={200} label='Email' dataKey='email' flexGrow={1}/>
+              <Column width={100} label='Phone' dataKey='phone' flexGrow={1}/>
+              <Column width={80} label='Verified' dataKey='emailVerified' flexGrow={0} cellRenderer={::this.verifiedRenderer}/>
+              <Column width={80} label='Admin' dataKey='uid' flexGrow={0} cellRenderer={::this.adminRenderer}/>
+            </Table>
+          }
+        </AutoSizer>
+      </div>
     );
   }
 }
