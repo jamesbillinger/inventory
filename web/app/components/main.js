@@ -8,6 +8,7 @@ import InventoryFilter from './inventoryFilter';
 import Orders from './orders';
 import Reports from './reports';
 import Users from './users';
+import POS from './POS';
 import FlatButton from 'material-ui/FlatButton';
 import Popover from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
@@ -80,6 +81,7 @@ class Main extends Component {
                 <MyMenuItem label='Users'/>
                 <MyMenuItem label='Reports'/>
                 <MyMenuItem label='Orders'/>
+                <MyMenuItem label='POS'/>
               </div>
               <MyMenuItem label={inventory.user.name} style={{fontSize:'14px', padding:'0 10px'}}>
                 <Menu>
@@ -98,6 +100,7 @@ class Main extends Component {
               <Route path='/users' component={Users}/>
               <Route path='/reports' component={Reports}/>
               <Route path='/orders' component={Orders}/>
+              <Route path='/POS' component={POS}/>
               <Route component={Inventory}/>
             </Switch>
           </div>
