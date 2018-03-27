@@ -15,7 +15,7 @@ class _InventoryFilter extends Component {
     const { match } = this.props;
     return (
       <Dialog
-        title="Dialog With Actions"
+        title="Inventory Item Details"
         modal={false}
         open={true}
         onRequestClose={::this.handleClose}

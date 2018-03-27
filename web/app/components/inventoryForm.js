@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import DatePicker from 'material-ui/DatePicker';
 
 class MyTextField extends Component {
   render() {
@@ -28,7 +29,7 @@ class inventoryForm extends Component {
             <Field name='calibre' component={MyTextField} label='Calibre' />
             <Field name='category' component={MyTextField} label='Category' />
             <Field name='purchasePrice' component={MyTextField} label='Purchase Price' />
-            <Field name='purchaseDate' component={MyTextField} label='Purchase Date' />
+            <DatePicker name='purchaseDate' component={MyTextField} placeholderText='Purchase Date' />
             <Field name='salePrice' component={MyTextField} label='Sale Price' />
             <Field name='saleDate' component={MyTextField} label='Sale Date' />
             <Field name='owner' component={MyTextField} label='Owner' />
