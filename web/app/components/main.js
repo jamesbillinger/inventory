@@ -92,7 +92,7 @@ class Main extends Component {
           </div>
           <div style={{gridRow:'2', gridColumn:'1', display:'flex', flexDirection:'column', padding:'15px 0 15px 15px'}}>
             <Switch>
-              <Route path='/' exact={true} component={InventoryFilter}/>
+              <Route path='/' component={InventoryFilter}/>
             </Switch>
           </div>
           <div style={{gridRow:'2', gridColumn:'2', display:'flex', flexDirection:'column', padding:'15px'}}>
