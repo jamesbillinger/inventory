@@ -4,14 +4,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FormDate from './formDate';
 import FormInput from './formInput';
 
-class MyTextField extends Component {
-  render() {
-    const { label, input } = this.props;
-    return (
-      <FormInput floatingLabelText={label} defaultValue={input.value} onChange={input.onChange} style={{display:'block'}} />
-    );
-  }
-}
 
 class inventoryForm extends Component {
   submit(data) {
@@ -22,20 +14,20 @@ class inventoryForm extends Component {
     const { handleSubmit } = this.props;
     return (
         <div >
-          <div style={{display:'flex', flexWrap:'wrap', justifyContent:'space-between'}}>
-            <Field name='_id' component={MyTextField} label='ID' />
-            <Field name='make' component={MyTextField} label='Make' />
-            <Field name='model' component={MyTextField} label='Model' />
-            <Field name='calibre' component={MyTextField} label='Calibre' />
-            <Field name='category' component={MyTextField} label='Category' />
-            <Field name='purchasePrice' component={MyTextField} label='Purchase Price' />
+          <div style={{display:'flex', flexWrap:'wrap'}} >
+            <Field name='_id' component={FormInput} label='ID' />
+            <Field name='make' component={FormInput} label='Make' />
+            <Field name='model' component={FormInput} label='Model' />
+            <Field name='calibre' component={FormInput} label='Calibre' />
+            <Field name='category' component={FormInput} label='Category' />
+            <Field name='purchasePrice' component={FormInput} label='Purchase Price' />
             <Field name='purchaseDate' component={FormDate} label='Purchase Date' />
-            <Field name='salePrice' component={MyTextField} label='Sale Price' />
+            <Field name='salePrice' component={FormInput} label='Sale Price' />
             <Field name='saleDate' component={FormDate} label='Sale Date' />
-            <Field name='owner' component={MyTextField} label='Owner' />
-            <Field name='quantity' component={MyTextField} label='Quantity' />
-            <Field name='barcode' component={MyTextField} label='Barcode' />
-            <Field name='lowStock' component={MyTextField} label='Low stock level' />
+            <Field name='owner' component={FormInput} label='Owner' />
+            <Field name='quantity' component={FormInput} label='Quantity' />
+            <Field name='barcode' component={FormInput} label='Barcode' />
+            <Field name='lowStock' component={FormInput} label='Low stock level' />
           </div>
           <RaisedButton primary={true} onClick={handleSubmit(this.submit)}>Submit</RaisedButton>
         </div>
