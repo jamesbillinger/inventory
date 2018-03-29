@@ -8,12 +8,22 @@ import InventoryDetail from './inventoryDetail';
 import {AutoSizer, Table, Column} from 'react-virtualized';
 
 class Inventory extends Component {
+  constructor() {
+    super();
+    this._rowClick = ::this.rowClick;
+  }
+
   componentDidMount() {
     const {actions, inventory} = this.props;
     if (!inventory.items && !this._fetched) {
       this._fetched = true;
       actions.fetchItems();
     }
+  }
+
+  rowClick({event, rowData}) {
+    const { history } = this.props;
+    history.push('/inventory/' + rowData._id);
   }
 
   render() {
@@ -48,14 +58,16 @@ class Inventory extends Component {
                 rowGetter={({ index }) => (inventory.items || [])[index]}
                 rowCount={(inventory.items || []).length || 0}
                 headerHeight={32}
+                onRowClick={this._rowClick}
+                rowStyle={{cursor:'pointer'}}
                 width={width}>
-                <Column label='Calibre' dataKey='Calibre' flexGrow={1} width={40} />
-                <Column label='Category' dataKey='Category' flexGrow={1} width={80} />
-                <Column label='Make' dataKey='Make' flexGrow={1} width={50} />
-                <Column label='Model' dataKey='Model' flexGrow={1} width={50} />
-                <Column label='Owner' dataKey='Owner' flexGrow={1} width={80} />
-                <Column label='Purch Price' dataKey='Purchase Price' flexGrow={1} width={80} />
-                <Column label='Sale Price' dataKey='Sale Price' flexGrow={1} width={80} />
+                <Column label='Calibre' dataKey='calibre' flexGrow={1} width={40} />
+                <Column label='Category' dataKey='category' flexGrow={1} width={80} />
+                <Column label='Make' dataKey='make' flexGrow={1} width={50} />
+                <Column label='Model' dataKey='model' flexGrow={1} width={50} />
+                <Column label='Owner' dataKey='owner' flexGrow={1} width={80} />
+                <Column label='Purch Price' dataKey='purchasePrice' flexGrow={1} width={80} />
+                <Column label='Sale Price' dataKey='salePrice' flexGrow={1} width={80} />
               </Table>
             )}
           </AutoSizer>

@@ -11,49 +11,6 @@ let provider = new firebase.auth.GoogleAuthProvider();
 let fbProvider = new firebase.auth.FacebookAuthProvider();
 fbProvider.addScope('email');
 
-export function register(data, callback) {
-  return dispatch => {
-    firebaseAuth().createUserWithEmailAndPassword(data.email, data.password)
-      .then((user) => {
-        if (user) {
-          if (!user.emailVerified) {
-            user.sendEmailVerification();
-          }
-          firebaseRef.child('/users/' + user.uid).set({
-            uid: user.uid,
-            email: user.email,
-            emailVerified: user.emailVerified,
-            name: data.name,
-            phone: data.phone
-          });
-        }
-        callback && callback(user);
-      })
-      .catch((err) => {
-        console.log(err);
-        dispatch({
-          type: 'UPDATE_AUTH',
-          err,
-          email: data.email
-        });
-        callback && callback(undefined, err);
-      })
-  }
-}
-
-export function resendEmailVerification(user, callback) {
-  return dispatch => {
-    user.sendEmailVerification()
-      .then(() => {
-        callback && callback();
-      })
-      .catch((err) => {
-        console.log(err);
-        callback && callback(err);
-      });
-  }
-}
-
 export function onAuthStateChanged(firebaseUser) {
   return dispatch => {
     if (firebaseUser) {
@@ -123,23 +80,6 @@ export function onAuthStateChanged(firebaseUser) {
   }
 }
 
-export function login(email, pw, callback) {
-  return dispatch => {
-    firebaseAuth().signInWithEmailAndPassword(email, pw)
-      .then((user) => {
-        callback && callback(user);
-      })
-      .catch((err) => {
-        console.log(err);
-        dispatch({
-          type: 'UPDATE_AUTH',
-          err
-        });
-        callback && callback(undefined, err);
-      })
-  }
-}
-
 export function loginWithGoogle(email, callback) {
   return dispatch => {
     if (email) {
@@ -170,84 +110,6 @@ export function loginWithGoogle(email, callback) {
       });
       callback && callback(undefined, err);
     });
-  }
-}
-
-export function loginWithFacebook(email, callback) {
-  return dispatch => {
-    firebaseAuth().signInWithRedirect(fbProvider);
-    firebaseAuth().getRedirectResult().then((result) => {
-      if (result.credential) {
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        //var token = result.credential.accessToken;
-      }
-      let user = result.user;
-      callback && callback(user);
-    }).catch((err) => {
-      // Handle Errors here.
-      var errorCode = err.code;
-      var errorMessage = err.message;
-      // The email of the user's account used.
-      var email = err.email;
-      // The firebase.auth.AuthCredential type that was used.
-      var credential = err.credential;
-      console.log(err);
-      dispatch({
-        type: 'UPDATE_AUTH',
-        err
-      });
-      callback && callback(undefined, err);
-    });
-  }
-}
-
-export function applyActionCode(uid, mode, oobCode, newPassword, callback) {
-  return dispatch => {
-    firebaseAuth().checkActionCode(oobCode)
-      .then((code) => {
-        if (mode === 'verifyEmail') {
-          if (firebaseAuth().currentUser.emailVerified) {
-            firebaseRef.child('/users/' + uid).update({
-              emailVerified: true
-            });
-            callback && callback();
-          } else {
-            firebaseAuth().applyActionCode(oobCode)
-              .then(() => {
-                firebaseRef.child('/users/' + uid).update({
-                  emailVerified: true
-                });
-                callback && callback();
-              })
-              .catch((err) => {
-                console.log(err);
-                callback && callback(err);
-              })
-          }
-        } else if (mode === 'resetPassword') {
-          firebaseAuth().confirmPasswordReset(oobCode, newPassword)
-            .then(() => {
-              callback && callback();
-            })
-            .catch((err) => {
-              console.log(err);
-              callback && callback(err);
-            })
-        } else {
-          firebaseAuth().applyActionCode(oobCode)
-            .then(() => {
-              callback && callback();
-            })
-            .catch((err) => {
-              console.log(err);
-              callback && callback(err);
-            })
-        }
-      })
-      .catch((cerr) => {
-        console.log('cerr:', cerr);
-        callback && callback(cerr);
-      })
   }
 }
 
@@ -360,19 +222,6 @@ export function updateUser(user, callback) {
   }
 }
 
-export function updateUserPassword(password, callback) {
-  return dispatch => {
-    let user = firebaseAuth().currentUser;
-    user.updatePassword(password)
-      .then(() => {
-        callback && callback();
-      })
-      .catch((err) => {
-        callback && callback(err);
-      })
-  }
-}
-
 export function deleteUser(uid) {
   return dispatch => {
     firebaseRef.child('/users/' + uid).remove();
@@ -401,7 +250,10 @@ export function fetchItems() {
     ref.on('value', (snap) => {
       let items = [];
       snap.forEach((child) => {
-        items.push(child.val());
+        items.push({
+          _id: child.key,
+          ...child.val()
+        });
       });
       dispatch({
         type: 'FETCH_ITEMS',
@@ -415,7 +267,7 @@ export function addItem(item, callback) {
   return dispatch => {
     let newRef = firebaseRef.child('/items/').push();
     newRef.set({
-      uid: newRef.getKey(),
+      _id: newRef.getKey(),
       ...item
     });
     callback && callback();
@@ -424,13 +276,13 @@ export function addItem(item, callback) {
 
 export function updateItem(item, callback) {
   return dispatch => {
-    firebaseRef.child('/items/' + item.uid).set(item);
+    firebaseRef.child('/items/' + item._id).set(item);
     callback && callback();
   }
 }
 
-export function deleteItem(uid) {
+export function deleteItem(id) {
   return dispatch => {
-    firebaseRef.child('/items/' + uid).remove();
+    firebaseRef.child('/items/' + id).remove();
   }
 }
