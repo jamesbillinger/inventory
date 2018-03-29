@@ -396,7 +396,9 @@ export function deleteUser(uid) {
 
 export function fetchItems() {
   return dispatch => {
+    console.log('here', firebaseRef);
     firebaseRef.child('/items/').on('value', (snap) => {
+      console.log(snap);
       let items = {};
       snap.forEach((child) => {
         items[child.key] = child.val();
