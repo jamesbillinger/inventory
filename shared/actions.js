@@ -4,7 +4,8 @@ import pick from 'lodash/pick';
 import moment from 'moment';
 
 const firebaseApp = firebase.initializeApp(config.firebase);
-const firebaseRef = firebaseApp.database().ref();
+const firebaseDB = firebaseApp.database();
+const firebaseRef = firebaseDB.ref();
 const firebaseAuth = firebase.auth;
 let provider = new firebase.auth.GoogleAuthProvider();
 let fbProvider = new firebase.auth.FacebookAuthProvider();
@@ -396,12 +397,11 @@ export function deleteUser(uid) {
 
 export function fetchItems() {
   return dispatch => {
-    console.log('here', firebaseRef);
-    firebaseRef.child('/items/').on('value', (snap) => {
-      console.log(snap);
-      let items = {};
+    var ref = firebaseDB.ref('items/');
+    ref.on('value', (snap) => {
+      let items = [];
       snap.forEach((child) => {
-        items[child.key] = child.val();
+        items.push(child.val());
       });
       dispatch({
         type: 'FETCH_ITEMS',

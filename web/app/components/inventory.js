@@ -10,7 +10,8 @@ import {AutoSizer, Table, Column} from 'react-virtualized';
 class Inventory extends Component {
   componentDidMount() {
     const {actions, inventory} = this.props;
-    if (!inventory.items) {
+    if (!inventory.items && !this._fetched) {
+      this._fetched = true;
       actions.fetchItems();
     }
   }
@@ -42,10 +43,12 @@ class Inventory extends Component {
               <Table
                 height={height}
                 rowHeight={32}
-                rowGetter={({index}) => (inventory.items || [])[index]}
-                rowCount={(inventory.items || []).length}
+                rowGetter={({ index }) => (inventory.items || [])[index]}
+                rowCount={(inventory.items || []).length || 0}
+                headerHeight={32}
                 width={width}>
-                <Column dataKey='name' flexGrow={1} width={80} />
+                <Column label='Name' dataKey='name' flexGrow={1} width={80} />
+                <Column label='Descriptioin' dataKey='description' flexGrow={1} width={80} />
               </Table>
             )}
           </AutoSizer>
