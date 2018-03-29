@@ -28,7 +28,9 @@ class Inventory extends Component {
         flexDirection: 'column'
       }}>
         <div style={{flex: '0 0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-          <div>search</div>
+          <RaisedButton>
+            search
+          </RaisedButton>
           <div>
             <Link to='/inventory/_new'>
               <RaisedButton>
@@ -47,8 +49,13 @@ class Inventory extends Component {
                 rowCount={(inventory.items || []).length || 0}
                 headerHeight={32}
                 width={width}>
-                <Column label='Name' dataKey='name' flexGrow={1} width={80} />
-                <Column label='Descriptioin' dataKey='description' flexGrow={1} width={80} />
+                <Column label='Calibre' dataKey='Calibre' flexGrow={1} width={40} />
+                <Column label='Category' dataKey='Category' flexGrow={1} width={80} />
+                <Column label='Make' dataKey='Make' flexGrow={1} width={50} />
+                <Column label='Model' dataKey='Model' flexGrow={1} width={50} />
+                <Column label='Owner' dataKey='Owner' flexGrow={1} width={80} />
+                <Column label='Purch Price' dataKey='Purchase Price' flexGrow={1} width={80} />
+                <Column label='Sale Price' dataKey='Sale Price' flexGrow={1} width={80} />
               </Table>
             )}
           </AutoSizer>
