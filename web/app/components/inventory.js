@@ -65,8 +65,6 @@ class Inventory extends Component {
                 <Column label='Category' dataKey='category' flexGrow={1} width={80} />
                 <Column label='Make' dataKey='make' flexGrow={1} width={50} />
                 <Column label='Model' dataKey='model' flexGrow={1} width={50} />
-                <Column label='Owner' dataKey='owner' flexGrow={1} width={80} />
-                <Column label='Purch Price' dataKey='purchasePrice' flexGrow={1} width={80} />
                 <Column label='Sale Price' dataKey='salePrice' flexGrow={1} width={80} />
               </Table>
             )}
