@@ -65,7 +65,9 @@ class Inventory extends Component {
                 <Column label='Category' dataKey='category' flexGrow={1} width={80} />
                 <Column label='Make' dataKey='make' flexGrow={1} width={50} />
                 <Column label='Model' dataKey='model' flexGrow={1} width={50} />
-                <Column label='Sale Price' dataKey='salePrice' flexGrow={1} width={80} />
+                <Column label='Sale Price' dataKey='salePrice' flexGrow={1} width={80} cellRenderer={({cellData}) =>
+                  <div>{cellData ? cellData.toLocaleString('en-US', {style:'currency', currency:'USD'}) : cellData}</div>
+                } />
               </Table>
             )}
           </AutoSizer>
