@@ -5,7 +5,7 @@ import * as InventoryActions from 'shared/actions';
 import {Route, BrowserRouter, Link, Redirect, Switch, withRouter} from 'react-router-dom';
 import Inventory from './inventory';
 import InventoryFilter from './inventoryFilter';
-import Orders from './orders';
+import Sales from './sales';
 import Reports from './reports';
 import Users from './users';
 import POS from './POS';
@@ -78,10 +78,10 @@ class Main extends Component {
                          backgroundColor:'#607d8b', color:'white', padding:'0 20px'}}>
               <div style={{display:'flex', alignItems:'center'}}>
                 <MyMenuItem label='POS' path='/' />
+                <MyMenuItem label='Sales' parth='sales' />
                 <MyMenuItem label='Inventory' path='/inventory'/>
                 <MyMenuItem label='Users' path='/users' />
                 <MyMenuItem label='Reports' path='/reports' />
-                <MyMenuItem label='Orders' parth='orders' />
               </div>
               <MyMenuItem label={inventory.user.name} style={{fontSize:'14px', padding:'0 10px'}}>
                 <Menu>
@@ -99,7 +99,7 @@ class Main extends Component {
             <Switch>
               <Route path='/users' component={Users}/>
               <Route path='/reports' component={Reports}/>
-              <Route path='/orders' component={Orders}/>
+              <Route path='/sales' component={Sales}/>
               <Route path='/inventory' component={Inventory}/>
               <Route component={POS}/>
             </Switch>
