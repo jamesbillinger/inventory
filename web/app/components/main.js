@@ -77,11 +77,11 @@ class Main extends Component {
             <div style={{display:'flex', alignItems:'center', justifyContent:'space-between',
                          backgroundColor:'#607d8b', color:'white', padding:'0 20px'}}>
               <div style={{display:'flex', alignItems:'center'}}>
-                <MyMenuItem label='Inventory' path='/'/>
-                <MyMenuItem label='Users'/>
-                <MyMenuItem label='Reports'/>
-                <MyMenuItem label='Orders'/>
-                <MyMenuItem label='POS'/>
+                <MyMenuItem label='POS' path='/' />
+                <MyMenuItem label='Inventory' path='/inventory'/>
+                <MyMenuItem label='Users' path='/users' />
+                <MyMenuItem label='Reports' path='/reports' />
+                <MyMenuItem label='Orders' parth='orders' />
               </div>
               <MyMenuItem label={inventory.user.name} style={{fontSize:'14px', padding:'0 10px'}}>
                 <Menu>
@@ -90,9 +90,9 @@ class Main extends Component {
               </MyMenuItem>
             </div>
           </div>
-          <div style={{gridRow:'2', gridColumn:'1', display:'flex', flexDirection:'column', padding:'15px 0 15px 15px'}}>
+          <div style={{gridRow:'2', gridColumn:'1', display:'flex', flexDirection:'column'}}>
             <Switch>
-              <Route path='/' component={InventoryFilter}/>
+              <Route path='/inventory' component={InventoryFilter}/>
             </Switch>
           </div>
           <div style={{gridRow:'2', gridColumn:'2', display:'flex', flexDirection:'column', padding:'15px'}}>
@@ -100,8 +100,8 @@ class Main extends Component {
               <Route path='/users' component={Users}/>
               <Route path='/reports' component={Reports}/>
               <Route path='/orders' component={Orders}/>
-              <Route path='/POS' component={POS}/>
-              <Route component={Inventory}/>
+              <Route path='/inventory' component={Inventory}/>
+              <Route component={POS}/>
             </Switch>
           </div>
           <div style={{gridRow:'3', gridColumn:'1 / 3', display:'flex', backgroundColor:'#455a64',
