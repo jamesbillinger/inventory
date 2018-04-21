@@ -108,8 +108,8 @@ class Main extends Component {
             <Switch>
               <Route path='/users' component={Users}/>
               <Route path='/reports' component={Reports}/>
-              <Route path='/sales' component={Sales}/>
-              <Route path='/inventory' component={Inventory}/>
+              <Route path='/sales/:saleID?' component={Sales}/>
+              <Route path='/inventory/:itemID?' component={Inventory} />
               <Route component={POS}/>
             </Switch>
           </div>

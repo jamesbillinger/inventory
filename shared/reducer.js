@@ -23,9 +23,14 @@ function inventory(state = initialState, action) {
         items: action.items || {}
       });
 
+    case 'FETCH_SALES':
+      return Object.assign({}, state, {
+        sales: action.items || {}
+      });
+
     case 'UPDATE_USER':
       return Object.assign({}, state, {
-        users: Object.assign({}, state.users, {
+        user: Object.assign({}, state.user, {
           uid: action.uid,
           ...action.update
         })

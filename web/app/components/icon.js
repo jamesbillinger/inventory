@@ -26,6 +26,9 @@ export default class Icon extends Component {
     } else {
       newIconStyle.color = undefined;
     }
+    if (props.disabled || (!onClick && !to && !href)) {
+      newIconStyle.cursor = 'default';
+    }
     Object.assign(newIconStyle, iconStyle);
 
     let iconClassName = 'material-icons';

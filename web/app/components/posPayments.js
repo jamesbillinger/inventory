@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { reduxForm, Field, Fields, FieldArray } from 'redux-form';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as InventoryActions from 'shared/actions';
+import { reduxForm, Field, Fields, FieldArray, SubmissionError } from 'redux-form';
 import LabelledText from './labelledText';
 import FatButton from './fatButton';
 import Icon from './icon';
 import FormInput from './formInput';
+import moment from 'moment';
 
 class Payment extends Component {
   render() {
@@ -27,6 +31,9 @@ class Payment extends Component {
           <div style={{textTransform:'capitalize', fontSize:'13px', color}}>{input.value.method}</div>
         </div>
         <Field name={input.name + '.value'} component={FormInput} type='currency' style={{width:'120px'}} />
+        {input.value.method === 'trade' &&
+          <Field name={input.name + '.notes'} component={FormInput} placeholder='Trade Notes' />
+        }
       </div>
     );
   }
@@ -45,7 +52,7 @@ class PaymentsList extends Component {
   }
 }
 
-export default class Payments extends Component {
+class Payments extends Component {
   state = {
     total: 0
   };
@@ -74,20 +81,33 @@ export default class Payments extends Component {
     ]);
   };
 
+  submit = (data) => {
+    const { actions, onSubmit, user } = this.props;
+    actions.submitSale(Object.assign({}, data, {
+      createdAt: moment().valueOf(),
+      updatedAt: moment().valueOf(),
+      createdBy: user.uid,
+      updatedBy: user.uid
+    }), (err, r) => {
+      if (err) {
+        console.log(err);
+        throw new SubmissionError(err);
+      } else {
+        onSubmit(r);
+      }
+    });
+  };
+
   render() {
-    const { payments, taxRate, items, close, submit } = this.props;
+    const { payments, taxRate, items, close, handleSubmit, submitting } = this.props;
     const { total } = this.state;
     let paid = (payments.input.value || []).reduce((a, b) => {
       return a + parseFloat(b.value || 0);
     }, 0);
     let valid = paid === total;
-    console.log(total, paid);
     return (
       <div style={{display:'flex', flexDirection:'column', height:'80vh', width:'100%'}}>
-        <div style={{flex:'0 0 auto'}}>
-          Select a Payment Method
-        </div>
-        <div style={{flex:'0 0 auto', display:'flex', alignItems:'center', justifyContent:'center'}}>
+        <div style={{flex:'0 0 auto', display:'flex', alignItems:'center', justifyContent:'center', paddingTop:'10px'}}>
           <FatButton icon='attach_money' color='green' onClick={this.addPayment.bind(this,'cash')} disabled={valid}>
             Cash
           </FatButton>
@@ -113,11 +133,11 @@ export default class Payments extends Component {
           </LabelledText>
         </div>
         <div style={{flex:'0 0 auto', paddingBottom:'20px', display:'flex', justifyContent:'center', alignItems:'center'}}>
-          <FatButton icon='check' color='green' onClick={submit}
-                     disabled={!valid}>
+          <FatButton icon='check' color='green' onClick={handleSubmit(this.submit)}
+                     disabled={!valid || submitting}>
             Complete
           </FatButton>
-          <FatButton icon='close' color='red' onClick={close}>
+          <FatButton icon='close' color='red' onClick={close} disabled={submitting}>
             Close
           </FatButton>
         </div>
@@ -125,3 +145,10 @@ export default class Payments extends Component {
     )
   }
 }
+export default connect(
+  (state) => ({
+    user: state.inventory.user
+  }), (dispatch) => ({
+    actions: bindActionCreators({...InventoryActions}, dispatch)
+  })
+)(Payments)

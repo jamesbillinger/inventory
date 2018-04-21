@@ -286,3 +286,44 @@ export function deleteItem(id) {
     firebaseRef.child('/items/' + id).remove();
   }
 }
+
+export function submitSale(item, callback) {
+  return dispatch => {
+    if (item._id) {
+      firebaseRef.child('/sales/' + item._id).set(item);
+      callback && callback(undefined, item);
+    } else {
+      let newRef = firebaseRef.child('/sales/').push();
+      let newItem = Object.assign({}, item, {
+        _id:newRef.getKey()
+      });
+      newRef.set(newItem);
+      callback && callback(undefined, newItem);
+    }
+  }
+}
+
+export function fetchSales() {
+  return dispatch => {
+    var ref = firebaseDB.ref('sales/');
+    ref.on('value', (snap) => {
+      let items = [];
+      snap.forEach((child) => {
+        items.push({
+          _id: child.key,
+          ...child.val()
+        });
+      });
+      dispatch({
+        type: 'FETCH_SALES',
+        items
+      });
+    });
+  }
+}
+
+export function deleteSale(id) {
+  return dispatch => {
+    firebaseRef.child('/sales/' + id).remove();
+  }
+}

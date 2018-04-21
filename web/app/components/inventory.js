@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Switch, Route, Link} from 'react-router-dom';
 import InventoryDetail from './inventoryDetail';
 import {AutoSizer, Table, Column} from 'react-virtualized';
+import Dialog from 'material-ui/Dialog';
 
 class Inventory extends Component {
   constructor() {
@@ -18,8 +19,13 @@ class Inventory extends Component {
     history.push('/inventory/' + rowData._id);
   }
 
+  close = () => {
+    const { history } = this.props;
+    history.push('/inventory');
+  };
+
   render() {
-    const { inventory } = this.props;
+    const { inventory, match } = this.props;
     return (
       <div style={{
         flex: '1 1 auto',
@@ -64,9 +70,9 @@ class Inventory extends Component {
             )}
           </AutoSizer>
         </div>
-        <Switch>
-          <Route path='/inventory/:inventoryID' component={InventoryDetail}/>
-        </Switch>
+        <Dialog modal={false} open={!!match.params.itemID} onRequestClose={this.close} autoScrollBodyContent={true}>
+          {match.params.itemID && <InventoryDetail itemID={match.params.itemID} close={this.close} />}
+        </Dialog>
       </div>
     )
   }

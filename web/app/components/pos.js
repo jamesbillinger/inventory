@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { reduxForm, Field, Fields, FieldArray } from 'redux-form';
+import { reduxForm, Field, Fields, FieldArray, SubmissionError } from 'redux-form';
 import POSSearch from './posSearch';
 import LabelledText from './labelledText';
 import POSItem from './posItem';
@@ -8,6 +8,7 @@ import FatButton from './fatButton';
 import Totals from './posTotals';
 import Dialog from 'material-ui/Dialog';
 import Payments from './posPayments';
+import { withRouter } from 'react-router-dom';
 
 class POSItems extends Component {
   render() {
@@ -51,12 +52,14 @@ class POS extends Component {
     });
   };
 
-  submit = (data) => {
-    console.log(data);
+  onSubmit = (r) => {
+    const { reset, history } = this.props;
     this.setState({
       pay: false,
       itemID: undefined
     });
+    reset();
+    history.push('/sales/' + r._id);
   };
 
   render() {
@@ -93,15 +96,15 @@ class POS extends Component {
         </div>
         <Dialog open={pay} onRequestClose={this.pay}>
           {pay && <Fields names={['payments', 'taxRate', 'items', 'discount']} component={Payments}
-                          submit={handleSubmit(this.submit)} close={this.pay} />}
+                          onSubmit={this.onSubmit} handleSubmit={handleSubmit} close={this.pay} submitting={submitting} />}
         </Dialog>
       </div>
     )
   }
 }
-export default reduxForm({
+export default withRouter(reduxForm({
   form: 'posForm',
   initialValues: {
     taxRate: 0.105
   }
-})(POS)
+})(POS))
