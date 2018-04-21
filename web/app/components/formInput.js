@@ -1,8 +1,7 @@
-/**
- * Created by jamesbillinger on 4/18/17.
- */
 import React, { Component } from 'react';
 import TextField from "material-ui/TextField";
+import omit from 'lodash/omit';
+import LabelledText from './labelledText';
 
 export default class FormInput extends Component {
   componentDidMount() {
@@ -54,7 +53,7 @@ export default class FormInput extends Component {
 
 
   render() {
-    const {style, type, input, meta, label, step, ...props} = this.props;
+    const {style, type, input, meta, label, step, labelledTextMode, ...props} = this.props;
     const { value, onChange, onBlur, onFocus } = input || props;
     const { error, touched } = meta || props;
     let newStyle = Object.assign({
@@ -84,17 +83,31 @@ export default class FormInput extends Component {
       }
       //inputType = 'number';
     }
-    return (
-      <div style={{position:'relative'}}>
-        <TextField ref={(c) => this._field = c} id='unique' style={newStyle} value={value || ''}
-                   floatingLabelStyle={{pointerEvents: 'none', whiteSpace:'nowrap', left:'0px', color:'rgba(33, 33, 33, 0.5)'}}
-                   type={inputType} onChange={myOnChange} floatingLabelText={label} errorText={(touched && error) ? error : null}
-                   onBlur={onBlur} onFocus={onFocus} step={inputStep} {...props} />
-        {(value && type === 'currency')
-          ? <div style={{position:'absolute', left:'0px', bottom:'13px', fontSize:'0.9em'}}>$</div>
-          : null
-        }
-      </div>
-    );
+    if (labelledTextMode) {
+      let textValue = value;
+      if (type === 'currency' && value) {
+        textValue = parseFloat(value).toLocaleString('en-US', {style:'currency', currency:'USD'});
+      }
+      return <LabelledText label={label} style={omit(style || {}, ['width', 'height'])}>{textValue}</LabelledText>;
+    } else {
+      return (
+        <div style={{position:'relative'}}>
+          <TextField ref={(c) => this._field = c} id='unique' style={newStyle} value={value || ''}
+                     floatingLabelStyle={{
+                       pointerEvents:'none',
+                       whiteSpace:'nowrap',
+                       left:'0px',
+                       color:'rgba(33, 33, 33, 0.5)'
+                     }}
+                     type={inputType} onChange={myOnChange} floatingLabelText={label}
+                     errorText={(touched && error) ? error : null}
+                     onBlur={onBlur} onFocus={onFocus} step={inputStep} {...props} />
+          {(value && type === 'currency')
+            ? <div style={{position:'absolute', left:'0px', bottom:'13px', fontSize:'0.9em'}}>$</div>
+            : null
+          }
+        </div>
+      );
+    }
   }
 }

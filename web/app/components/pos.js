@@ -3,26 +3,12 @@ import { connect } from 'react-redux';
 import { reduxForm, Field, Fields, FieldArray, SubmissionError } from 'redux-form';
 import POSSearch from './posSearch';
 import LabelledText from './labelledText';
-import POSItem from './posItem';
 import FatButton from './fatButton';
 import Totals from './posTotals';
 import Dialog from 'material-ui/Dialog';
 import Payments from './posPayments';
 import { withRouter } from 'react-router-dom';
-
-class POSItems extends Component {
-  render() {
-    const { fields, meta, ...props } = this.props;
-    return (
-      <div>
-        {(fields || []).map((f, fi) =>
-          <Fields key={f} names={[f + '.item', f + '.quantity', f + '.price', f + '.totalPrice']}
-                  component={POSItem} index={fi} {...props} />
-        )}
-      </div>
-    )
-  }
-}
+import POSItems from './posItems';
 
 class POS extends Component {
   state = {

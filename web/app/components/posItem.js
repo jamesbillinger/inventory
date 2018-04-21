@@ -48,7 +48,7 @@ class _POSItem extends Component {
   };
 
   render() {
-    const { items, index, selectItem } = this.props;
+    const { items, index, selectItem, labelledTextMode } = this.props;
     let price = items[index].price;
     let quantity = items[index].quantity;
     let totalPrice = items[index].totalPrice;
@@ -56,17 +56,18 @@ class _POSItem extends Component {
     if (fullItem) {
       return (
         <div style={{display:'flex', alignItems:'center', backgroundColor: index % 2 ? '#f2f2f2' : 'none'}}>
+          <div style={{flex:'0 0 25px', fontWeight:'bold', fontSize:'18px', color:'#bbb'}}>{index + 1}.</div>
           <div style={{flex: '1 1 auto', display: 'flex', alignItems: 'center', cursor: 'pointer'}}
-               onClick={selectItem.bind(this, fullItem._id)}>
+               onClick={selectItem ? selectItem.bind(this, fullItem._id) : null}>
             <LabelledText label='Make'>{fullItem.make}</LabelledText>
             <LabelledText label='Model'>{fullItem.model}</LabelledText>
             <LabelledText label='Qty On Hand'>{fullItem.qty}</LabelledText>
           </div>
-          <FormInput type='currency' label='Price (ea)' style={{width:'100px'}}
+          <FormInput type='currency' label='Price (ea)' style={{width:'100px'}} labelledTextMode={labelledTextMode}
                      input={{value:price.input.value, onChange:this.priceChange}} meta={price.meta} />
           <FormInput input={{value:quantity.input.value, onChange:this.quantityChange}} type='number' label='Quantity'
-                     style={{ width: '60px' }} meta={quantity.meta} />
-          <FormInput type='currency' label='Total Price' style={{width:'100px'}} {...totalPrice} />
+                     style={{ width: '60px' }} meta={quantity.meta} labelledTextMode={labelledTextMode} />
+          <FormInput type='currency' label='Total Price' style={{width:'100px'}} {...totalPrice} labelledTextMode={labelledTextMode} />
         </div>
       );
     } else {

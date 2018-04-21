@@ -8,10 +8,14 @@ import find from 'lodash/find';
 import Icon from './icon';
 
 class SaleDetail extends Component {
-  deleteItem = () => {
+  deleteSale = () => {
     const { actions, saleID, close } = this.props;
-    actions.deleteItem(saleID);
+    actions.deleteSale(saleID);
     close();
+  };
+
+  print = () => {
+
   };
 
   render() {
@@ -20,6 +24,9 @@ class SaleDetail extends Component {
     return (
       <div>
         <div style={{position:'absolute', top:'23px', right:'30px'}}>
+          {saleID !== '_new' &&
+            <Icon icon='print' onClick={this.print} style={{fontSize:'18px', marginRight:'10px', color:'blue'}} />
+          }
           {saleID !== '_new' &&
             <Icon icon='delete' secondary={true} onClick={this.deleteSale} style={{ fontSize: '18px' }}/>
           }

@@ -50,22 +50,23 @@ export default class Totals extends Component {
   };
 
   render() {
-    const { items, discount, taxRate } = this.props;
+    const { items, discount, taxRate, labelledTextMode } = this.props;
     const { itemsTotal } = this.state;
     let totalValue = this.state.totalValue || (itemsTotal - (discount.input.value || 0));
     if ((items.input.value || []).length > 0) {
       return (
         <div style={{display:'flex', alignItems:'center'}}>
-          <FormInput label='Subtotal' input={{value:itemsTotal}} type='currency' style={{flex:'1 1 100px'}} disabled={true} />
+          <FormInput label='Subtotal' input={{value:itemsTotal}} type='currency' style={{flex:'1 1 100px'}}
+                     disabled={true} labelledTextMode={labelledTextMode} />
           <FormInput label='Discount' input={{value:discount.input.value, onChange:this.discountChange}}
-                     type='currency' style={{flex:'1 1 100px'}} />
+                     type='currency' style={{flex:'1 1 100px'}} labelledTextMode={labelledTextMode} />
           <FormInput label='Sale Total' input={{value:totalValue, onChange:this.changeTotal}}
-                     type='currency' style={{flex:'1 1 100px'}} />
+                     type='currency' style={{flex:'1 1 100px'}} labelledTextMode={labelledTextMode} />
           <FormInput label={'Tax (' + taxRate.input.value + ')'}
                      input={{value:(totalValue * taxRate.input.value).toFixed(2), onChange:this.changeTotal}}
-                     type='currency' style={{flex:'1 1 100px'}} disabled={true} />
+                     type='currency' style={{flex:'1 1 100px'}} disabled={true} labelledTextMode={labelledTextMode} />
           <FormInput label='Total' input={{value:(totalValue * (1 + taxRate.input.value)).toFixed(2), onChange:this.changeTotal}}
-                     type='currency' style={{flex:'1 1 100px´'}} disabled={true} />
+                     type='currency' style={{flex:'1 1 100px´'}} disabled={true} labelledTextMode={labelledTextMode} />
         </div>
       );
     } else {

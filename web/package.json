@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "build": "rimraf ../public/*.js && webpack --config webpack-prod.config.js --progress"
+  },
   "dependencies": {
     "babel": "^6.23.0",
     "babel-core": "^6.26.0",
@@ -42,6 +45,7 @@
     "style-loader": "^0.20.3",
     "tracer": "^0.8.12",
     "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.15",
     "webpack-dev-server": "^3.1.1",
     "winston": "^2.4.1"
   }
