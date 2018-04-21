@@ -31,6 +31,9 @@ class Payment extends Component {
           <div style={{textTransform:'capitalize', fontSize:'13px', color}}>{input.value.method}</div>
         </div>
         <Field name={input.name + '.value'} component={FormInput} type='currency' style={{width:'120px'}} />
+        {input.value.method === 'cash' &&
+          <Field name={input.name + '.notes'} component={FormInput} placeholder='Check Number' />
+        }
         {input.value.method === 'trade' &&
           <Field name={input.name + '.notes'} component={FormInput} placeholder='Trade Notes' />
         }

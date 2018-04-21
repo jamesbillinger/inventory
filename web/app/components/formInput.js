@@ -46,7 +46,6 @@ export default class FormInput extends Component {
       val[1] = (val[1] || '').substring(0, 2);
     }
     //val[0] = (val[0] || '').replace(/(\d)(?=(\d{3})+$)/g, '$1,');
-    console.log(val.join('.'), parseFloat(val.join('.')));
     val = parseFloat(val.join('.') || 0);
     input.onChange(e, val);
   };
