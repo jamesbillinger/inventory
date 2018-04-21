@@ -3,7 +3,7 @@ import IconButton from "material-ui/IconButton";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MaterialTheme from '../materialTheme';
 import { Link } from 'react-router-dom';
-
+import omit from 'lodash/omit';
 
 export default class Icon extends Component {
   focus() { }
@@ -14,9 +14,10 @@ export default class Icon extends Component {
     let newIconStyle = {};
     if (style && style.fontSize) {
       newIconStyle.fontSize = style.fontSize;
-      delete style.fontSize;
     }
-    if (primary) {
+    if (style && style.color) {
+      newIconStyle.color = style.color;
+    } else if (primary) {
       newIconStyle.color = getMuiTheme(MaterialTheme).baseTheme.palette.primary1Color;
     } else if (secondary) {
       newIconStyle.color = getMuiTheme(MaterialTheme).baseTheme.palette.accent1Color;
@@ -40,7 +41,7 @@ export default class Icon extends Component {
     if (props.onClick) {
       newStyle.cursor = 'pointer';
     }
-    Object.assign(newStyle, style);
+    Object.assign(newStyle, omit(style, 'fontSize'));
 
     let button = (
       <IconButton {...props} iconClassName={iconClassName} onClick={onClick} style={newStyle}

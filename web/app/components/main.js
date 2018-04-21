@@ -8,7 +8,7 @@ import InventoryFilter from './inventoryFilter';
 import Sales from './sales';
 import Reports from './reports';
 import Users from './users';
-import POS from './POS';
+import POS from './pos';
 import FlatButton from 'material-ui/FlatButton';
 import Popover from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
@@ -67,12 +67,20 @@ class MyMenuItem extends Component {
 }
 
 class Main extends Component {
+  componentDidMount() {
+    const {actions, inventory} = this.props;
+    if (!inventory.items && !this._fetched) {
+      this._fetched = true;
+      actions.fetchItems();
+    }
+  }
+
   render() {
     const { actions, inventory } = this.props;
     if (inventory.user) {
       return (
         <div style={{height:'100%', width:'100%', display:'grid', backgroundColor:'rgba(207,216,220,0.2)',
-                     gridTemplateColumns:'auto 1fr', gridTemplateRows:'auto 1fr 32px'}}>
+                     gridTemplateColumns:'auto 1fr', gridTemplateRows:'auto 1fr'}}>
           <div style={{gridRow:'1', gridColumn:'1 / 3'}}>
             <div style={{display:'flex', alignItems:'center', justifyContent:'space-between',
                          backgroundColor:'#607d8b', color:'white', padding:'0 20px'}}>
@@ -84,8 +92,9 @@ class Main extends Component {
                 <MyMenuItem label='Reports' path='/reports' />
               </div>
               <MyMenuItem label={inventory.user.name} style={{fontSize:'14px', padding:'0 10px'}}>
-                <Menu>
+                <Menu style={{textAlign:'right'}}>
                   <MenuItem primaryText='Sign out' onClick={actions.logout.bind(this)} />
+                  <MenuItem primaryText={'© Copyright ' + (new Date()).getFullYear()} style={{fontSize:'0.85em'}} />
                 </Menu>
               </MyMenuItem>
             </div>
@@ -103,10 +112,6 @@ class Main extends Component {
               <Route path='/inventory' component={Inventory}/>
               <Route component={POS}/>
             </Switch>
-          </div>
-          <div style={{gridRow:'3', gridColumn:'1 / 3', display:'flex', backgroundColor:'#455a64',
-                       alignItems:'center', justifyContent:'center', color:'#ddd', fontSize:'13px'}}>
-            <div>Copyright {(new Date()).getFullYear()}</div>
           </div>
         </div>
       );

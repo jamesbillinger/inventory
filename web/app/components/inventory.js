@@ -13,14 +13,6 @@ class Inventory extends Component {
     this._rowClick = ::this.rowClick;
   }
 
-  componentDidMount() {
-    const {actions, inventory} = this.props;
-    if (!inventory.items && !this._fetched) {
-      this._fetched = true;
-      actions.fetchItems();
-    }
-  }
-
   rowClick({event, rowData}) {
     const { history } = this.props;
     history.push('/inventory/' + rowData._id);

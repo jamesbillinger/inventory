@@ -11,9 +11,10 @@ export default class FormInput extends Component {
       this._field && this._field.focus();
     }
   }
+
   focus = () => {
     this._field && this._field.focus();
-  }
+  };
 
   phoneOnChange = (e) => {
     const { input } = this.props;
@@ -26,15 +27,15 @@ export default class FormInput extends Component {
     } else if (val.length > 7) {
       val = val.substring(0,3) + '-' + val.substring(3,6) + '-' + val.substring(6);
     }
-    input.onChange(val);
-  }
+    input.onChange(e, val);
+  };
 
   numberOnChange = (e) => {
     const { input } = this.props;
     let val = e.target.value || '';
     val = (val.match(/[\d\.]+/g) || []).join();
-    input.onChange(val);
-  }
+    input.onChange(e, parseFloat(val || 0));
+  };
 
   currencyOnChange = (e) => {
     const { input } = this.props;
@@ -48,8 +49,8 @@ export default class FormInput extends Component {
     //val[0] = (val[0] || '').replace(/(\d)(?=(\d{3})+$)/g, '$1,');
     console.log(val.join('.'), parseFloat(val.join('.')));
     val = parseFloat(val.join('.') || 0);
-    input.onChange(val);
-  }
+    input.onChange(e, val);
+  };
 
 
   render() {
@@ -64,6 +65,9 @@ export default class FormInput extends Component {
     }, style);
     if (props.disabled) {
       newStyle.color = 'rgba(0,0,0,0.3)';
+    }
+    if (newStyle.flex) {
+      newStyle.width = 'unset';
     }
     let myOnChange = onChange;
     let inputType;
