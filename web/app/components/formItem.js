@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import FormSelect from './formSelect';
+import FormSelect from 'components/formSelect';
 
 class FormItem extends Component {
   getOptionLabel(item) {

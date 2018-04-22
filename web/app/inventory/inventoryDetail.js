@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import InventoryForm from './inventoryForm';
+import InventoryForm from 'inventory/inventoryForm';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as Actions from 'shared/actions';
 import find from 'lodash/find';
-import Icon from './icon';
+import Icon from 'components/icon';
 
 class InventoryDetail extends Component {
   deleteItem = () => {

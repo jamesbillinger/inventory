@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TextField from "material-ui/TextField";
 import omit from 'lodash/omit';
-import LabelledText from './labelledText';
+import LabelledText from 'components/labelledText';
 
 export default class FormInput extends Component {
   componentDidMount() {

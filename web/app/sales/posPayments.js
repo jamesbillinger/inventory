@@ -3,11 +3,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as InventoryActions from 'shared/actions';
 import { reduxForm, Field, Fields, FieldArray, SubmissionError } from 'redux-form';
-import LabelledText from './labelledText';
-import FatButton from './fatButton';
-import Icon from './icon';
-import FormInput from './formInput';
+import LabelledText from 'components/labelledText';
+import FatButton from 'components/fatButton';
+import Icon from 'components/icon';
+import FormInput from 'components/formInput';
+import FormSelect from 'components/formSelect';
 import moment from 'moment';
+import Button from 'components/button';
 
 class Payment extends Component {
   render() {
@@ -109,22 +111,35 @@ class Payments extends Component {
     }, 0);
     let valid = paid === total;
     return (
-      <div style={{display:'flex', flexDirection:'column', height:'80vh', width:'100%'}}>
-        <div style={{flex:'0 0 auto', display:'flex', alignItems:'center', justifyContent:'center', paddingTop:'10px'}}>
-          <FatButton icon='attach_money' color='green' onClick={this.addPayment.bind(this,'cash')} disabled={valid}>
-            Cash
-          </FatButton>
-          <FatButton icon='credit_card' color='red' onClick={this.addPayment.bind(this,'credit')} disabled={valid}>
-            Credit
-          </FatButton>
-          <FatButton icon='swap_vert' color='blue' onClick={this.addPayment.bind(this,'trade')} disabled={valid}>
-            Trade
-          </FatButton>
+      <div style={{display:'flex', flexDirection:'column', justifyContent:'space-between', height:'80vh', width:'100%'}}>
+        <div style={{flex:'0 0 auto', backgroundColor:'#f2f2f2', borderRadius:'6px', padding:'10px', position:'relative', marginTop:'20px'}}>
+          <div style={{position:'absolute', top:'-20px', left:'10px', fontSize:'16px', color:'#999', fontWeight:'bold'}}>
+            Customer
+          </div>
+          <Field name='customer' component={FormSelect} options={[]} label='Customer' allowCreate={true} />
         </div>
-        <div style={{flex:'2 1 auto'}}>
+        <div style={{flex:'0 0 auto', backgroundColor:'#f2f2f2', borderRadius:'6px', padding:'10px', position:'relative'}}>
+          <div style={{position:'absolute', top:'-20px', left:'10px', fontSize:'16px', color:'#999', fontWeight:'bold'}}>
+            Payment
+          </div>
+          <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+            <FatButton icon='attach_money' color='green' onClick={this.addPayment.bind(this,'cash')} disabled={valid}>
+              Cash
+            </FatButton>
+            <FatButton icon='credit_card' color='red' onClick={this.addPayment.bind(this,'credit')} disabled={valid}>
+              Credit
+            </FatButton>
+            <FatButton icon='swap_vert' color='blue' onClick={this.addPayment.bind(this,'trade')} disabled={valid}>
+              Trade
+            </FatButton>
+          </div>
           <FieldArray name='payments' component={PaymentsList} />
         </div>
-        <div style={{flex:'1 1 auto', display:'flex', alignItems:'center', justifyContent:'space-evenly'}}>
+        <div style={{flex:'0 0 auto', display:'flex', alignItems:'flex-end', backgroundColor:'#f2f2f2', borderRadius:'6px',
+                     justifyContent:'space-evenly', padding:'10px', position:'relative'}}>
+          <div style={{position:'absolute', top:'-20px', left:'10px', fontSize:'16px', color:'#999', fontWeight:'bold'}}>
+            Totals
+          </div>
           <LabelledText label='Total Due'>
             ${total}
           </LabelledText>
@@ -132,7 +147,7 @@ class Payments extends Component {
             ${paid}
           </LabelledText>
           <LabelledText label='Remaining'>
-            ${(total - paid).toFixed(2)}
+            <div style={valid ? {} : {color:'red'}}>${(total - paid).toFixed(2)}</div>
           </LabelledText>
         </div>
         <div style={{flex:'0 0 auto', paddingBottom:'20px', display:'flex', justifyContent:'center', alignItems:'center'}}>

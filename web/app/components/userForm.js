@@ -8,7 +8,6 @@ import Button from 'components/button';
 import { required, email, phoneNumber } from 'shared/validators';
 import filter from 'lodash/filter';
 import map from 'lodash/map';
-import PlayerForm from './playerForm';
 import Logo from 'components/logo';
 import MaskedInput from 'components/maskedInput';
 import isEqual from 'lodash/isEqual';
@@ -182,10 +181,6 @@ class UserForm extends Component {
                   </div>
                   <div style={{flex:'1 1 auto'}} />
                 </div>
-              }
-              {player &&
-                <PlayerForm initialValues={player} closeAction={::this.playerClose}
-                            userID={initialValues && initialValues.uid} />
               }
             </div>
           </div>

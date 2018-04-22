@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import RaisedButton from 'material-ui/RaisedButton';
-import FormDate from './formDate';
-import FormInput from './formInput';
-import FormSelect from './formSelect';
+import FormDate from 'components/formDate';
+import FormInput from 'components/formInput';
+import FormSelect from 'components/formSelect';
 
 const categoryOptions = ['Firearm','Ammo','Misc'];
 

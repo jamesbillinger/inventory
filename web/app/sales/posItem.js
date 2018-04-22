@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FormInput from 'components/formInput';
 import find from 'lodash/find';
-import LabelledText from './labelledText';
+import LabelledText from 'components/labelledText';
 import get from 'lodash/get';
 
 class _POSItem extends Component {

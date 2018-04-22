@@ -3,7 +3,7 @@ import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
 import moment from 'moment';
 import omit from 'lodash/omit';
-import LabelledText from './labelledText';
+import LabelledText from 'components/labelledText';
 
 export default class FormDate extends Component {
   componentWillMount() {

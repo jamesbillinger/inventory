@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as Actions from 'shared/actions';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Switch, Route, Link} from 'react-router-dom';
-import InventoryDetail from './inventoryDetail';
+import InventoryDetail from 'inventory/inventoryDetail';
 import {AutoSizer, Table, Column} from 'react-virtualized';
 import Dialog from 'material-ui/Dialog';
 

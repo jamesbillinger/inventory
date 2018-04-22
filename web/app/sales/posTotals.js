@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import debounce from 'lodash/debounce'
-import FormInput from './formInput';
-import LabelledText from './labelledText';
+import FormInput from 'components/formInput';
+import LabelledText from 'components/labelledText';
 
 export default class Totals extends Component {
   state = {

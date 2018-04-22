@@ -28,6 +28,11 @@ function inventory(state = initialState, action) {
         sales: action.items || {}
       });
 
+    case 'FETCH_CUSTOMERS':
+      return Object.assign({}, state, {
+        customers: action.items || {}
+      });
+
     case 'UPDATE_USER':
       return Object.assign({}, state, {
         user: Object.assign({}, state.user, {

@@ -2,18 +2,36 @@ import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from 'shared/actions';
-import Button from './button';
+import Button from 'components/button';
 import {Switch, Route, Link} from 'react-router-dom';
 import SaleDetail from './saleDetail';
 import {AutoSizer, Table, Column} from 'react-virtualized';
 import Dialog from 'material-ui/Dialog';
 import moment from 'moment';
+import FormInput from 'components/formInput';
+import filter from 'lodash/filter';
 
 class Sales extends Component {
+  state = {};
+
   componentDidMount() {
     const { inventory, actions } = this.props;
     if (!inventory.sales) {
       actions.fetchSales();
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { inventory } = this.props;
+    const { search } = this.state;
+    if ((search || '') !== (prevState.search || '')) {
+      this.setState({
+        searchResults: search
+          ? filter(inventory.sales || [], (s) => {
+            return (s.taxRate || '').toString().indexOf(search) > -1;
+          })
+          : undefined
+      })
     }
   }
 
@@ -27,8 +45,18 @@ class Sales extends Component {
     history.push('/sales');
   };
 
+  search = (e, v) => {
+    if ((v || '') !== (this.state.search || '')) {
+      this.setState({
+        search: v
+      });
+    }
+  };
+
   render() {
     const { inventory, match } = this.props;
+    const { searchResults, search } = this.state;
+    let data = searchResults ? searchResults : inventory.sales || [];
     return (
       <div style={{
         flex: '1 1 auto',
@@ -39,9 +67,7 @@ class Sales extends Component {
         flexDirection: 'column'
       }}>
         <div style={{flex: '0 0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-          <Button>
-            search
-          </Button>
+          <FormInput input={{value:search, onChange:this.search}} placeholder='Search Sales' />
           <div>
             <Link to='/'>
               <Button>
@@ -56,8 +82,8 @@ class Sales extends Component {
               <Table
                 height={height}
                 rowHeight={32}
-                rowGetter={({ index }) => (inventory.sales || [])[index]}
-                rowCount={(inventory.sales || []).length || 0}
+                rowGetter={({ index }) => data[index]}
+                rowCount={data.length || 0}
                 headerHeight={32}
                 onRowClick={this.rowClick}
                 rowStyle={{cursor:'pointer'}}

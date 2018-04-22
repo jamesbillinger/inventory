@@ -67,6 +67,9 @@ module.exports = {
       shared: path.resolve(__dirname, '../shared'),
       files: path.resolve(__dirname, 'files'),
       components: path.resolve(__dirname, 'app/components'),
+      customers: path.resolve(__dirname, 'app/customers'),
+      inventory: path.resolve(__dirname, 'app/inventory'),
+      sales: path.resolve(__dirname, 'app/sales'),
     },
     modules: [
       path.resolve(__dirname, 'node_modules'),

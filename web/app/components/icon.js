@@ -15,6 +15,9 @@ export default class Icon extends Component {
     if (style && style.fontSize) {
       newIconStyle.fontSize = style.fontSize;
     }
+    if (style && style.cursor) {
+      newIconStyle.cursor = style.cursor;
+    }
     if (style && style.color) {
       newIconStyle.color = style.color;
     } else if (primary) {
@@ -26,7 +29,7 @@ export default class Icon extends Component {
     } else {
       newIconStyle.color = undefined;
     }
-    if (props.disabled || (!onClick && !to && !href)) {
+    if (props.disabled || (!newIconStyle.cursor && (!onClick && !to && !href))) {
       newIconStyle.cursor = 'default';
     }
     Object.assign(newIconStyle, iconStyle);
@@ -45,7 +48,6 @@ export default class Icon extends Component {
       newStyle.cursor = 'pointer';
     }
     Object.assign(newStyle, omit(style, 'fontSize'));
-
     let button = (
       <IconButton {...props} iconClassName={iconClassName} onClick={onClick} style={newStyle}
                   iconStyle={newIconStyle} tooltip={tooltip}>

@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
 import { reduxForm, Field, Fields, FieldArray } from 'redux-form';
-import FormDate from './formDate';
-import FormInput from './formInput';
-import FormSelect from './formSelect';
-import Button from './button';
-import Totals from "./posTotals";
-import POSItems from "./posItems";
+import FormDate from 'components/formDate';
+import FormInput from 'components/formInput';
+import FormSelect from 'components/formSelect';
+import Button from 'components/button';
 
-class SaleForm extends Component {
+class CustomerForm extends Component {
   state = {};
 
   submit = (data) => {
     const { actions, closeAction } = this.props;
     if (data._id) {
-      actions.updateSale(data, closeAction);
+      actions.updateCustomer(data, closeAction);
     } else {
-      actions.addSale(data, closeAction);
+      actions.addCustomer(data, closeAction);
     }
   };
 
@@ -31,16 +29,10 @@ class SaleForm extends Component {
     return (
       <div style={{display:'flex', flexDirection:'column', minHeight:'400px'}}>
         <div style={{display:'flex', flexWrap:'wrap', flex:'0 0 auto'}} >
-          <Field name='createdAt' component={FormDate} label='Sale Date' labelledTextMode={!mode} />
+          <Field name='createdAt' component={FormDate} label='Customer Date' labelledTextMode={!mode} />
           <Field name='createdBy' component={FormInput} label='Sold By' labelledTextMode={!mode} />
         </div>
         <Field name='customer' component={FormInput} label='Sold To' labelledTextMode={!mode} />
-        <div style={{flex:'1 0 auto', padding:'5px 10px', borderRadius:'6px', backgroundColor:'#f9f9f9'}}>
-          <FieldArray name='items' component={POSItems} labelledTextMode={true} />
-        </div>
-        <div style={{flex:'1 0 auto', paddingTop:'10px'}}>
-          <Fields names={['items','discount','total','taxRate']} component={Totals} labelledTextMode={true} />
-        </div>
         <div style={{display:'flex', alignItems:'center', justifyContent:'flex-end'}}>
           {mode && <Button primary={true} onClick={handleSubmit(this.submit)}>Submit</Button>}
           <Button secondary={true} onClick={closeAction}>{mode ? 'Cancel' : 'Close'}</Button>
@@ -51,5 +43,5 @@ class SaleForm extends Component {
 }
 
 export default reduxForm({
-  form: 'saleForm'
-})(SaleForm);
+  form: 'customerForm'
+})(CustomerForm);

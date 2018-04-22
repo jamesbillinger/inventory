@@ -6,12 +6,8 @@ let tracer = require('tracer');
 let bodyParser = require('body-parser');
 let async = require('async');
 
-let app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(express.static('../public'));
-app.use(express.static('files'));
 
+let app = express();
 
 global.logger = tracer.console();
 global.log = tracer.console().log;
@@ -43,6 +39,20 @@ if (process.env.NODE_ENV !== 'development') {
     colorize: true
   }));
 }
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+//app.use(express.static('../public'));
+let statics = express.static('../public');
+let excludedStatic = (path) => {
+  return (req, res, next) => {
+    if (/(\.html$|^\/$)/.test(req.path) === !!path) return statics(req, res, next);
+    return next();
+  };
+};
+app.use(excludedStatic());
+app.use(express.static('files'));
+
 
 let middleware = require('./middleware');
 let manifest = require(__dirname + '/files/dist/assets.json');
@@ -192,4 +202,4 @@ app.set('view engine', 'html');
 let router = express.Router();
 app.use(router);
 let server = app.listen(3000);
-console.log('Web Server started on port 3000');
+console.log('Web Server started on port 3000', process.env.NODE_ENV || 'production');

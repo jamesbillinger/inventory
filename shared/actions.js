@@ -262,7 +262,6 @@ export function fetchItems() {
     });
   }
 }
-
 export function addItem(item, callback) {
   return dispatch => {
     let newRef = firebaseRef.child('/items/').push();
@@ -273,33 +272,15 @@ export function addItem(item, callback) {
     callback && callback();
   }
 }
-
 export function updateItem(item, callback) {
   return dispatch => {
     firebaseRef.child('/items/' + item._id).set(item);
     callback && callback();
   }
 }
-
 export function deleteItem(id) {
   return dispatch => {
     firebaseRef.child('/items/' + id).remove();
-  }
-}
-
-export function submitSale(item, callback) {
-  return dispatch => {
-    if (item._id) {
-      firebaseRef.child('/sales/' + item._id).set(item);
-      callback && callback(undefined, item);
-    } else {
-      let newRef = firebaseRef.child('/sales/').push();
-      let newItem = Object.assign({}, item, {
-        _id:newRef.getKey()
-      });
-      newRef.set(newItem);
-      callback && callback(undefined, newItem);
-    }
   }
 }
 
@@ -321,9 +302,62 @@ export function fetchSales() {
     });
   }
 }
-
+export function submitSale(item, callback) {
+  return dispatch => {
+    if (item._id) {
+      firebaseRef.child('/sales/' + item._id).set(item);
+      callback && callback(undefined, item);
+    } else {
+      let newRef = firebaseRef.child('/sales/').push();
+      let newItem = Object.assign({}, item, {
+        _id:newRef.getKey()
+      });
+      newRef.set(newItem);
+      callback && callback(undefined, newItem);
+    }
+  }
+}
 export function deleteSale(id) {
   return dispatch => {
     firebaseRef.child('/sales/' + id).remove();
+  }
+}
+
+export function fetchCustomers() {
+  return dispatch => {
+    var ref = firebaseDB.ref('customers/');
+    ref.on('value', (snap) => {
+      let items = [];
+      snap.forEach((child) => {
+        items.push({
+          _id: child.key,
+          ...child.val()
+        });
+      });
+      dispatch({
+        type: 'FETCH_CUSTOMERS',
+        items
+      });
+    });
+  }
+}
+export function submitCustomer(item, callback) {
+  return dispatch => {
+    if (item._id) {
+      firebaseRef.child('/customers/' + item._id).set(item);
+      callback && callback(undefined, item);
+    } else {
+      let newRef = firebaseRef.child('/customers/').push();
+      let newItem = Object.assign({}, item, {
+        _id:newRef.getKey()
+      });
+      newRef.set(newItem);
+      callback && callback(undefined, newItem);
+    }
+  }
+}
+export function deleteCustomer(id) {
+  return dispatch => {
+    firebaseRef.child('/customers/' + id).remove();
   }
 }
