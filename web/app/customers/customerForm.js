@@ -6,7 +6,9 @@ import FormSelect from 'components/formSelect';
 import Button from 'components/button';
 
 class CustomerForm extends Component {
-  state = {};
+  state = {
+    mode:'edit'
+  };
 
   submit = (data) => {
     const { actions, closeAction } = this.props;
@@ -30,7 +32,8 @@ class CustomerForm extends Component {
       <div style={{display:'flex', flexDirection:'column', minHeight:'400px'}}>
         <div style={{display:'flex', flexWrap:'wrap', flex:'0 0 auto'}} >
           <Field name='createdAt' component={FormDate} label='Customer Date' labelledTextMode={!mode} />
-          <Field name='createdBy' component={FormInput} label='Sold By' labelledTextMode={!mode} />
+          <Field name='name' component={FormInput} label='Name' labelledTextMode={!mode} />
+          <Field name='phone' component={FormInput} label='Phone' labelledTextMode={!mode} />
         </div>
         <Field name='customer' component={FormInput} label='Sold To' labelledTextMode={!mode} />
         <div style={{display:'flex', alignItems:'center', justifyContent:'flex-end'}}>

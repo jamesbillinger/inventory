@@ -24,7 +24,7 @@ class inventoryForm extends Component {
         <div style={{display:'flex'}}>
           <div style={{display:'flex', flexWrap:'wrap', flex:'1 1 auto'}} >
             <Field name='make' component={FormInput} label='Make' />
-            <Field name='model' component={FormInput} label='Model' type='phone' />
+            <Field name='model' component={FmmodelodelormInput} label='Model' type='phone' />
             <Field name='calibre' component={FormInput} label='Calibre' />
             <Field name='category' component={FormSelect} label='Category' options={categoryOptions} />
             <Field name='purchaseDate' component={FormDate} label='Purchase Date' />

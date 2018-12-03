@@ -62,10 +62,8 @@ class Customers extends Component {
                 onRowClick={this.rowClick}
                 rowStyle={{cursor:'pointer'}}
                 width={width}>
-                <Column label='Date' dataKey='createdAt' flexGrow={1} width={40}
-                        cellRenderer={({cellData}) => <div>{cellData && moment(cellData).format('M/D/YY h:mm a')}</div>} />
-                <Column label='Total' dataKey='total' flexGrow={1} width={80} />
-                <Column label='Tax Rate' dataKey='taxRate' flexGrow={1} width={80} />
+                <Column label='Name' dataKey='name' flexGrow={0} width={200}/>
+                <Column label='Phone' dataKey='phone' flexGrow={1} width={80} />
               </Table>
             )}
           </AutoSizer>
