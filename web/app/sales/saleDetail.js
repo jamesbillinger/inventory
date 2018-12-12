@@ -21,6 +21,7 @@ class SaleDetail extends Component {
   render() {
     const { inventory, actions, saleID, close } = this.props;
     let item = find((inventory.sales || []), {_id: saleID});
+    console.log(item)
     return (
       <div>
         <div style={{position:'absolute', top:'23px', right:'30px'}}>

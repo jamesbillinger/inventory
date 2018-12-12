@@ -29,6 +29,7 @@ class Customers extends Component {
 
   render() {
     const { inventory, match } = this.props;
+    console.log(inventory.customers)
     return (
       <div style={{
         flex: '1 1 auto',

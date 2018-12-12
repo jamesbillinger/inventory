@@ -283,6 +283,27 @@ export function deleteItem(id) {
     firebaseRef.child('/items/' + id).remove();
   }
 }
+export function addCustomer(customer, callback) {
+  return dispatch => {
+    let newRef = firebaseRef.child('/customers/').push();
+    newRef.set({
+      _id: newRef.getKey(),
+      ...customer
+    });
+    callback && callback();
+  }
+}
+export function updateCustomer(customer, callback) {
+  return dispatch => {
+    firebaseRef.child('/customers/' + customer._id).set(customer);
+    callback && callback();
+  }
+}
+export function deleteCustomer(id) {
+  return dispatch => {
+    firebaseRef.child('/customers/' + id).remove();
+  }
+}
 
 export function fetchSales() {
   return dispatch => {
@@ -339,25 +360,5 @@ export function fetchCustomers() {
         items
       });
     });
-  }
-}
-export function submitCustomer(item, callback) {
-  return dispatch => {
-    if (item._id) {
-      firebaseRef.child('/customers/' + item._id).set(item);
-      callback && callback(undefined, item);
-    } else {
-      let newRef = firebaseRef.child('/customers/').push();
-      let newItem = Object.assign({}, item, {
-        _id:newRef.getKey()
-      });
-      newRef.set(newItem);
-      callback && callback(undefined, newItem);
-    }
-  }
-}
-export function deleteCustomer(id) {
-  return dispatch => {
-    firebaseRef.child('/customers/' + id).remove();
   }
 }

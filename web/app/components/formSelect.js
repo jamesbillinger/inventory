@@ -47,14 +47,14 @@ export default class FormSelect extends Component {
     input.onFocus && input.onFocus();
   };
 
-  onBlur = () => {
+  onBlur = (e) => {
     const { input } = this.props;
     if (this.state.focused) {
       this.setState({
         focused: false
       });
     }
-    input.onBlur && input.onBlur();
+    //input.onBlur && input.onBlur(e);
   };
 
   render() {
@@ -100,7 +100,8 @@ export default class FormSelect extends Component {
           <div style={(hasValue || focused) ? activeLabelStyle : inactiveLabelStyle} onClick={this.focus}>{label}</div>
         }
         <Select ref={k => this._field = k}
-                styles={styles} onFocus={this.onFocus} onBlur={this.onBlur} onChange={this.onChange}
+                value={input.value}
+                styles={styles} onFocus={this.onFocus} onBlur={this.onBlur} onChange={input.onChange}
                 placeholder={placeholder || ''} {...props} />
         {!hideLine &&
           <hr style={{border:'none', borderBottom:'solid 1px', borderColor:'#b6b6b6', bottom:'8px',

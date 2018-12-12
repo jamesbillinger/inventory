@@ -9,3 +9,11 @@ to push to fb:
 - npm run build
 - cd ../
 - firebase deploy
+
+
+Todo:
+    remove items on sale
+    add customers to sales
+    click customer to see history?
+    build reports
+        EOD

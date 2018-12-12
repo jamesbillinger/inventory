@@ -63,12 +63,15 @@ class Payments extends Component {
   };
 
   componentDidMount() {
-    const { items, taxRate, discount } = this.props;
+    const { items, taxRate, discount, actions, customers } = this.props;
     this.setState({
       total: parseFloat((((items.input.value || []).reduce((a, b) => {
         return a + parseFloat(b.totalPrice || 0);
       }, 0) - (discount.input.value || 0)) * (1 + taxRate.input.value)).toFixed(2))
     });
+    if (!customers) {
+      actions.fetchCustomers();
+    }
   }
 
   addPayment(method) {
@@ -88,6 +91,7 @@ class Payments extends Component {
 
   submit = (data) => {
     const { actions, onSubmit, user } = this.props;
+    console.log(data)
     actions.submitSale(Object.assign({}, data, {
       createdAt: moment().valueOf(),
       updatedAt: moment().valueOf(),
@@ -104,19 +108,23 @@ class Payments extends Component {
   };
 
   render() {
-    const { payments, taxRate, items, close, handleSubmit, submitting } = this.props;
+    const { payments, taxRate, items, close, handleSubmit, submitting, customers } = this.props;
     const { total } = this.state;
     let paid = (payments.input.value || []).reduce((a, b) => {
       return a + parseFloat(b.value || 0);
     }, 0);
     let valid = paid === total;
+    let customerOptions = (customers || []).map((c) => ({
+      value: c._id,
+      label: c.name
+    }))
     return (
       <div style={{display:'flex', flexDirection:'column', justifyContent:'space-between', height:'80vh', width:'100%'}}>
         <div style={{flex:'0 0 auto', backgroundColor:'#f2f2f2', borderRadius:'6px', padding:'10px', position:'relative', marginTop:'20px'}}>
           <div style={{position:'absolute', top:'-20px', left:'10px', fontSize:'16px', color:'#999', fontWeight:'bold'}}>
             Customer
           </div>
-          <Field name='customer' component={FormSelect} options={[]} label='Customer' allowCreate={true} />
+          <Field name='customer' component={FormSelect} options={customerOptions} label='Customer' allowCreate={true} />
         </div>
         <div style={{flex:'0 0 auto', backgroundColor:'#f2f2f2', borderRadius:'6px', padding:'10px', position:'relative'}}>
           <div style={{position:'absolute', top:'-20px', left:'10px', fontSize:'16px', color:'#999', fontWeight:'bold'}}>
@@ -165,7 +173,8 @@ class Payments extends Component {
 }
 export default connect(
   (state) => ({
-    user: state.inventory.user
+    user: state.inventory.user,
+    customers: state.inventory.customers
   }), (dispatch) => ({
     actions: bindActionCreators({...InventoryActions}, dispatch)
   })
