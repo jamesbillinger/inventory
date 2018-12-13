@@ -1,118 +1,455 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
-
-const activeLabelStyle = {
-  position: 'absolute',
-  lineHeight: '22px',
-  bottom:'11px',
-  left:'0px',
-  transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
-  zIndex: '1',
-  cursor: 'text',
-  transform: 'perspective(1px) scale(0.75) translate3d(2px, -28px, 0)',
-  transformOrigin: 'left top',
-  pointerEvents: 'none',
-  userSelect: 'none',
-  color: 'rgba(33,33,33,0.5)'
-};
-
-const inactiveLabelStyle = {
-  position: 'absolute',
-  lineHeight: '22px',
-  bottom:'11px',
-  left:'0px',
-  transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
-  zIndex: '1',
-  cursor: 'text',
-  transform: 'scale(1) translate3d(0px, 0px, 0px)',
-  transformOrigin: 'left top 0px',
-  pointerEvents: 'auto',
-  color: 'rgba(0, 0, 0, 0.298039)'
-};
+import * as Animated from 'react-select/lib/animated';
+import Async from 'react-select/lib/Async';
+import Creatable from 'react-select/lib/Creatable';
+import AsyncCreatable from 'react-select/lib/AsyncCreatable';
+import LabelledText from 'components/labelledText';
+import api from 'globals/api';
+import find from 'lodash/find';
+import isEqual from 'lodash/isEqual';
+import omit from 'lodash/omit';
 
 export default class FormSelect extends Component {
-  state = {};
+  state = {
+    labelCache: {}
+  };
+  _labelCache = {};
+  _mounted = true;
+
+  componentDidMount() {
+    const { loadOptions, loadOptionsPath, input, options } = this.props;
+    if (loadOptions || loadOptionsPath) {
+      this.populateValues();
+      this.callLoadOptions('', (ret) => {
+        if (this._mounted) {
+          this.setState({defaultOptions:ret});
+        }
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { input, loadOptions, loadOptionsPath } = this.props;
+    if (!isEqual(input.value, prevProps.input.value)) {
+      if (this._changed) {
+        this._changed = false;
+      } else if (loadOptions || loadOptionsPath) {
+        this.populateValues();
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    this._mounted = false;
+  }
+
+  handleLoadReturn = (ret) => {
+    if (this._mounted) {
+      (ret || []).map((r) => {
+        this._labelCache[r.value] = r.label;
+      });
+      this.setState({
+        labelCache:this._labelCache
+      });
+    }
+  };
+
+  populateValues() {
+    const { loadOptions, loadOptionsPath, input, options, multi } = this.props;
+    if (multi) {
+      if ((input.value || []).length > 0) {
+        if (loadOptions) {
+          loadOptions(null, input.value, this.handleLoadReturn);
+        } else if (loadOptionsPath) {
+          this.defaultLoadOptions(null, input.value, this.handleLoadReturn);
+        }
+      }
+    } else if (input.value) {
+      if (loadOptions || loadOptionsPath) {
+        if (loadOptions) {
+          loadOptions(null, [input.value], this.handleLoadReturn);
+        } else if (loadOptionsPath) {
+          this.defaultLoadOptions(null, [input.value], this.handleLoadReturn);
+        }
+      }
+    }
+  }
+
+  callLoadOptions = (input, callback) => {
+    const { loadOptions } = this.props;
+    if (loadOptions) {
+      loadOptions(input, null, (ret) => {
+        this.handleLoadReturn(ret);
+        callback(ret);
+      });
+    } else {
+      this.defaultLoadOptions(input, null, (ret) => {
+        this.handleLoadReturn(ret);
+        callback(ret);
+      });
+    }
+  };
+
+  defaultLoadOptions(input, value, callback) {
+    const { loadOptionsPath, loadOptionsField, allowCreate, addText = 'Add' } = this.props;
+    let body = {
+      search: input ? input.toLowerCase() : ''
+    };
+    if (!input && value) {
+      body = {
+        values: Array.isArray(value) ? value : [value]
+      }
+    }
+    if (loadOptionsField) {
+      body.field = loadOptionsField;
+    }
+    api.post(loadOptionsPath, body, (err, data) => {
+      if (err) {
+        console.log(err);
+        callback([]);
+      } else {
+        let newOptions = data || [];
+        this._options = newOptions;
+        callback(newOptions);
+      }
+    });
+  }
 
   focus = () => {
     this._field && this._field.focus();
   };
 
-  onFocus = () => {
+  onFocus = (e) => {
     const { input } = this.props;
     if (!this.state.focused) {
       this.setState({
         focused: true
       });
+      if (input.onFocus) {
+        input.onFocus(e);
+      }
     }
-    input.onFocus && input.onFocus();
   };
 
-  onBlur = (e) => {
+  onBlur = (e, e2, e3) => {
     const { input } = this.props;
     if (this.state.focused) {
       this.setState({
-        focused: false
+        focused: false,
+        highlightedIndex: undefined
       });
+      if (input.onBlur) {
+        input.onBlur();
+      }
     }
-    //input.onBlur && input.onBlur(e);
+  };
+
+  onChange = (val) => {
+    const { input, multi } = this.props;
+    this._changed = true;
+    if (input.onChange) {
+      if (multi) {
+        input.onChange((val || []).map((v) => typeof v === 'object' ? v.value : v));
+      } else {
+        input.onChange((val && typeof val === 'object') ? val.value : val);
+      }
+    }
+  };
+
+  onCreateOption = (val) => {
+    const { input, multi } = this.props;
+    if (!this._labelCache[val]) {
+      this._labelCache[val] = val;
+    }
+    this.setState({
+      labelCache: this._labelCache
+    });
+    if (multi) {
+      input.onChange([
+        ...(input.value || []).slice(),
+        val
+      ]);
+    } else {
+      input.onChange(val);
+    }
+  };
+
+  getOptionLabel = (option) => {
+    return typeof option === 'object' ? option.label : option;
+  };
+
+  getOptionValue = (option) => {
+    return typeof option === 'object' ? option.value : option;
   };
 
   render() {
-    const { style, input, meta, label, hideLine, placeholder, ...props } = this.props;
-    const { focused } = this.state;
-    let newStyle = Object.assign({
-      position: 'relative',
-      width: '256px',
-      margin: '10px 10px 0 10px',
-      paddingBottom:'5px'
-    }, style);
-    if (props.disabled) {
-      newStyle.color = 'rgba(0,0,0,0.3)';
-    }
-    if (props.multiple) {
-      newStyle.width = '80%';
-    }
-    let hasValue = true;
-    if (input.value === '' || input.value === null || typeof input.value === 'undefined' || input.value === []) {
-      hasValue = false;
-    }
-    let styles = {
-      control: (base) => ({
-        ...base,
-        color:'transparent',
-        border:'none',
-        borderWidth:'0',
-        background:'none',
-        boxShadow:'none'
-      }),
-      container: (base) => ({
-        ...base
-      }),
-      indicatorSeparator: (base) => ({}),
-      valueContainer: (base) => ({
-        ...base,
-        paddingLeft:'0'
-      })
-    };
-    return (
-      <div style={newStyle}>
-        {label &&
-          <div style={(hasValue || focused) ? activeLabelStyle : inactiveLabelStyle} onClick={this.focus}>{label}</div>
+    const {
+      options,
+      label,
+      disabled,
+      input,
+      meta,
+      labelledTextMode,
+      style,
+      labelStyle,
+      optionStyle,
+      inputStyle,
+      controlStyle,
+      placeholder,
+      loadOptionsPath,
+      loadOptions,
+      multi,
+      clearable,
+      components,
+      getOptionLabel,
+      getOptionValue,
+      singleValueStyle,
+      menuPlacement,
+      allowCreate,
+      placeholderStyle,
+      menuStyle,
+      dropDownIndicatorStyle,
+      short
+    } = this.props;
+    const { focused, labelCache, defaultOptions } = this.state;
+    const { name, value, onFocus, onBlur, onChange, ...inputProps } = input || {};
+    const { touched, error } = meta || {};
+    if (labelledTextMode) {
+      return (
+        <LabelledText label={label} style={omit(style || {}, ['width', 'height'])}>
+          {input.value}
+        </LabelledText>
+      );
+    } else {
+      let myValue = null;
+      if (multi) {
+        if (loadOptions || loadOptionsPath) {
+          myValue = [];
+          (value || []).map((v) => {
+            if (labelCache.hasOwnProperty(v)) {
+              myValue.push({
+                value: v,
+                label: labelCache[v] || ''
+              });
+            }
+          });
+        } else {
+          myValue = (value || []).map((v) => ({
+            value: v,
+            label: (find(options || [], {value:v}) || {}).label || v
+          }));
         }
-        <Select ref={k => this._field = k}
-                value={input.value}
-                styles={styles} onFocus={this.onFocus} onBlur={this.onBlur} onChange={input.onChange}
-                placeholder={placeholder || ''} {...props} />
-        {!hideLine &&
-          <hr style={{border:'none', borderBottom:'solid 1px', borderColor:'#b6b6b6', bottom:'8px',
-                      boxSizing:'content-box', margin:'0px', position:'absolute', width:'100%'}}/>
+      } else if (typeof value !== 'undefined') {
+        if (loadOptions || loadOptionsPath) {
+          if (labelCache.hasOwnProperty(value)) {
+            myValue = {
+              value,
+              label:labelCache[value] || value
+            };
+          }
+        } else {
+          let opt = find(options || [], {value});
+          myValue = {
+            value,
+            label:opt ? opt.label : value
+          };
         }
-        {!hideLine &&
-          <hr style={{borderStyle:'none none solid', borderBottomWidth:'2px', borderColor:'rgb(158, 158, 158)',
-                      bottom:'8px', boxSizing:'content-box', margin:'0px', position:'absolute', width:'100%',
-                      transform:focused ? 'scaleX(1)' : 'scaleX(0)', transition:'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms'}}/>
+      }
+      let myInputStyle = {
+        fontSize: '1rem',
+        lineHeight: short ? '1' : '1.25',
+        color: '#464a4c'
+      };
+      if (short) {
+        myInputStyle.margin = '0';
+        myInputStyle.paddingTop = '0';
+        myInputStyle.paddingBottom = '0';
+      }
+      Object.assign(myInputStyle, inputStyle);
+      let styles = {
+        control: (base) =>
+          Object.assign(
+            {},
+            base,
+            {
+              color: '#464a4c',
+              backgroundColor: '#fff',
+              border: '1px solid rgba(0, 0, 0, 0.15)',
+              borderRadius: '3px',
+              transition: 'border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s',
+              boxSizing: 'border-box',
+              minHeight: 'unset'
+            },
+            controlStyle
+          ),
+        input: (base) =>
+          Object.assign(
+            {},
+            base,
+            myInputStyle
+          ),
+        dropdownIndicator: (base) => ({
+          ...base,
+          padding: short ? '0 8px' : '2px 8px',
+          ...(dropDownIndicatorStyle || {})
+        }),
+        clearIndicator: (base) => ({
+          ...base,
+          padding:short ? '0 8px' : '2px 8px'
+        }),
+        menu: (base) => ({
+          ...base,
+          zIndex: '5',
+          ...(menuStyle || {})
+        }),
+        placeholder: (base) => Object.assign({}, base, placeholderStyle)
+        //list here https://github.com/JedWatson/react-select/blob/v2/src/styles.js
+      };
+      if (short) {
+        styles.valueContainer = (base) => Object.assign({}, base, {
+          padding:'0 8px'
+        });
+      }
+      if (optionStyle) {
+        styles.option = (base) => ({
+          ...base,
+          ...optionStyle
+        });
+      }
+      if (singleValueStyle) {
+        styles.singleValue = (base) => ({
+          ...base,
+          ...singleValueStyle
+        });
+      }
+      let newStyle = {
+        margin: '15px 0 0 10px',
+        fontWeight: 'normal',
+        width: multi ? 'calc(100% - 10px)' : '200px'
+      };
+      Object.assign(newStyle, style);
+      let newLabelStyle = {
+        display: 'block',
+        marginBottom: '0.5em',
+        fontWeight: 'bold',
+        fontSize: '0.8rem',
+        lineHeight: '1rem'
+      };
+      Object.assign(newLabelStyle, labelStyle);
+      let selectControl;
+      if (loadOptionsPath || loadOptions) {
+        if (allowCreate) {
+          selectControl = (
+            <AsyncCreatable
+              id={name || 'FormSelect'}
+              ref={(c) => (this._field = c)}
+              loadOptions={this.callLoadOptions}
+              components={components || Animated}
+              placeholder={placeholder || label}
+              styles={styles}
+              cacheOptions={true}
+              isClearable={clearable}
+              isMulti={multi}
+              menuPlacement={menuPlacement}
+              getOptionLabel={getOptionLabel || this.getOptionLabel}
+              getOptionValue={getOptionValue || this.getOptionValue}
+              value={myValue}
+              onFocus={this.onFocus}
+              onBlur={this.onBlur}
+              onChange={this.onChange}
+              onCreateOption={this.onCreateOption}
+              defaultOptions={defaultOptions}
+              {...inputProps}
+            />
+          );
+        } else {
+          selectControl = (
+            <Async
+              id={name || 'FormSelect'}
+              ref={(c) => (this._field = c)}
+              loadOptions={this.callLoadOptions}
+              components={components || Animated}
+              placeholder={placeholder || label}
+              styles={styles}
+              cacheOptions={true}
+              isClearable={clearable}
+              isMulti={multi}
+              menuPlacement={menuPlacement}
+              getOptionLabel={getOptionLabel || this.getOptionLabel}
+              getOptionValue={getOptionValue || this.getOptionValue}
+              value={myValue}
+              onFocus={this.onFocus}
+              onBlur={this.onBlur}
+              onChange={this.onChange}
+              defaultOptions={defaultOptions}
+              {...inputProps}
+            />
+          );
         }
-      </div>
-    );
+      } else if (allowCreate) {
+        selectControl = (
+          <Creatable
+            id={name || 'FormSelect'}
+            style={{ minHeight: 'unset' }}
+            ref={(c) => (this._field = c)}
+            options={options || []}
+            isMulti={multi}
+            components={components || Animated}
+            isClearable={clearable}
+            placeholder={placeholder || label}
+            styles={styles}
+            menuPlacement={menuPlacement}
+            getOptionLabel={getOptionLabel || this.getOptionLabel}
+            getOptionValue={getOptionValue || this.getOptionValue}
+            value={myValue}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            onChange={this.onChange}
+            {...inputProps}
+          />
+        );
+      } else {
+        selectControl = (
+          <Select
+            id={name || 'FormSelect'}
+            style={{ minHeight: 'unset' }}
+            ref={(c) => (this._field = c)}
+            options={options || []}
+            isMulti={multi}
+            components={components || Animated}
+            isClearable={clearable}
+            placeholder={placeholder || label}
+            styles={styles}
+            menuPlacement={menuPlacement}
+            getOptionLabel={getOptionLabel || this.getOptionLabel}
+            getOptionValue={getOptionValue || this.getOptionValue}
+            value={myValue}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            onChange={this.onChange}
+            {...inputProps}
+          />
+        );
+      }
+      return (
+        <div style={newStyle}>
+          {label && (
+            <label htmlFor={name || 'FormSelect'} style={newLabelStyle} onClick={this.focus}>
+              {label}
+            </label>
+          )}
+          {selectControl}
+          {touched &&
+            error && (
+              <div
+                style={{ color: 'red', fontSize: '13px', whiteSpace: 'nowrap', marginTop: '3px' }}
+                onClick={this.focus}>
+                {error}
+              </div>
+            )}
+        </div>
+      );
+    }
   }
 }
