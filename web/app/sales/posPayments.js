@@ -124,7 +124,7 @@ class Payments extends Component {
           <div style={{position:'absolute', top:'-20px', left:'10px', fontSize:'16px', color:'#999', fontWeight:'bold'}}>
             Customer
           </div>
-          <Field name='customer' component={FormSelect} options={customerOptions} label='Customer' allowCreate={true} />
+          <Field name='customer' component={FormSelect} options={customerOptions} label='Customer' />
         </div>
         <div style={{flex:'0 0 auto', backgroundColor:'#f2f2f2', borderRadius:'6px', padding:'10px', position:'relative'}}>
           <div style={{position:'absolute', top:'-20px', left:'10px', fontSize:'16px', color:'#999', fontWeight:'bold'}}>

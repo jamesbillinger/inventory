@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
-import * as Animated from 'react-select/lib/animated';
+import makeAnimated from 'react-select/lib/animated';
 import Async from 'react-select/lib/Async';
 import Creatable from 'react-select/lib/Creatable';
 import AsyncCreatable from 'react-select/lib/AsyncCreatable';
 import LabelledText from 'components/labelledText';
-import api from 'globals/api';
+//import api from 'globals/api';
 import find from 'lodash/find';
 import isEqual from 'lodash/isEqual';
 import omit from 'lodash/omit';
@@ -345,7 +345,7 @@ export default class FormSelect extends Component {
               id={name || 'FormSelect'}
               ref={(c) => (this._field = c)}
               loadOptions={this.callLoadOptions}
-              components={components || Animated}
+              components={components || makeAnimated()}
               placeholder={placeholder || label}
               styles={styles}
               cacheOptions={true}
@@ -369,7 +369,7 @@ export default class FormSelect extends Component {
               id={name || 'FormSelect'}
               ref={(c) => (this._field = c)}
               loadOptions={this.callLoadOptions}
-              components={components || Animated}
+              components={components || makeAnimated()}
               placeholder={placeholder || label}
               styles={styles}
               cacheOptions={true}
@@ -395,7 +395,7 @@ export default class FormSelect extends Component {
             ref={(c) => (this._field = c)}
             options={options || []}
             isMulti={multi}
-            components={components || Animated}
+            components={components || makeAnimated()}
             isClearable={clearable}
             placeholder={placeholder || label}
             styles={styles}
@@ -417,7 +417,7 @@ export default class FormSelect extends Component {
             ref={(c) => (this._field = c)}
             options={options || []}
             isMulti={multi}
-            components={components || Animated}
+            //components={components || makeAnimated()}
             isClearable={clearable}
             placeholder={placeholder || label}
             styles={styles}
