@@ -414,7 +414,7 @@ export default class FormSelect extends Component {
           <Select
             id={name || 'FormSelect'}
             style={{ minHeight: 'unset' }}
-            ref={(c) => (this._field = c)}
+            //ref={(c) => (this._field = c)}
             options={options || []}
             isMulti={multi}
             //components={components || makeAnimated()}

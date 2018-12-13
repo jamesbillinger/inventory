@@ -92,6 +92,7 @@ class Sales extends Component {
                         cellRenderer={({cellData}) => <div>{cellData && moment(cellData).format('M/D/YY h:mm a')}</div>} />
                 <Column label='Total' dataKey='total' flexGrow={1} width={80} />
                 <Column label='Tax Rate' dataKey='taxRate' flexGrow={1} width={80} />
+                <Column label='Customer' dataKey='customer' flexGrow={1} width={80} />
               </Table>
             )}
           </AutoSizer>

@@ -18,6 +18,7 @@ Todo:
     click customer to see history?
     fix sell button on inventory details screen
     categories dropdown in inventory details not working
+    first entry press enter to select on search
     build reports
         EOD
         purchases by customer
