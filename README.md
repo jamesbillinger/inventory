@@ -12,8 +12,17 @@ to push to fb:
 
 
 Todo:
-    remove items on sale
+    remove items on sale/inventory quantity
     add customers to sales
+    new customers from sale screen (like new inventory item from helpdesk ticket)
     click customer to see history?
+    fix sell button on inventory details screen
+    categories dropdown in inventory details not working
     build reports
         EOD
+        purchases by customer
+        filters on type sold etc
+    Stock low notifications
+    percent discount
+    barcode printing
+
