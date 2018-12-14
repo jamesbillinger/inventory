@@ -13,11 +13,11 @@ to push to fb:
 
 Todo:
     remove items on sale/inventory quantity
-    add customers to sales
+    *add customers to sales
     new customers from sale screen (like new inventory item from helpdesk ticket)
     click customer to see history?
     fix sell button on inventory details screen
-    categories dropdown in inventory details not working
+    *categories dropdown in inventory details not working
     first entry press enter to select on search
     build reports
         EOD
@@ -26,4 +26,8 @@ Todo:
     Stock low notifications
     percent discount
     barcode printing
+    receipt print
+    cash drawer open?
+    mobile
 
+questions for Jim:

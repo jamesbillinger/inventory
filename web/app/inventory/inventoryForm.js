@@ -44,7 +44,7 @@ class inventoryForm extends Component {
         <div style={{display:'flex', alignItems:'center', justifyContent:'flex-end'}}>
           <RaisedButton primary={true} onClick={handleSubmit(this.submit)}>Submit</RaisedButton>
           <RaisedButton secondary={true} onClick={closeAction}>Cancel</RaisedButton>
-          <RaisedButton label={'Sell'} />
+          <RaisedButton label={'Sell'} onClick={{}} />
         </div>
       </div>
     )
