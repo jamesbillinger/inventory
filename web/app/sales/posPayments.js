@@ -16,6 +16,8 @@ import FormInput from "components/formInput";
 import FormSelect from "components/formSelect";
 import moment from "moment";
 import Button from "components/button";
+import find from 'lodash/find'
+import async from 'async'
 
 class Payment extends Component {
   render() {
@@ -127,7 +129,7 @@ class Payments extends Component {
   }
 
   submit = data => {
-    const { actions, onSubmit, user } = this.props;
+    const { actions, onSubmit, user, inventoryItems } = this.props;
     console.log(data);
     actions.submitSale(
       Object.assign({}, data, {
@@ -141,7 +143,21 @@ class Payments extends Component {
           console.log(err);
           throw new SubmissionError(err);
         } else {
-          onSubmit(r);
+          async.each(
+            data.items,
+            (saleItem, callback) => {
+              let inventoryItem = find(inventoryItems, { _id: saleItem.item });
+              let newQuantity = inventoryItem.quantity - saleItem.quantity;
+              actions.updateItem(Object.assign({}, inventoryItem, {
+                quantity: newQuantity
+              }), () => {
+                callback()
+              })
+            },
+            () => {
+              onSubmit(r);
+            }
+          );
         }
       }
     );
@@ -325,7 +341,8 @@ class Payments extends Component {
 export default connect(
   state => ({
     user: state.inventory.user,
-    customers: state.inventory.customers
+    customers: state.inventory.customers,
+    inventoryItems: state.inventory.items
   }),
   dispatch => ({
     actions: bindActionCreators({ ...InventoryActions }, dispatch)
