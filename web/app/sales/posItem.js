@@ -61,7 +61,7 @@ class _POSItem extends Component {
                onClick={selectItem ? selectItem.bind(this, fullItem._id) : null}>
             <LabelledText label='Make'>{fullItem.make}</LabelledText>
             <LabelledText label='Model'>{fullItem.model}</LabelledText>
-            <LabelledText label='Qty On Hand'>{fullItem.qty}</LabelledText>
+            <LabelledText label='Qty On Hand'>{fullItem.quantity}</LabelledText>
           </div>
           <FormInput type='currency' label='Price (ea)' style={{width:'100px'}} labelledTextMode={labelledTextMode}
                      input={{value:price.input.value, onChange:this.priceChange}} meta={price.meta} />
