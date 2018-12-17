@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as InventoryActions from 'shared/actions';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import Main from './main';
-import Register from './register';
-import Login from './login';
-import firebase from 'firebase';
+import React, { Component } from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as InventoryActions from "shared/actions";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import Main from "./main";
+import Register from "./register";
+import Login from "./login";
+import firebase from "firebase";
 
 class Wrapper extends Component {
   componentWillMount() {
@@ -19,25 +19,30 @@ class Wrapper extends Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path='/register' component={Register} />
-          <Route path='/login' render={(props) => {
-            if (!initialLoadComplete) {
-              return <div />;
-            } else if (user) {
-              return <Redirect to='/' />;
-            } else {
-              return <Login {...props} />;
-            }
-          }} />
-          <Route render={() => {
-            if (!initialLoadComplete) {
-              return <div/>;
-            } else if (user) {
-              return <Main />;
-            } else {
-              return <Redirect to='/login' />;
-            }
-          }} />
+          <Route path="/register" component={Register} />
+          <Route
+            path="/login"
+            render={props => {
+              if (!initialLoadComplete) {
+                return <div />;
+              } else if (user) {
+                return <Redirect to="/" />;
+              } else {
+                return <Login {...props} />;
+              }
+            }}
+          />
+          <Route
+            render={() => {
+              if (!initialLoadComplete) {
+                return <div />;
+              } else if (user) {
+                return <Main />;
+              } else {
+                return <Redirect to="/login" />;
+              }
+            }}
+          />
         </Switch>
       </BrowserRouter>
     );
@@ -45,11 +50,11 @@ class Wrapper extends Component {
 }
 
 export default connect(
-  (state) => ({
+  state => ({
     initialLoadComplete: state.inventory.initialLoadComplete,
     user: state.inventory.user
   }),
-  (dispatch) => ({
-    actions: bindActionCreators({...InventoryActions}, dispatch)
+  dispatch => ({
+    actions: bindActionCreators({ ...InventoryActions }, dispatch)
   })
 )(Wrapper);

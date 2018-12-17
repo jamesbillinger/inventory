@@ -13,11 +13,11 @@ import LabelledText from "components/labelledText";
 import FatButton from "components/fatButton";
 import Icon from "components/icon";
 import FormInput from "components/formInput";
-import FormSelect from "components/formSelect";
+import FormCustomer from "customers/formCustomer";
 import moment from "moment";
 import Button from "components/button";
-import find from 'lodash/find'
-import async from 'async'
+import find from "lodash/find";
+import async from "async";
 
 class Payment extends Component {
   render() {
@@ -148,11 +148,14 @@ class Payments extends Component {
             (saleItem, callback) => {
               let inventoryItem = find(inventoryItems, { _id: saleItem.item });
               let newQuantity = inventoryItem.quantity - saleItem.quantity;
-              actions.updateItem(Object.assign({}, inventoryItem, {
-                quantity: newQuantity
-              }), () => {
-                callback()
-              })
+              actions.updateItem(
+                Object.assign({}, inventoryItem, {
+                  quantity: newQuantity
+                }),
+                () => {
+                  callback();
+                }
+              );
             },
             () => {
               onSubmit(r);
@@ -178,10 +181,6 @@ class Payments extends Component {
       return a + parseFloat(b.value || 0);
     }, 0);
     let valid = paid === total;
-    let customerOptions = (customers || []).map(c => ({
-      value: c._id,
-      label: c.name
-    }));
     return (
       <div
         style={{
@@ -216,8 +215,8 @@ class Payments extends Component {
           </div>
           <Field
             name="customer"
-            component={FormSelect}
-            options={customerOptions}
+            component={FormCustomer}
+            allowCreate={true}
             label="Customer"
           />
         </div>

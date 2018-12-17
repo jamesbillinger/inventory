@@ -1,8 +1,8 @@
 /**
  * Created by jamesbillinger on 4/18/17.
  */
-import React, { Component } from 'react';
-import FlatButton from 'material-ui/FlatButton';
+import React, { Component } from "react";
+import FlatButton from "material-ui/FlatButton";
 
 export default class Button extends Component {
   render() {

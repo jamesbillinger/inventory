@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import SaleForm from './saleForm';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import * as Actions from 'shared/actions';
-import find from 'lodash/find';
-import Icon from 'components/icon';
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import SaleForm from "./saleForm";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import * as Actions from "shared/actions";
+import find from "lodash/find";
+import Icon from "components/icon";
 
 class SaleDetail extends Component {
   deleteSale = () => {
@@ -14,35 +14,44 @@ class SaleDetail extends Component {
     close();
   };
 
-  print = () => {
-
-  };
+  print = () => {};
 
   render() {
     const { inventory, actions, saleID, close } = this.props;
-    let item = find((inventory.sales || []), {_id: saleID});
-    console.log(item)
+    let item = find(inventory.sales || [], { _id: saleID });
+    console.log(item);
     return (
       <div>
-        <div style={{position:'absolute', top:'23px', right:'30px'}}>
-          {saleID !== '_new' &&
-            <Icon icon='print' onClick={this.print} style={{fontSize:'18px', marginRight:'10px', color:'blue'}} />
-          }
-          {saleID !== '_new' &&
-            <Icon icon='delete' secondary={true} onClick={this.deleteSale} style={{ fontSize: '18px' }}/>
-          }
+        <div style={{ position: "absolute", top: "23px", right: "30px" }}>
+          {saleID !== "_new" && (
+            <Icon
+              icon="print"
+              onClick={this.print}
+              style={{ fontSize: "18px", marginRight: "10px", color: "blue" }}
+            />
+          )}
+          {saleID !== "_new" && (
+            <Icon
+              icon="delete"
+              secondary={true}
+              onClick={this.deleteSale}
+              style={{ fontSize: "18px" }}
+            />
+          )}
         </div>
         <SaleForm initialValues={item} closeAction={close} actions={actions} />
       </div>
-    )
+    );
   }
 }
 
-export default withRouter(connect(
-  (state) => ({
-    inventory: state.inventory
-  }),
-  (dispatch) => ({
-    actions: bindActionCreators({...Actions}, dispatch)
-  })
-)(SaleDetail));
+export default withRouter(
+  connect(
+    state => ({
+      inventory: state.inventory
+    }),
+    dispatch => ({
+      actions: bindActionCreators({ ...Actions }, dispatch)
+    })
+  )(SaleDetail)
+);

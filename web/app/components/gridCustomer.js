@@ -6,8 +6,8 @@ import find from "lodash/find";
 
 class GridCustomer extends Component {
   componentDidMount() {
-    const {  actions, customers } = this.props;
-        if (!customers) {
+    const { actions, customers } = this.props;
+    if (!customers) {
       actions.fetchCustomers();
     }
   }
@@ -17,12 +17,9 @@ class GridCustomer extends Component {
   }
 }
 
-
-
 export default connect(
   (state, ownProps) => ({
     customer: find(state.inventory.customers || [], { _id: ownProps.value })
-
   }),
   dispatch => ({
     actions: bindActionCreators({ ...InventoryActions }, dispatch)
