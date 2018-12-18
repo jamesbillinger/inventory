@@ -29,4 +29,7 @@ Todo:
 
 questions for Jim:
 
+should we tie customers and sales together? maybe along with inventory for when we have an item in the
+store that is under consignment?
+
 

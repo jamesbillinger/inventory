@@ -30,12 +30,17 @@ class CustomerForm extends Component {
     });
   };
 
+  click = () => {
+    const { initialValues } = this.props;
+    console.log(initialValues);
+  };
+
   render() {
     const { handleSubmit, closeAction } = this.props;
     const { mode } = this.state;
     return (
       <div
-        style={{ display: "flex", flexDirection: "column", minHeight: "400px" }}
+        style={{ display: "flex", flexDirection: "column", minHeight: "200px" }}
       >
         <div style={{ display: "flex", flexWrap: "wrap", flex: "0 0 auto" }}>
           <Field
@@ -57,12 +62,15 @@ class CustomerForm extends Component {
             labelledTextMode={!mode}
           />
         </div>
-        <Field
-          name="customer"
-          component={FormInput}
-          label="Sold To"
-          labelledTextMode={!mode}
-        />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end"
+          }}
+        >
+        <Button onClick={this.click}>Sales History</Button>
+        </div>
         <div
           style={{
             display: "flex",
