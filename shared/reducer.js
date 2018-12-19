@@ -1,7 +1,11 @@
 import { combineReducers } from "redux";
+import findIndex from 'lodash/findIndex';
 import { reducer as formReducer } from "redux-form";
 
-const initialState = {};
+
+const initialState = {
+  popovers: []
+};
 function inventory(state = initialState, action) {
   switch (action.type) {
     case "UPDATE_AUTH":
@@ -41,6 +45,40 @@ function inventory(state = initialState, action) {
           ...action.update
         })
       });
+
+    case "OPEN_POPOVER":
+      var newKey = 0;
+      if (state.popovers && state.popovers.length > 0) {
+        state.popovers.map(p => {
+          if (p.key > newKey) {
+            newKey = p.key;
+          }
+        });
+        newKey++;
+      }
+      return Object.assign({}, state, {
+        popovers: [
+          ...(state.popovers || []),
+          {
+            key: newKey,
+            component: action.component,
+            props: action.props,
+            children: action.children
+          }
+        ]
+      });
+    case "CLOSE_POPOVER":
+      var i = findIndex(state.popovers, { key: action.key });
+      if (i > -1) {
+        return Object.assign({}, state, {
+          popovers: [
+            ...state.popovers.slice(0, i),
+            ...state.popovers.slice(i + 1)
+          ]
+        });
+      } else {
+        return state;
+      }
 
     default:
       return state;

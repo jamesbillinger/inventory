@@ -381,3 +381,37 @@ export function fetchCustomers() {
     });
   };
 }
+
+export function openPopover(component, props, children) {
+  if (global.events && global.events.openPopover) {
+    global.events.openPopover(props);
+    return {
+      type: 'default'
+    };
+  } else {
+    return {
+      type: 'OPEN_POPOVER',
+      component: component,
+      props: props,
+      children: children
+    };
+  }
+}
+export function closePopover(key) {
+  return {
+    type: 'CLOSE_POPOVER',
+    key
+  };
+}
+
+export function openModal(component, props, children) {
+  return {
+    type: 'OPEN_POPOVER',
+    component: component,
+    props: Object.assign({}, props, {
+      raw: true,
+      show: true
+    }),
+    children: children
+  };
+}

@@ -20,6 +20,7 @@ import POS from "sales/pos";
 import FlatButton from "material-ui/FlatButton";
 import Popover from "material-ui/Popover";
 import Menu from "material-ui/Menu";
+import PopoverContainer from 'components/popoverContainer';
 import MenuItem from "material-ui/MenuItem";
 
 class _MyMenuItem extends Component {
@@ -199,6 +200,7 @@ class Main extends Component {
               <Route component={POS} />
             </Switch>
           </div>
+          <PopoverContainer />
         </div>
       );
     } else {
