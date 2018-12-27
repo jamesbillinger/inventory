@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as GlobalActions from 'shared/actions';
-import { CSSTransitionGroup } from 'react-transition-group';
 import isEqual from 'lodash/isEqual';
 import moment from 'moment';
 import Menu from '@material-ui/core/Menu';
@@ -118,13 +117,6 @@ class PopoverContainer extends Component {
     });
     return (
       <div style={{ display: 'inline-block', position: 'fixed', top: '72px', zIndex: outerZ, height: '0px' }}>
-        <CSSTransitionGroup
-          transitionName="popoverTransition"
-          transitionAppear={true}
-          transitionLeave={true}
-          transitionEnterTimeout={300}
-          transitionAppearTimeout={300}
-          transitionLeaveTimeout={300}>
           {(popovers || []).map((p) => {
             let zIndex = 1001 + p.key;
             if (popoverOrder && popoverOrder.length > 0) {
@@ -163,7 +155,6 @@ class PopoverContainer extends Component {
               );
             }
           })}
-        </CSSTransitionGroup>
       </div>
     );
   }
