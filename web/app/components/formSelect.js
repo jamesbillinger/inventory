@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import Select from "react-select";
-import makeAnimated from "react-select/lib/animated";
-import Async from "react-select/lib/Async";
-import Creatable from "react-select/lib/Creatable";
-import AsyncCreatable from "react-select/lib/AsyncCreatable";
-import LabelledText from "components/labelledText";
+import React, { Component } from 'react';
+import Select from 'react-select';
+import makeAnimated from 'react-select/lib/animated';
+import Async from 'react-select/lib/Async';
+import Creatable from 'react-select/lib/Creatable';
+import AsyncCreatable from 'react-select/lib/AsyncCreatable';
+import LabelledText from 'components/labelledText';
 //import api from 'globals/api';
-import find from "lodash/find";
-import isEqual from "lodash/isEqual";
-import omit from "lodash/omit";
+import find from 'lodash/find';
+import isEqual from 'lodash/isEqual';
+import omit from 'lodash/omit';
 
 export default class FormSelect extends Component {
   state = {
@@ -21,7 +21,7 @@ export default class FormSelect extends Component {
     const { loadOptions, loadOptionsPath, input, options } = this.props;
     if (loadOptions || loadOptionsPath) {
       this.populateValues();
-      this.callLoadOptions("", ret => {
+      this.callLoadOptions('', (ret) => {
         if (this._mounted) {
           this.setState({ defaultOptions: ret });
         }
@@ -44,9 +44,9 @@ export default class FormSelect extends Component {
     this._mounted = false;
   }
 
-  handleLoadReturn = ret => {
+  handleLoadReturn = (ret) => {
     if (this._mounted) {
-      (ret || []).map(r => {
+      (ret || []).map((r) => {
         this._labelCache[r.value] = r.label;
       });
       this.setState({
@@ -79,12 +79,12 @@ export default class FormSelect extends Component {
   callLoadOptions = (input, callback) => {
     const { loadOptions } = this.props;
     if (loadOptions) {
-      loadOptions(input, null, ret => {
+      loadOptions(input, null, (ret) => {
         this.handleLoadReturn(ret);
         callback(ret);
       });
     } else {
-      this.defaultLoadOptions(input, null, ret => {
+      this.defaultLoadOptions(input, null, (ret) => {
         this.handleLoadReturn(ret);
         callback(ret);
       });
@@ -92,14 +92,9 @@ export default class FormSelect extends Component {
   };
 
   defaultLoadOptions(input, value, callback) {
-    const {
-      loadOptionsPath,
-      loadOptionsField,
-      allowCreate,
-      addText = "Add"
-    } = this.props;
+    const { loadOptionsPath, loadOptionsField, allowCreate, addText = 'Add' } = this.props;
     let body = {
-      search: input ? input.toLowerCase() : ""
+      search: input ? input.toLowerCase() : ''
     };
     if (!input && value) {
       body = {
@@ -125,7 +120,7 @@ export default class FormSelect extends Component {
     this._field && this._field.focus();
   };
 
-  onFocus = e => {
+  onFocus = (e) => {
     const { input } = this.props;
     if (!this.state.focused) {
       this.setState({
@@ -150,21 +145,19 @@ export default class FormSelect extends Component {
     }
   };
 
-  onChange = val => {
+  onChange = (val) => {
     const { input, multi } = this.props;
     this._changed = true;
     if (input.onChange) {
       if (multi) {
-        input.onChange(
-          (val || []).map(v => (typeof v === "object" ? v.value : v))
-        );
+        input.onChange((val || []).map((v) => (typeof v === 'object' ? v.value : v)));
       } else {
-        input.onChange(val && typeof val === "object" ? val.value : val);
+        input.onChange(val && typeof val === 'object' ? val.value : val);
       }
     }
   };
 
-  onCreateOption = val => {
+  onCreateOption = (val) => {
     const { input, multi } = this.props;
     if (!this._labelCache[val]) {
       this._labelCache[val] = val;
@@ -179,12 +172,12 @@ export default class FormSelect extends Component {
     }
   };
 
-  getOptionLabel = option => {
-    return typeof option === "object" ? option.label : option;
+  getOptionLabel = (option) => {
+    return typeof option === 'object' ? option.label : option;
   };
 
-  getOptionValue = option => {
-    return typeof option === "object" ? option.value : option;
+  getOptionValue = (option) => {
+    return typeof option === 'object' ? option.value : option;
   };
 
   render() {
@@ -217,15 +210,11 @@ export default class FormSelect extends Component {
       short
     } = this.props;
     const { focused, labelCache, defaultOptions } = this.state;
-    const { name, value, onFocus, onBlur, onChange, ...inputProps } =
-      input || {};
+    const { name, value, onFocus, onBlur, onChange, ...inputProps } = input || {};
     const { touched, error } = meta || {};
     if (labelledTextMode) {
       return (
-        <LabelledText
-          label={label}
-          style={omit(style || {}, ["width", "height"])}
-        >
+        <LabelledText label={label} style={omit(style || {}, ['width', 'height'])}>
           {input.value}
         </LabelledText>
       );
@@ -234,21 +223,21 @@ export default class FormSelect extends Component {
       if (multi) {
         if (loadOptions || loadOptionsPath) {
           myValue = [];
-          (value || []).map(v => {
+          (value || []).map((v) => {
             if (labelCache.hasOwnProperty(v)) {
               myValue.push({
                 value: v,
-                label: labelCache[v] || ""
+                label: labelCache[v] || ''
               });
             }
           });
         } else {
-          myValue = (value || []).map(v => ({
+          myValue = (value || []).map((v) => ({
             value: v,
             label: (find(options || [], { value: v }) || {}).label || v
           }));
         }
-      } else if (typeof value !== "undefined") {
+      } else if (typeof value !== 'undefined') {
         if (loadOptions || loadOptionsPath) {
           if (labelCache.hasOwnProperty(value)) {
             myValue = {
@@ -265,81 +254,80 @@ export default class FormSelect extends Component {
         }
       }
       let myInputStyle = {
-        fontSize: "1rem",
-        lineHeight: short ? "1" : "1.25",
-        color: "#464a4c"
+        fontSize: '1rem',
+        lineHeight: short ? '1' : '1.25',
+        color: '#464a4c'
       };
       if (short) {
-        myInputStyle.margin = "0";
-        myInputStyle.paddingTop = "0";
-        myInputStyle.paddingBottom = "0";
+        myInputStyle.margin = '0';
+        myInputStyle.paddingTop = '0';
+        myInputStyle.paddingBottom = '0';
       }
       Object.assign(myInputStyle, inputStyle);
       let styles = {
-        control: base =>
+        control: (base) =>
           Object.assign(
             {},
             base,
             {
-              color: "#464a4c",
-              backgroundColor: "#fff",
-              border: "1px solid rgba(0, 0, 0, 0.15)",
-              borderRadius: "3px",
-              transition:
-                "border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s",
-              boxSizing: "border-box",
-              minHeight: "unset"
+              color: '#464a4c',
+              backgroundColor: '#fff',
+              border: '1px solid rgba(0, 0, 0, 0.15)',
+              borderRadius: '3px',
+              transition: 'border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s',
+              boxSizing: 'border-box',
+              minHeight: 'unset'
             },
             controlStyle
           ),
-        input: base => Object.assign({}, base, myInputStyle),
-        dropdownIndicator: base => ({
+        input: (base) => Object.assign({}, base, myInputStyle),
+        dropdownIndicator: (base) => ({
           ...base,
-          padding: short ? "0 8px" : "2px 8px",
+          padding: short ? '0 8px' : '2px 8px',
           ...(dropDownIndicatorStyle || {})
         }),
-        clearIndicator: base => ({
+        clearIndicator: (base) => ({
           ...base,
-          padding: short ? "0 8px" : "2px 8px"
+          padding: short ? '0 8px' : '2px 8px'
         }),
-        menu: base => ({
+        menu: (base) => ({
           ...base,
-          zIndex: "5",
+          zIndex: '5',
           ...(menuStyle || {})
         }),
-        placeholder: base => Object.assign({}, base, placeholderStyle)
+        placeholder: (base) => Object.assign({}, base, placeholderStyle)
         //list here https://github.com/JedWatson/react-select/blob/v2/src/styles.js
       };
       if (short) {
-        styles.valueContainer = base =>
+        styles.valueContainer = (base) =>
           Object.assign({}, base, {
-            padding: "0 8px"
+            padding: '0 8px'
           });
       }
       if (optionStyle) {
-        styles.option = base => ({
+        styles.option = (base) => ({
           ...base,
           ...optionStyle
         });
       }
       if (singleValueStyle) {
-        styles.singleValue = base => ({
+        styles.singleValue = (base) => ({
           ...base,
           ...singleValueStyle
         });
       }
       let newStyle = {
-        margin: "15px 0 0 10px",
-        fontWeight: "normal",
-        width: multi ? "calc(100% - 10px)" : "200px"
+        margin: '15px 0 0 10px',
+        fontWeight: 'normal',
+        width: multi ? 'calc(100% - 10px)' : '200px'
       };
       Object.assign(newStyle, style);
       let newLabelStyle = {
-        display: "block",
-        marginBottom: "0.5em",
-        fontWeight: "bold",
-        fontSize: "0.8rem",
-        lineHeight: "1rem"
+        display: 'block',
+        marginBottom: '0.5em',
+        fontWeight: 'bold',
+        fontSize: '0.8rem',
+        lineHeight: '1rem'
       };
       Object.assign(newLabelStyle, labelStyle);
       let selectControl;
@@ -347,8 +335,8 @@ export default class FormSelect extends Component {
         if (allowCreate) {
           selectControl = (
             <AsyncCreatable
-              id={name || "FormSelect"}
-              ref={c => (this._field = c)}
+              id={name || 'FormSelect'}
+              ref={(c) => (this._field = c)}
               loadOptions={this.callLoadOptions}
               components={components || makeAnimated()}
               placeholder={placeholder || label}
@@ -371,8 +359,8 @@ export default class FormSelect extends Component {
         } else {
           selectControl = (
             <Async
-              id={name || "FormSelect"}
-              ref={c => (this._field = c)}
+              id={name || 'FormSelect'}
+              ref={(c) => (this._field = c)}
               loadOptions={this.callLoadOptions}
               components={components || makeAnimated()}
               placeholder={placeholder || label}
@@ -395,8 +383,8 @@ export default class FormSelect extends Component {
       } else if (allowCreate) {
         selectControl = (
           <Creatable
-            id={name || "FormSelect"}
-            style={{ minHeight: "unset" }}
+            id={name || 'FormSelect'}
+            style={{ minHeight: 'unset' }}
             //ref={(c) => (this._field = c)}
             options={options || []}
             isMulti={multi}
@@ -417,8 +405,8 @@ export default class FormSelect extends Component {
       } else {
         selectControl = (
           <Select
-            id={name || "FormSelect"}
-            style={{ minHeight: "unset" }}
+            id={name || 'FormSelect'}
+            style={{ minHeight: 'unset' }}
             //ref={(c) => (this._field = c)}
             options={options || []}
             isMulti={multi}
@@ -440,28 +428,24 @@ export default class FormSelect extends Component {
       return (
         <div style={newStyle}>
           {label && (
-            <label
-              htmlFor={name || "FormSelect"}
-              style={newLabelStyle}
-              onClick={this.focus}
-            >
+            <label htmlFor={name || 'FormSelect'} style={newLabelStyle} onClick={this.focus}>
               {label}
             </label>
           )}
           {selectControl}
-          {touched && error && (
-            <div
-              style={{
-                color: "red",
-                fontSize: "13px",
-                whiteSpace: "nowrap",
-                marginTop: "3px"
-              }}
-              onClick={this.focus}
-            >
-              {error}
-            </div>
-          )}
+          {touched &&
+            error && (
+              <div
+                style={{
+                  color: 'red',
+                  fontSize: '13px',
+                  whiteSpace: 'nowrap',
+                  marginTop: '3px'
+                }}
+                onClick={this.focus}>
+                {error}
+              </div>
+            )}
         </div>
       );
     }

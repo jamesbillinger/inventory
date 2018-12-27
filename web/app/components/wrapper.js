@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import * as InventoryActions from "shared/actions";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import Main from "./main";
-import Register from "./register";
-import Login from "./login";
-import firebase from "firebase";
+import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as InventoryActions from 'shared/actions';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import Main from './main';
+import Register from './register';
+import Login from './login';
+import firebase from 'firebase';
 
 class Wrapper extends Component {
   componentWillMount() {
@@ -22,7 +22,7 @@ class Wrapper extends Component {
           <Route path="/register" component={Register} />
           <Route
             path="/login"
-            render={props => {
+            render={(props) => {
               if (!initialLoadComplete) {
                 return <div />;
               } else if (user) {
@@ -50,11 +50,11 @@ class Wrapper extends Component {
 }
 
 export default connect(
-  state => ({
+  (state) => ({
     initialLoadComplete: state.inventory.initialLoadComplete,
     user: state.inventory.user
   }),
-  dispatch => ({
+  (dispatch) => ({
     actions: bindActionCreators({ ...InventoryActions }, dispatch)
   })
 )(Wrapper);

@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import * as InventoryActions from "shared/actions";
-import find from "lodash/find";
+import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as InventoryActions from 'shared/actions';
+import find from 'lodash/find';
 
 class GridCustomer extends Component {
   componentDidMount() {
@@ -21,7 +21,7 @@ export default connect(
   (state, ownProps) => ({
     customer: find(state.inventory.customers || [], { _id: ownProps.value })
   }),
-  dispatch => ({
+  (dispatch) => ({
     actions: bindActionCreators({ ...InventoryActions }, dispatch)
   })
 );

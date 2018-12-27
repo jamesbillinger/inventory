@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import FormSelect from "components/formSelect";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import FormSelect from 'components/formSelect';
 
 class FormItem extends Component {
   getOptionLabel(item) {
-    return item.make + " " + item.model;
+    return item.make + ' ' + item.model;
   }
 
   getOptionValue(item) {
@@ -24,7 +24,7 @@ class FormItem extends Component {
   }
 }
 export default connect(
-  state => ({
+  (state) => ({
     items: state.inventory.items
   }),
   undefined

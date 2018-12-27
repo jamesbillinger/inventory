@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import debounce from "lodash/debounce";
-import FormInput from "components/formInput";
-import LabelledText from "components/labelledText";
+import React, { Component } from 'react';
+import debounce from 'lodash/debounce';
+import FormInput from 'components/formInput';
+import LabelledText from 'components/labelledText';
 
 export default class Totals extends Component {
   state = {
@@ -52,16 +52,15 @@ export default class Totals extends Component {
   render() {
     const { items, discount, taxRate, labelledTextMode } = this.props;
     const { itemsTotal } = this.state;
-    let totalValue =
-      this.state.totalValue || itemsTotal - (discount.input.value || 0);
+    let totalValue = this.state.totalValue || itemsTotal - (discount.input.value || 0);
     if ((items.input.value || []).length > 0) {
       return (
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
           <FormInput
             label="Subtotal"
             input={{ value: itemsTotal }}
             type="currency"
-            style={{ flex: "1 1 100px" }}
+            style={{ flex: '1 1 100px' }}
             disabled={true}
             labelledTextMode={labelledTextMode}
           />
@@ -72,24 +71,24 @@ export default class Totals extends Component {
               onChange: this.discountChange
             }}
             type="currency"
-            style={{ flex: "1 1 100px" }}
+            style={{ flex: '1 1 100px' }}
             labelledTextMode={labelledTextMode}
           />
           <FormInput
             label="Sale Total"
             input={{ value: totalValue, onChange: this.changeTotal }}
             type="currency"
-            style={{ flex: "1 1 100px" }}
+            style={{ flex: '1 1 100px' }}
             labelledTextMode={labelledTextMode}
           />
           <FormInput
-            label={"Tax (" + taxRate.input.value + ")"}
+            label={'Tax (' + taxRate.input.value + ')'}
             input={{
               value: (totalValue * taxRate.input.value).toFixed(2),
               onChange: this.changeTotal
             }}
             type="currency"
-            style={{ flex: "1 1 100px" }}
+            style={{ flex: '1 1 100px' }}
             disabled={true}
             labelledTextMode={labelledTextMode}
           />
@@ -100,7 +99,7 @@ export default class Totals extends Component {
               onChange: this.changeTotal
             }}
             type="currency"
-            style={{ flex: "1 1 100px´" }}
+            style={{ flex: '1 1 100px´' }}
             disabled={true}
             labelledTextMode={labelledTextMode}
           />

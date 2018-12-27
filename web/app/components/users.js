@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import * as Actions from "shared/actions";
-import { Column, Table } from "react-virtualized";
-import Icon from "components/icon";
-import Toggle from "material-ui/Toggle";
-import orderBy from "lodash/orderBy";
-import isEqual from "lodash/isEqual";
-import { AutoSizer } from "react-virtualized";
+import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as Actions from 'shared/actions';
+import { Column, Table } from 'react-virtualized';
+import Icon from 'components/icon';
+import Toggle from 'material-ui/Toggle';
+import orderBy from 'lodash/orderBy';
+import isEqual from 'lodash/isEqual';
+import { AutoSizer } from 'react-virtualized';
 
 class Users extends Component {
   constructor() {
@@ -24,10 +24,9 @@ class Users extends Component {
     if (inventory.users) {
       this.setState({
         users: orderBy(
-          Object.keys(inventory.users || {}).map(k => inventory.users[k]),
-          u =>
-            u.name && u.name.indexOf(" ") > -1 ? u.name.split(" ")[1] : u.email,
-          "asc"
+          Object.keys(inventory.users || {}).map((k) => inventory.users[k]),
+          (u) => (u.name && u.name.indexOf(' ') > -1 ? u.name.split(' ')[1] : u.email),
+          'asc'
         )
       });
     } else {
@@ -37,16 +36,12 @@ class Users extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { inventory } = this.props;
-    if (
-      (inventory.users && !prevProps.inventory.users) ||
-      !isEqual(inventory.users, prevProps.inventory.users)
-    ) {
+    if ((inventory.users && !prevProps.inventory.users) || !isEqual(inventory.users, prevProps.inventory.users)) {
       this.setState({
         users: orderBy(
-          Object.keys(inventory.users || {}).map(k => inventory.users[k]),
-          u =>
-            u.name && u.name.indexOf(" ") > -1 ? u.name.split(" ")[1] : u.email,
-          "asc"
+          Object.keys(inventory.users || {}).map((k) => inventory.users[k]),
+          (u) => (u.name && u.name.indexOf(' ') > -1 ? u.name.split(' ')[1] : u.email),
+          'asc'
         )
       });
     }
@@ -54,29 +49,25 @@ class Users extends Component {
 
   rowClassName({ index }) {
     if (index < 0) {
-      return "headerRow";
+      return 'headerRow';
     } else {
-      return index % 2 === 0 ? "evenRow" : "oddRow";
+      return index % 2 === 0 ? 'evenRow' : 'oddRow';
     }
   }
 
   userClick({ index, rowData, event }) {
     const { history } = this.props;
     if (
-      !(event.target && event.target.id === "clickable") &&
-      !(
-        event.target &&
-        event.target.parentElement &&
-        event.target.parentElement.id === "clickable"
-      ) &&
+      !(event.target && event.target.id === 'clickable') &&
+      !(event.target && event.target.parentElement && event.target.parentElement.id === 'clickable') &&
       !(
         event.target &&
         event.target.parentElement &&
         event.target.parentElement.parentElement &&
-        event.target.parentElement.parentElement.id === "clickable"
+        event.target.parentElement.parentElement.id === 'clickable'
       )
     ) {
-      history.push("/admin/user/" + rowData.uid);
+      history.push('/admin/user/' + rowData.uid);
     }
   }
 
@@ -87,13 +78,11 @@ class Users extends Component {
         id="clickable"
         icon="delete"
         secondary={true}
-        style={{ fontSize: "22px" }}
-        onClick={e => {
+        style={{ fontSize: '22px' }}
+        onClick={(e) => {
           e.preventDefault();
-          if (
-            confirm("Are you sure that you want to delete this " + type + "?")
-          ) {
-            actions["delete" + type](cellData);
+          if (confirm('Are you sure that you want to delete this ' + type + '?')) {
+            actions['delete' + type](cellData);
           }
         }}
       />
@@ -105,25 +94,10 @@ class Users extends Component {
     return (
       <Toggle
         id="clickable"
-        toggled={
-          !!(
-            inventory.groups &&
-            inventory.groups.admin &&
-            inventory.groups.admin[cellData]
-          )
-        }
+        toggled={!!(inventory.groups && inventory.groups.admin && inventory.groups.admin[cellData])}
         onToggle={(e, isInputChecked) => {
-          if (
-            confirm(
-              "Are you sure that you wish to change the Admin status for this user?"
-            )
-          ) {
-            actions.setUserGroup(
-              rowData.uid,
-              "admin",
-              isInputChecked,
-              inventory.groups
-            );
+          if (confirm('Are you sure that you wish to change the Admin status for this user?')) {
+            actions.setUserGroup(rowData.uid, 'admin', isInputChecked, inventory.groups);
           }
         }}
       />
@@ -181,12 +155,11 @@ class Users extends Component {
     return (
       <div
         style={{
-          flex: "1 1 auto",
-          backgroundColor: "white",
-          borderRadius: "6px",
-          maxWidth: "800px"
-        }}
-      >
+          flex: '1 1 auto',
+          backgroundColor: 'white',
+          borderRadius: '6px',
+          maxWidth: '800px'
+        }}>
         <AutoSizer>
           {({ height, width }) => (
             <Table
@@ -196,17 +169,16 @@ class Users extends Component {
               rowHeight={30}
               rowCount={(users || []).length}
               rowGetter={({ index }) => users[index]}
-              rowStyle={{ cursor: "pointer" }}
+              rowStyle={{ cursor: 'pointer' }}
               rowClassName={this._rowClassName}
               headerClassName="headerColumn"
-              onRowClick={::this.userClick}
-            >
+              onRowClick={::this.userClick}>
               <Column
                 label=""
                 dataKey="uid"
                 width={30}
                 flexGrow={0}
-                cellRenderer={this.deleteRenderer.bind(this, "User")}
+                cellRenderer={this.deleteRenderer.bind(this, 'User')}
               />
               <Column label="Name" dataKey="name" width={100} flexGrow={1} />
               <Column width={200} label="Email" dataKey="email" flexGrow={1} />
@@ -218,13 +190,7 @@ class Users extends Component {
                 flexGrow={0}
                 cellRenderer={::this.verifiedRenderer}
               />
-              <Column
-                width={80}
-                label="Admin"
-                dataKey="uid"
-                flexGrow={0}
-                cellRenderer={::this.adminRenderer}
-              />
+              <Column width={80} label="Admin" dataKey="uid" flexGrow={0} cellRenderer={::this.adminRenderer} />
             </Table>
           )}
         </AutoSizer>

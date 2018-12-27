@@ -1,25 +1,19 @@
 /**
  * Created by jamesbillinger on 4/18/17.
  */
-import React, { Component } from "react";
-import TextField from "material-ui/TextField";
-import InputMask from "inputmask-core";
+import React, { Component } from 'react';
+import TextField from 'material-ui/TextField';
+import InputMask from 'inputmask-core';
 
 var KEYCODE_Z = 90;
 var KEYCODE_Y = 89;
 
 function isUndo(e) {
-  return (
-    (e.ctrlKey || e.metaKey) &&
-    e.keyCode === (e.shiftKey ? KEYCODE_Y : KEYCODE_Z)
-  );
+  return (e.ctrlKey || e.metaKey) && e.keyCode === (e.shiftKey ? KEYCODE_Y : KEYCODE_Z);
 }
 
 function isRedo(e) {
-  return (
-    (e.ctrlKey || e.metaKey) &&
-    e.keyCode === (e.shiftKey ? KEYCODE_Z : KEYCODE_Y)
-  );
+  return (e.ctrlKey || e.metaKey) && e.keyCode === (e.shiftKey ? KEYCODE_Z : KEYCODE_Y);
 }
 
 function getSelection(el) {
@@ -35,7 +29,7 @@ function getSelection(el) {
       clone = rangeEl.duplicate();
 
       rangeEl.moveToBookmark(document.selection.createRange().getBookmark());
-      clone.setEndPoint("EndToStart", rangeEl);
+      clone.setEndPoint('EndToStart', rangeEl);
 
       start = clone.text.length;
       end = start + rangeEl.text.length;
@@ -58,8 +52,8 @@ function setSelection(el, selection) {
       el.focus();
       rangeEl = el.createTextRange();
       rangeEl.collapse(true);
-      rangeEl.moveStart("character", selection.start);
-      rangeEl.moveEnd("character", selection.end - selection.start);
+      rangeEl.moveStart('character', selection.start);
+      rangeEl.moveEnd('character', selection.end - selection.start);
       rangeEl.select();
     }
   } catch (e) {
@@ -92,10 +86,7 @@ export default class MaskedInput extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (
-      this.props.mask !== nextProps.mask &&
-      this.props.input.value !== nextProps.mask
-    ) {
+    if (this.props.mask !== nextProps.mask && this.props.input.value !== nextProps.mask) {
       // if we get a new value and a new mask at the same time
       // check if the mask.value is still the initial value
       // - if so use the nextProps value
@@ -186,7 +177,7 @@ export default class MaskedInput extends Component {
       return;
     }
 
-    if (e.key === "Backspace") {
+    if (e.key === 'Backspace') {
       e.preventDefault();
       this.updateMaskSelection();
       if (this.mask.backspace()) {
@@ -207,7 +198,7 @@ export default class MaskedInput extends Component {
 
     // Ignore modified key presses
     // Ignore enter key to allow form submission
-    if (e.metaKey || e.altKey || e.ctrlKey || e.key === "Enter") {
+    if (e.metaKey || e.altKey || e.ctrlKey || e.key === 'Enter') {
       return;
     }
 
@@ -228,7 +219,7 @@ export default class MaskedInput extends Component {
     e.preventDefault();
     this.updateMaskSelection();
     // getData value needed for IE also works in FF & Chrome
-    if (this.mask.paste(e.clipboardData.getData("Text"))) {
+    if (this.mask.paste(e.clipboardData.getData('Text'))) {
       e.target.value = this.mask.getValue();
       // Timeout needed for IE
       setTimeout(this.updateInputSelection, 0);
@@ -240,16 +231,14 @@ export default class MaskedInput extends Component {
 
   getDisplayValue() {
     let value = this.mask.getValue();
-    return value === this.mask.emptyValue ? "" : value;
+    return value === this.mask.emptyValue ? '' : value;
   }
 
   keyPressPropName() {
-    if (typeof navigator !== "undefined") {
-      return navigator.userAgent.match(/Android/i)
-        ? "onBeforeInput"
-        : "onKeyPress";
+    if (typeof navigator !== 'undefined') {
+      return navigator.userAgent.match(/Android/i) ? 'onBeforeInput' : 'onKeyPress';
     }
-    return "onKeyPress";
+    return 'onKeyPress';
   }
 
   getEventHandlers() {
@@ -275,18 +264,18 @@ export default class MaskedInput extends Component {
     const { error, touched } = meta || props;
     let newStyle = Object.assign(
       {
-        margin: "0px 10px",
-        verticalAlign: "top",
-        fontWeight: "normal",
-        display: "block"
+        margin: '0px 10px',
+        verticalAlign: 'top',
+        fontWeight: 'normal',
+        display: 'block'
       },
       style
     );
     if (props.disabled) {
-      newStyle.color = "rgba(0,0,0,0.3)";
+      newStyle.color = 'rgba(0,0,0,0.3)';
     }
     if (props.multiLine) {
-      newStyle.width = "80%";
+      newStyle.width = '80%';
     }
 
     let maxLength = this.mask.pattern.length;
@@ -299,15 +288,15 @@ export default class MaskedInput extends Component {
 
     return (
       <TextField
-        ref={c => (this._field = c)}
+        ref={(c) => (this._field = c)}
         id="unique"
         style={newStyle}
-        value={value || ""}
+        value={value || ''}
         floatingLabelStyle={{
-          pointerEvents: "none",
-          whiteSpace: "nowrap",
-          left: "0px",
-          color: "rgba(33, 33, 33, 0.5)"
+          pointerEvents: 'none',
+          whiteSpace: 'nowrap',
+          left: '0px',
+          color: 'rgba(33, 33, 33, 0.5)'
         }}
         type={type}
         floatingLabelText={label}

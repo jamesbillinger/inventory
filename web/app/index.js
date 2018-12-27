@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import materialTheme from "./materialTheme";
-import getMuiTheme from "material-ui/styles/getMuiTheme";
-import "public/styles/theme.css";
-import "public/fonts/material-icons.css";
-import configureStore from "shared/store";
-import Wrapper from "./components/wrapper";
-import "react-virtualized/styles.css";
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import materialTheme from './materialTheme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import 'public/styles/theme.css';
+import 'public/fonts/material-icons.css';
+import configureStore from 'shared/store';
+import Wrapper from './components/wrapper';
+import 'react-virtualized/styles.css';
 
 const store = configureStore({});
 
@@ -24,4 +24,4 @@ class App extends Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById('root'));

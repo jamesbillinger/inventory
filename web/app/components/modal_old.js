@@ -1,8 +1,8 @@
 /**
  * Created by jamesbillinger on 4/18/17.
  */
-import React, { Component } from "react";
-import Modal from "react-modal";
+import React, { Component } from 'react';
+import Modal from 'react-modal';
 
 export default class MyModal extends Component {
   render() {
@@ -10,14 +10,6 @@ export default class MyModal extends Component {
     let myStyle = {
       overlay: Object.assign({ zIndex: 10 }, style)
     };
-    return (
-      <Modal
-        isOpen={open}
-        onRequestClose={closeAction}
-        contentLabel=""
-        style={myStyle}
-        {...props}
-      />
-    );
+    return <Modal isOpen={open} onRequestClose={closeAction} contentLabel="" style={myStyle} {...props} />;
   }
 }

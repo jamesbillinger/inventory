@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import * as Actions from "shared/actions";
-import Button from "components/button";
-import { Switch, Route, Link } from "react-router-dom";
-import CustomerDetail from "./customerDetail";
-import { AutoSizer, Table, Column } from "react-virtualized";
-import Dialog from "material-ui/Dialog";
-import moment from "moment";
+import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as Actions from 'shared/actions';
+import Button from 'components/button';
+import { Switch, Route, Link } from 'react-router-dom';
+import CustomerDetail from './customerDetail';
+import { AutoSizer, Table, Column } from 'react-virtualized';
+import Dialog from '@material-ui/core/Dialog';
+import moment from 'moment';
 
 class Customers extends Component {
   componentDidMount() {
@@ -19,12 +19,12 @@ class Customers extends Component {
 
   rowClick = ({ event, rowData }) => {
     const { history } = this.props;
-    history.push("/customers/" + rowData._id);
+    history.push('/customers/' + rowData._id);
   };
 
   close = () => {
     const { history } = this.props;
-    history.push("/customers");
+    history.push('/customers');
   };
 
   render() {
@@ -33,22 +33,20 @@ class Customers extends Component {
     return (
       <div
         style={{
-          flex: "1 1 auto",
-          backgroundColor: "white",
-          borderRadius: "6px",
-          padding: "10px",
-          display: "flex",
-          flexDirection: "column"
-        }}
-      >
+          flex: '1 1 auto',
+          backgroundColor: 'white',
+          borderRadius: '6px',
+          padding: '10px',
+          display: 'flex',
+          flexDirection: 'column'
+        }}>
         <div
           style={{
-            flex: "0 0 auto",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between"
-          }}
-        >
+            flex: '0 0 auto',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}>
           <Button>search</Button>
           <div>
             <Link to="/customers/_new">
@@ -56,7 +54,7 @@ class Customers extends Component {
             </Link>
           </div>
         </div>
-        <div style={{ flex: "1 1 auto" }}>
+        <div style={{ flex: '1 1 auto' }}>
           <AutoSizer>
             {({ height, width }) => (
               <Table
@@ -66,37 +64,26 @@ class Customers extends Component {
                 rowCount={(inventory.customers || []).length || 0}
                 headerHeight={32}
                 onRowClick={this.rowClick}
-                rowStyle={{ cursor: "pointer" }}
-                width={width}
-              >
+                rowStyle={{ cursor: 'pointer' }}
+                width={width}>
                 <Column label="Name" dataKey="name" flexGrow={0} width={200} />
                 <Column label="Phone" dataKey="phone" flexGrow={1} width={80} />
               </Table>
             )}
           </AutoSizer>
         </div>
-        <Dialog
-          modal={false}
-          open={!!match.params.customerID}
-          onRequestClose={this.close}
-          autoScrollBodyContent={true}
-        >
-          {match.params.customerID && (
-            <CustomerDetail
-              customerID={match.params.customerID}
-              close={this.close}
-            />
-          )}
+        <Dialog modal={false} open={!!match.params.customerID} onRequestClose={this.close} autoScrollBodyContent={true}>
+          {match.params.customerID && <CustomerDetail customerID={match.params.customerID} close={this.close} />}
         </Dialog>
       </div>
     );
   }
 }
 export default connect(
-  state => ({
+  (state) => ({
     inventory: state.inventory
   }),
-  dispatch => ({
+  (dispatch) => ({
     actions: bindActionCreators({ ...Actions }, dispatch)
   })
 )(Customers);

@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import SaleForm from "./saleForm";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as Actions from "shared/actions";
-import find from "lodash/find";
-import Icon from "components/icon";
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import SaleForm from './saleForm';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as Actions from 'shared/actions';
+import find from 'lodash/find';
+import Icon from 'components/icon';
 
 class SaleDetail extends Component {
   deleteSale = () => {
@@ -22,21 +22,12 @@ class SaleDetail extends Component {
     console.log(item);
     return (
       <div>
-        <div style={{ position: "absolute", top: "23px", right: "30px" }}>
-          {saleID !== "_new" && (
-            <Icon
-              icon="print"
-              onClick={this.print}
-              style={{ fontSize: "18px", marginRight: "10px", color: "blue" }}
-            />
+        <div style={{ position: 'absolute', top: '23px', right: '30px' }}>
+          {saleID !== '_new' && (
+            <Icon icon="print" onClick={this.print} style={{ fontSize: '18px', marginRight: '10px', color: 'blue' }} />
           )}
-          {saleID !== "_new" && (
-            <Icon
-              icon="delete"
-              secondary={true}
-              onClick={this.deleteSale}
-              style={{ fontSize: "18px" }}
-            />
+          {saleID !== '_new' && (
+            <Icon icon="delete" secondary={true} onClick={this.deleteSale} style={{ fontSize: '18px' }} />
           )}
         </div>
         <SaleForm initialValues={item} closeAction={close} actions={actions} />
@@ -47,10 +38,10 @@ class SaleDetail extends Component {
 
 export default withRouter(
   connect(
-    state => ({
+    (state) => ({
       inventory: state.inventory
     }),
-    dispatch => ({
+    (dispatch) => ({
       actions: bindActionCreators({ ...Actions }, dispatch)
     })
   )(SaleDetail)

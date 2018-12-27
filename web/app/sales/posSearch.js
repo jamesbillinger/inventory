@@ -1,65 +1,65 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import debounce from "lodash/debounce";
-import Autosuggest from "react-autosuggest";
-import filter from "lodash/filter";
-import find from "lodash/find";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import debounce from 'lodash/debounce';
+import Autosuggest from 'react-autosuggest';
+import filter from 'lodash/filter';
+import find from 'lodash/find';
 
 const theme = {
   container: {
-    position: "relative",
-    paddingTop: "5px"
+    position: 'relative',
+    paddingTop: '5px'
   },
   input: {
-    width: "100%",
-    border: "none",
-    borderBottom: "none",
-    height: "26px",
-    padding: "5px 5px",
-    borderRadius: "6px",
-    fontSize: "16px"
+    width: '100%',
+    border: 'none',
+    borderBottom: 'none',
+    height: '26px',
+    padding: '5px 5px',
+    borderRadius: '6px',
+    fontSize: '16px'
   },
   inputFocused: {
-    outline: "none"
+    outline: 'none'
   },
   suggestionsContainer: {
-    display: "none"
+    display: 'none'
   },
   suggestionsContainerOpen: {
-    display: "block",
-    position: "absolute",
-    top: "41px",
-    width: "380px",
+    display: 'block',
+    position: 'absolute',
+    top: '41px',
+    width: '380px',
     //border: '1px solid #aaa',
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     //borderBottomLeftRadius: '4px',
     //borderBottomRightRadius: '4px',
-    zIndex: "2",
-    left: "0",
-    borderRadius: "6px",
-    boxShadow: "0 1px 2px rgba(0,0,0,.28), 0 4px 8px rgba(0,0,0,.13)",
-    borderTop: "1px solid #eee"
+    zIndex: '2',
+    left: '0',
+    borderRadius: '6px',
+    boxShadow: '0 1px 2px rgba(0,0,0,.28), 0 4px 8px rgba(0,0,0,.13)',
+    borderTop: '1px solid #eee'
   },
   suggestionsList: {
-    margin: "0",
-    padding: "0",
-    listStyleType: "none"
+    margin: '0',
+    padding: '0',
+    listStyleType: 'none'
   },
   suggestion: {
-    cursor: "pointer",
-    lineHeight: "22px",
-    padding: "2px 16px 2px 10px",
-    borderRadius: "6px"
+    cursor: 'pointer',
+    lineHeight: '22px',
+    padding: '2px 16px 2px 10px',
+    borderRadius: '6px'
   },
   suggestionHighlighted: {
-    backgroundColor: "rgba(0,181,239,0.1)"
+    backgroundColor: 'rgba(0,181,239,0.1)'
   }
 };
 
 class Search extends Component {
   state = {
     suggestions: [],
-    value: ""
+    value: ''
   };
 
   componentDidMount() {
@@ -80,16 +80,15 @@ class Search extends Component {
       this.pushItem(item);
       this.setState({
         suggestions: [],
-        value: ""
+        value: ''
       });
     } else if (value) {
       this.setState({
-        suggestions: filter(items || [], it => {
+        suggestions: filter(items || [], (it) => {
           return (
-            (it.make || "").toLowerCase().indexOf(value.toLowerCase()) > -1 ||
-            (it.calibre || "").toLowerCase().indexOf(value.toLowerCase()) >
-              -1 ||
-            (it.model || "").toLowerCase().indexOf(value.toLowerCase()) > -1
+            (it.make || '').toLowerCase().indexOf(value.toLowerCase()) > -1 ||
+            (it.calibre || '').toLowerCase().indexOf(value.toLowerCase()) > -1 ||
+            (it.model || '').toLowerCase().indexOf(value.toLowerCase()) > -1
           );
         })
       });
@@ -112,9 +111,9 @@ class Search extends Component {
 
   renderSuggestion(suggestion) {
     return (
-      <div style={{ display: "flex" }}>
+      <div style={{ display: 'flex' }}>
         <div>{suggestion.make}</div>
-        <div style={{ marginLeft: "10px" }}>{suggestion.model}</div>
+        <div style={{ marginLeft: '10px' }}>{suggestion.model}</div>
       </div>
     );
   }
@@ -123,7 +122,7 @@ class Search extends Component {
     const { fields } = this.props;
     this.pushItem(suggestion);
     this.setState({
-      value: "",
+      value: '',
       suggestions: []
     });
   };
@@ -141,13 +140,13 @@ class Search extends Component {
   render() {
     const { value, suggestions } = this.state;
     const inputProps = {
-      placeholder: "Search for Item",
+      placeholder: 'Search for Item',
       value,
       onChange: this.onChange
     };
     return (
       <Autosuggest
-        ref={k => (this._input = k)}
+        ref={(k) => (this._input = k)}
         suggestions={suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
@@ -161,7 +160,7 @@ class Search extends Component {
   }
 }
 export default connect(
-  state => ({
+  (state) => ({
     items: state.inventory.items
   }),
   undefined

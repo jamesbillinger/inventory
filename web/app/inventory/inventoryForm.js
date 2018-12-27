@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import { reduxForm, Field } from "redux-form";
-import RaisedButton from "material-ui/RaisedButton";
-import FormDate from "components/formDate";
-import FormInput from "components/formInput";
-import FormSelect from "components/formSelect";
+import React, { Component } from 'react';
+import { reduxForm, Field } from 'redux-form';
+import Button from '@material-ui/core/Button';
+import FormDate from 'components/formDate';
+import FormInput from 'components/formInput';
+import FormSelect from 'components/formSelect';
 
-const categoryOptions = ["Firearm", "Ammo", "Misc"];
+const categoryOptions = ['Firearm', 'Ammo', 'Misc'];
 
 class inventoryForm extends Component {
-  submit = data => {
+  submit = (data) => {
     const { actions, closeAction } = this.props;
     if (data._id) {
       actions.updateItem(data, closeAction);
@@ -21,85 +21,63 @@ class inventoryForm extends Component {
     const { handleSubmit, closeAction } = this.props;
     return (
       <div>
-        <div style={{ display: "flex" }}>
-          <div style={{ display: "flex", flexWrap: "wrap", flex: "1 1 auto" }}>
+        <div style={{ display: 'flex' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', flex: '1 1 auto' }}>
             <Field name="make" component={FormInput} label="Make" />
-            <Field
-              name="model"
-              component={FormInput}
-              label="Model"
-              type="phone"
-            />
+            <Field name="model" component={FormInput} label="Model" type="phone" />
             <Field name="calibre" component={FormInput} label="Calibre" />
-            <Field
-              name="category"
-              component={FormSelect}
-              label="Category"
-              options={categoryOptions}
-            />
-            <Field
-              name="purchaseDate"
-              component={FormDate}
-              label="Purchase Date"
-            />
+            <Field name="category" component={FormSelect} label="Category" options={categoryOptions} />
+            <Field name="purchaseDate" component={FormDate} label="Purchase Date" />
             <Field name="saleDate" component={FormDate} label="Sale Date" />
             <Field name="owner" component={FormInput} label="Owner" />
             <Field name="barcode" component={FormInput} label="Barcode" />
-            <Field
-              name="quantity"
-              component={FormInput}
-              label="Quantity"
-              type="number"
-              style={{ width: "100px" }}
-            />
+            <Field name="quantity" component={FormInput} label="Quantity" type="number" style={{ width: '100px' }} />
             <Field
               name="lowStock"
               component={FormInput}
               label="Low stock level"
               type="number"
-              style={{ width: "120px" }}
+              style={{ width: '120px' }}
             />
           </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div
               style={{
-                backgroundColor: "#f2f2f2",
-                borderRadius: "6px",
-                paddingBottom: "10px",
-                marginTop: "10px"
-              }}
-            >
+                backgroundColor: '#f2f2f2',
+                borderRadius: '6px',
+                paddingBottom: '10px',
+                marginTop: '10px'
+              }}>
               <Field
                 name="purchasePrice"
                 component={FormInput}
                 label="Purchase Price"
                 type="currency"
-                style={{ width: "120px" }}
+                style={{ width: '120px' }}
               />
               <Field
                 name="salePrice"
                 component={FormInput}
                 label="Sale Price"
                 type="currency"
-                style={{ width: "120px" }}
+                style={{ width: '120px' }}
               />
             </div>
           </div>
         </div>
         <div
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end"
-          }}
-        >
-          <RaisedButton primary={true} onClick={handleSubmit(this.submit)}>
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end'
+          }}>
+          <Button primary={true} onClick={handleSubmit(this.submit)}>
             Submit
-          </RaisedButton>
-          <RaisedButton secondary={true} onClick={closeAction}>
+          </Button>
+          <Button secondary={true} onClick={closeAction}>
             Cancel
-          </RaisedButton>
-          <RaisedButton label={"Sell"} onClick={{}} />
+          </Button>
+          <Button label={'Sell'} onClick={{}} />
         </div>
       </div>
     );
@@ -107,5 +85,5 @@ class inventoryForm extends Component {
 }
 
 export default reduxForm({
-  form: "inventoryForm"
+  form: 'inventoryForm'
 })(inventoryForm);

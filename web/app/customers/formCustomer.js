@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import FormSelect from "components/formSelect";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import * as InventoryActions from "shared/actions";
+import React, { Component } from 'react';
+import FormSelect from 'components/formSelect';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as InventoryActions from 'shared/actions';
 
 class CustomerForm extends Component {
-  change = val => {
+  change = (val) => {
     const { input } = this.props;
-    if (val === "_new") {
+    if (val === '_new') {
       //create new customer
     } else {
       input.onChange(val);
@@ -17,26 +17,24 @@ class CustomerForm extends Component {
   render() {
     const { input, ...props } = this.props;
     const { onChange, ...inputProps } = input;
-    return (
-      <FormSelect input={{ onChange: this.change, ...inputProps }} {...props} />
-    );
+    return <FormSelect input={{ onChange: this.change, ...inputProps }} {...props} />;
   }
 }
 
 export default connect(
-  state => ({
+  (state) => ({
     options: [
       {
-        value: "_new",
-        label: "Add New Customer"
+        value: '_new',
+        label: 'Add New Customer'
       },
-      ...(state.inventory.customers || []).map(c => ({
+      ...(state.inventory.customers || []).map((c) => ({
         value: c._id,
         label: c.name
       }))
     ]
   }),
-  dispatch => ({
+  (dispatch) => ({
     actions: bindActionCreators({ ...InventoryActions }, dispatch)
   })
 )(CustomerForm);

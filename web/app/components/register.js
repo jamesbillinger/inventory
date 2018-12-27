@@ -1,20 +1,14 @@
-import React, { Component } from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import * as Actions from "shared/actions";
-import { Field, reduxForm, SubmissionError } from "redux-form";
-import FormInput from "components/formInput";
-import MaskedInput from "components/maskedInput";
-import Button from "components/button";
+import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as Actions from 'shared/actions';
+import { Field, reduxForm, SubmissionError } from 'redux-form';
+import FormInput from 'components/formInput';
+import MaskedInput from 'components/maskedInput';
+import Button from 'components/button';
 //import { auth } from 'src/auth';
-import {
-  required,
-  email,
-  phoneNumber,
-  fullName,
-  minLength
-} from "shared/validators";
-import Logo from "components/logo";
+import { required, email, phoneNumber, fullName, minLength } from 'shared/validators';
+import Logo from 'components/logo';
 const minLength8 = minLength(8);
 
 class GoogleButton extends Component {
@@ -29,18 +23,17 @@ class GoogleButton extends Component {
         className="registerButton"
         onClick={::this.click}
         style={{
-          padding: "16px 30px",
-          borderRadius: "30px",
-          color: "#000",
-          alignItems: "center",
-          fontSize: "16px",
-          cursor: "pointer",
-          display: "flex",
-          justifyContent: "center"
-        }}
-      >
+          padding: '16px 30px',
+          borderRadius: '30px',
+          color: '#000',
+          alignItems: 'center',
+          fontSize: '16px',
+          cursor: 'pointer',
+          display: 'flex',
+          justifyContent: 'center'
+        }}>
         <img src="images/google.svg" height="20px" width="20px" />
-        <div style={{ paddingLeft: "10px" }}>Sign in with Google</div>
+        <div style={{ paddingLeft: '10px' }}>Sign in with Google</div>
       </div>
     );
   }
@@ -57,13 +50,10 @@ class Register extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { inventory, history } = this.props;
-    if (
-      inventory.authErr &&
-      inventory.authErr !== prevProps.inventory.authErr
-    ) {
-      if (inventory.authErr.code === "auth/email-already-in-use") {
+    if (inventory.authErr && inventory.authErr !== prevProps.inventory.authErr) {
+      if (inventory.authErr.code === 'auth/email-already-in-use') {
         //redirect to login and pass email address
-        history.push("/login");
+        history.push('/login');
       }
     }
   }
@@ -87,39 +77,32 @@ class Register extends Component {
     return (
       <div
         style={{
-          height: "100%",
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center"
-        }}
-      >
-        <div style={{ display: "flex", flexWrap: "wrap" }}>
+          height: '100%',
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           <div
             style={{
-              borderRight: "1px solid #ddd",
-              marginRight: "20px",
-              paddingRight: "25px",
-              flex: "1 1 auto"
+              borderRight: '1px solid #ddd',
+              marginRight: '20px',
+              paddingRight: '25px',
+              flex: '1 1 auto'
             }}
-            className="content"
-          >
-            <h3 style={{ textAlign: "center" }}>Sign in with social</h3>
-            <div style={{ marginTop: "40px", textAlign: "center" }}>
+            className="content">
+            <h3 style={{ textAlign: 'center' }}>Sign in with social</h3>
+            <div style={{ marginTop: '40px', textAlign: 'center' }}>
               <Field component={GoogleButton} name="email" actions={actions} />
             </div>
           </div>
-          <div style={{ flex: "1 0 auto" }} className="content">
-            <h3 style={{ textAlign: "center" }}>...or register with email</h3>
+          <div style={{ flex: '1 0 auto' }} className="content">
+            <h3 style={{ textAlign: 'center' }}>...or register with email</h3>
             <form onSubmit={handleSubmit(this._submit)}>
               <div>
-                <Field
-                  component={FormInput}
-                  name="name"
-                  label="Name"
-                  validate={[required, fullName]}
-                />
+                <Field component={FormInput} name="name" label="Name" validate={[required, fullName]} />
                 <Field
                   component={MaskedInput}
                   name="phone"
@@ -127,12 +110,7 @@ class Register extends Component {
                   mask="(111) 111-1111"
                   validate={[phoneNumber]}
                 />
-                <Field
-                  component={FormInput}
-                  name="email"
-                  label="Email Address"
-                  validate={[required, email]}
-                />
+                <Field component={FormInput} name="email" label="Email Address" validate={[required, email]} />
                 <Field
                   component={FormInput}
                   name="password"
@@ -143,17 +121,15 @@ class Register extends Component {
               </div>
               <div
                 style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  marginTop: "30px"
-                }}
-              >
+                  display: 'flex',
+                  justifyContent: 'center',
+                  marginTop: '30px'
+                }}>
                 <Button
                   onClick={handleSubmit(this._submit)}
                   disabled={pristine || submitting || !valid}
                   primary={true}
-                  type="submit"
-                >
+                  type="submit">
                   Register
                 </Button>
               </div>
@@ -179,7 +155,7 @@ function mapDispatchToProps(dispatch) {
 
 export default reduxForm({
   // a unique name for the form
-  form: "RegisterForm"
+  form: 'RegisterForm'
 })(
   connect(
     mapStateToProps,

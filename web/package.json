@@ -7,7 +7,7 @@
     "build": "rimraf ../public/*.js && webpack --config webpack-prod.config.js --progress"
   },
   "dependencies": {
-    "@material-ui/core": "^3.7.0",
+    "@material-ui/core": "^3.7.1",
     "babel": "^6.23.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",

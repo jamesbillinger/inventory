@@ -117,44 +117,44 @@ class PopoverContainer extends Component {
     });
     return (
       <div style={{ display: 'inline-block', position: 'fixed', top: '72px', zIndex: outerZ, height: '0px' }}>
-          {(popovers || []).map((p) => {
-            let zIndex = 1001 + p.key;
-            if (popoverOrder && popoverOrder.length > 0) {
-              let i = popoverOrder.indexOf(p.key);
-              if (i > -1) {
-                zIndex = 1001 + (100 - i);
-              }
+        {(popovers || []).map((p) => {
+          let zIndex = 1001 + p.key;
+          if (popoverOrder && popoverOrder.length > 0) {
+            let i = popoverOrder.indexOf(p.key);
+            if (i > -1) {
+              zIndex = 1001 + (100 - i);
             }
-            if (p.props.anchorEl) {
-              let closeAction = p.close || this.close.bind(this, p.key);
-              return (
-                <Popover
-                  zIndex={p.props.zIndex || zIndex}
-                  key={p.key}
-                  anchorEl={p.props.anchorEl}
-                  closeAction={closeAction}
-                  getContentAnchorEl={null}
-                  {...p.props.popoverProps}>
-                  <p.component closeAction={closeAction} {...p.props} />
-                </Popover>
-              );
-            } else {
-              return React.createElement(
-                p.component,
-                Object.assign(
-                  {
-                    closeAction: p.close || this.close.bind(this, p.key),
-                    overlayStyle: {
-                      zIndex: p.props.zIndex || zIndex
-                    },
-                    key: p.key
+          }
+          if (p.props.anchorEl) {
+            let closeAction = p.close || this.close.bind(this, p.key);
+            return (
+              <Popover
+                zIndex={p.props.zIndex || zIndex}
+                key={p.key}
+                anchorEl={p.props.anchorEl}
+                closeAction={closeAction}
+                getContentAnchorEl={null}
+                {...p.props.popoverProps}>
+                <p.component closeAction={closeAction} {...p.props} />
+              </Popover>
+            );
+          } else {
+            return React.createElement(
+              p.component,
+              Object.assign(
+                {
+                  closeAction: p.close || this.close.bind(this, p.key),
+                  overlayStyle: {
+                    zIndex: p.props.zIndex || zIndex
                   },
-                  p.props
-                ),
-                p.children
-              );
-            }
-          })}
+                  key: p.key
+                },
+                p.props
+              ),
+              p.children
+            );
+          }
+        })}
       </div>
     );
   }

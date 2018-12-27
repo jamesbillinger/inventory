@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import IconButton from "material-ui/IconButton";
-import getMuiTheme from "material-ui/styles/getMuiTheme";
-import MaterialTheme from "../materialTheme";
-import { Link } from "react-router-dom";
-import omit from "lodash/omit";
+import React, { Component } from 'react';
+import IconButton from 'material-ui/IconButton';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MaterialTheme from '../materialTheme';
+import { Link } from 'react-router-dom';
+import omit from 'lodash/omit';
 
 export default class Icon extends Component {
   focus() {}
@@ -34,40 +34,33 @@ export default class Icon extends Component {
     if (style && style.color) {
       newIconStyle.color = style.color;
     } else if (primary) {
-      newIconStyle.color = getMuiTheme(
-        MaterialTheme
-      ).baseTheme.palette.primary1Color;
+      newIconStyle.color = getMuiTheme(MaterialTheme).baseTheme.palette.primary1Color;
     } else if (secondary) {
-      newIconStyle.color = getMuiTheme(
-        MaterialTheme
-      ).baseTheme.palette.accent1Color;
+      newIconStyle.color = getMuiTheme(MaterialTheme).baseTheme.palette.accent1Color;
     } else if (!className) {
-      newIconStyle.color = "#795548";
+      newIconStyle.color = '#795548';
     } else {
       newIconStyle.color = undefined;
     }
-    if (
-      props.disabled ||
-      (!newIconStyle.cursor && (!onClick && !to && !href))
-    ) {
-      newIconStyle.cursor = "default";
+    if (props.disabled || (!newIconStyle.cursor && (!onClick && !to && !href))) {
+      newIconStyle.cursor = 'default';
     }
     Object.assign(newIconStyle, iconStyle);
 
-    let iconClassName = "material-icons";
+    let iconClassName = 'material-icons';
     if (className) {
-      iconClassName += " " + className;
+      iconClassName += ' ' + className;
     }
 
     let newStyle = {
-      padding: "0px",
-      width: "unset",
-      height: "unset"
+      padding: '0px',
+      width: 'unset',
+      height: 'unset'
     };
     if (props.onClick) {
-      newStyle.cursor = "pointer";
+      newStyle.cursor = 'pointer';
     }
-    Object.assign(newStyle, omit(style, "fontSize"));
+    Object.assign(newStyle, omit(style, 'fontSize'));
     let button = (
       <IconButton
         {...props}
@@ -75,8 +68,7 @@ export default class Icon extends Component {
         onClick={onClick}
         style={newStyle}
         iconStyle={newIconStyle}
-        tooltip={tooltip}
-      >
+        tooltip={tooltip}>
         {props.icon || props.glyph || children}
       </IconButton>
     );
@@ -84,7 +76,7 @@ export default class Icon extends Component {
       return <Link to={to}>{button}</Link>;
     } else if (href) {
       return (
-        <a href={href} target={target || "_blank"}>
+        <a href={href} target={target || '_blank'}>
           {button}
         </a>
       );
