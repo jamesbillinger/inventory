@@ -121,7 +121,7 @@ class POS extends Component {
             <Fields names={['items', 'discount', 'total', 'taxRate']} component={Totals} />
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <FatButton
-                icon="attach_money"
+                icon="currency-usd"
                 color="green"
                 onClick={this.pay}
                 disabled={pristine || !valid || submitting}>

@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
-import IconButton from 'material-ui/IconButton';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import MaterialTheme from '../materialTheme';
 import { Link } from 'react-router-dom';
-import omit from 'lodash/omit';
+import palette from 'shared/palette';
 
 export default class Icon extends Component {
-  focus() {}
-
   render() {
     const {
       tooltip,
@@ -19,62 +14,58 @@ export default class Icon extends Component {
       to,
       href,
       target,
-      iconStyle,
+      icon,
       className,
+      disabled,
+      fa,
       ...props
     } = this.props;
-
-    let newIconStyle = {};
-    if (style && style.fontSize) {
-      newIconStyle.fontSize = style.fontSize;
-    }
-    if (style && style.cursor) {
-      newIconStyle.cursor = style.cursor;
-    }
-    if (style && style.color) {
-      newIconStyle.color = style.color;
-    } else if (primary) {
-      newIconStyle.color = getMuiTheme(MaterialTheme).baseTheme.palette.primary1Color;
-    } else if (secondary) {
-      newIconStyle.color = getMuiTheme(MaterialTheme).baseTheme.palette.accent1Color;
-    } else if (!className) {
-      newIconStyle.color = '#795548';
+    let newStyle = {
+      color:palette.LightBlue1,
+      padding:'0px',
+      width:'unset',
+      height:'unset',
+      fontSize:'inherit',
+      lineHeight:'inherit'
+    };
+    if (!disabled && (onClick || to || href)) {
+      newStyle.cursor = 'pointer';
     } else {
-      newIconStyle.color = undefined;
+      newStyle.cursor = 'default';
     }
-    if (props.disabled || (!newIconStyle.cursor && (!onClick && !to && !href))) {
-      newIconStyle.cursor = 'default';
+    if (primary) {
+      newStyle.color = palette.Submit;
     }
-    Object.assign(newIconStyle, iconStyle);
-
-    let iconClassName = 'material-icons';
+    if (secondary) {
+      newStyle.color = palette.Cancel;
+    }
+    if (disabled && !(style || {}).color) {
+      newStyle.color = palette.Disabled;
+    }
+    Object.assign(newStyle, style);
+    let iconClassName = '';
+    if (icon) {
+      if (fa) {
+        iconClassName = `fa fa-${icon}`;
+      } else {
+        iconClassName = `mdi mdi-${icon}`;
+      }
+    }
     if (className) {
       iconClassName += ' ' + className;
     }
-
-    let newStyle = {
-      padding: '0px',
-      width: 'unset',
-      height: 'unset'
-    };
-    if (props.onClick) {
-      newStyle.cursor = 'pointer';
-    }
-    Object.assign(newStyle, omit(style, 'fontSize'));
     let button = (
-      <IconButton
-        {...props}
-        iconClassName={iconClassName}
-        onClick={onClick}
-        style={newStyle}
-        iconStyle={newIconStyle}
-        tooltip={tooltip}>
-        {props.icon || props.glyph || children}
-      </IconButton>
+      <div {...props} onClick={onClick} style={newStyle} className="hoverDiv">
+        <i className={iconClassName} />
+      </div>
     );
-    if (to) {
-      return <Link to={to}>{button}</Link>;
-    } else if (href) {
+    if (to && !disabled) {
+      return (
+        <Link to={to} style={{ display: 'flex', alignItems: 'center' }}>
+          {button}
+        </Link>
+      );
+    } else if (href && !disabled) {
       return (
         <a href={href} target={target || '_blank'}>
           {button}
