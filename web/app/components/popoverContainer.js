@@ -40,7 +40,8 @@ class Popover extends Component {
         anchorEl={anchorEl}
         open={open}
         onClose={this.close}
-        MenuListProps={{ style: { paddingTop: '0', paddingBottom: '0' } }} {...props}>
+        MenuListProps={{ style: { paddingTop: '0', paddingBottom: '0' } }}
+        {...props}>
         {children}
       </Menu>
     );
@@ -115,7 +116,6 @@ class PopoverContainer extends Component {
         outerZ = p.props.zIndex;
       }
     });
-    console.log(CSSTransitionGroup);
     return (
       <div style={{ display: 'inline-block', position: 'fixed', top: '72px', zIndex: outerZ, height: '0px' }}>
         <CSSTransitionGroup
