@@ -76,7 +76,7 @@ class POS extends Component {
             }}>
             <FieldArray name="items" component={POSSearch} />
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <FatButton icon="clear" secondary={true} disabled={pristine} onClick={this.clear}>
+              <FatButton icon="close" secondary={true} disabled={pristine} onClick={this.clear}>
                 Clear
               </FatButton>
             </div>

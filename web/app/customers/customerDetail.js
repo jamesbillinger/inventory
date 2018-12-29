@@ -19,14 +19,17 @@ class CustomerDetail extends Component {
   render() {
     const { inventory, actions, customerID, close } = this.props;
     let item = find(inventory.customers || [], { _id: customerID });
+
     if (!item && customerID === '_new') {
       item = {};
+
+
     }
     return (
       <div>
         <div style={{ position: 'absolute', top: '23px', right: '30px' }}>
           {customerID !== '_new' && (
-            <Icon icon="print" onClick={this.print} style={{ fontSize: '18px', marginRight: '10px', color: 'blue' }} />
+            <Icon icon="printer" onClick={this.print} style={{ fontSize: '18px', marginRight: '10px', color: 'blue' }} />
           )}
           {customerID !== '_new' && (
             <Icon icon="delete" secondary={true} onClick={this.deleteCustomer} style={{ fontSize: '18px' }} />

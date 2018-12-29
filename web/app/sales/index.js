@@ -10,6 +10,7 @@ import Dialog from '@material-ui/core/Dialog';
 import moment from 'moment';
 import FormInput from 'components/formInput';
 import filter from 'lodash/filter';
+import find from 'lodash/find';
 
 class Sales extends Component {
   state = {};
@@ -54,9 +55,11 @@ class Sales extends Component {
   };
 
   render() {
-    const { inventory, match } = this.props;
+    const { inventory, match, customerID } = this.props;
     const { searchResults, search } = this.state;
     let data = searchResults ? searchResults : inventory.sales || [];
+    let item = find(inventory.customers || [], { _id: customerID });
+    console.log('logThisYo  ' + item)
     return (
       <div
         style={{

@@ -24,7 +24,7 @@ class SaleDetail extends Component {
       <div>
         <div style={{ position: 'absolute', top: '23px', right: '30px' }}>
           {saleID !== '_new' && (
-            <Icon icon="print" onClick={this.print} style={{ fontSize: '18px', marginRight: '10px', color: 'blue' }} />
+            <Icon icon="printer" onClick={this.print} style={{ fontSize: '18px', marginRight: '10px', color: 'blue' }} />
           )}
           {saleID !== '_new' && (
             <Icon icon="delete" secondary={true} onClick={this.deleteSale} style={{ fontSize: '18px' }} />

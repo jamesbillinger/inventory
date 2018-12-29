@@ -33,3 +33,9 @@ should we tie customers and sales together? maybe along with inventory for when 
 store that is under consignment?
 
 
+for names instead of ID's rendered on the page, do we use cellRenderer to look up the ID but display the name?
+
+I fixed the printer Icon's yay!
+
+Did not get sales/index customer names to show up.  I modified the sales/index.js a bit trying to get it to
+work will explain monday if I can't get it sorted.  I feel so close but am probably far away heh.
