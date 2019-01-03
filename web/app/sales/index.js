@@ -99,25 +99,42 @@ class Sales extends Component {
                 <Column
                   label="Date"
                   dataKey="createdAt"
-                  flexGrow={1}
-                  width={40}
+                  flexGrow={0}
+                  width={150}
                   cellRenderer={({ cellData }) => <div>{cellData && moment(cellData).format('M/D/YY h:mm a')}</div>}
                 />
-                <Column label="Total" dataKey="total" flexGrow={1} width={80} />
-                <Column label="Tax Rate" dataKey="taxRate" flexGrow={1} width={80} />
                 <Column
                   label="Customer"
                   dataKey="customer"
-                  flexGrow={1}
-                  width={80}
+                  flexGrow={0}
+                  width={200}
                   cellRenderer={({ cellData }) => <GridCustomer value={cellData} />}
+                />
+                <Column
+                  label="Total"
+                  dataKey="items"
+                  flexGrow={0}
+                  width={120}
+                  cellRenderer={({ cellData }) => {
+                    let total = (cellData || []).reduce((t, item) => {
+                      return t + parseFloat(item.totalPrice || 0);
+                    }, 0);
+                    return (
+                      <div style={{ textAlign: 'right', paddingRight: '20px' }}>
+                        {total.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'USD'
+                        })}
+                      </div>
+                    );
+                  }}
                 />
               </Table>
             )}
           </AutoSizer>
         </div>
         <Dialog modal={false} open={!!match.params.saleID} onRequestClose={this.close} autoScrollBodyContent={true}>
-          {match.params.saleID && <SaleDetail saleID={match.params.saleID} close={this.close} />}
+          {match.params.saleID ? <SaleDetail saleID={match.params.saleID} close={this.close} /> : <div />}
         </Dialog>
       </div>
     );

@@ -7,10 +7,13 @@ import { Switch, Route, Link } from 'react-router-dom';
 import InventoryDetail from 'inventory/inventoryDetail';
 import { AutoSizer, Table, Column } from 'react-virtualized';
 import Dialog from '@material-ui/core/Dialog';
+import FormInput from 'components/formInput';
+import filter from 'lodash/filter';
 
 class Inventory extends Component {
   constructor() {
     super();
+    this.state = {};
     this._rowClick = ::this.rowClick;
   }
 
@@ -24,8 +27,28 @@ class Inventory extends Component {
     history.push('/inventory');
   };
 
+  searchChange = (e) => {
+    const { inventory } = this.props;
+    this.setState({
+      search: e.target.value,
+      items: e.target.value
+        ? filter(inventory.items || [], (item) => {
+            let s = e.target.value.toLowerCase();
+            let ret = false;
+            Object.keys(item).map((k) => {
+              if (typeof item[k] === 'string' && item[k].toLowerCase().indexOf(s) > -1) {
+                ret = true;
+              }
+            })
+            return ret;
+          })
+        : undefined
+    });
+  };
+
   render() {
     const { inventory, match } = this.props;
+    const { search, items } = this.state;
     return (
       <div
         style={{
@@ -43,7 +66,7 @@ class Inventory extends Component {
             alignItems: 'center',
             justifyContent: 'space-between'
           }}>
-          <Button>search</Button>
+          <FormInput placeholder={'search'} input={{ value: search, onChange: this.searchChange }} />
           <div>
             <Link to="/inventory/_new">
               <Button>Add Inventory</Button>
@@ -56,8 +79,8 @@ class Inventory extends Component {
               <Table
                 height={height}
                 rowHeight={32}
-                rowGetter={({ index }) => (inventory.items || [])[index]}
-                rowCount={(inventory.items || []).length || 0}
+                rowGetter={({ index }) => (items || inventory.items || [])[index]}
+                rowCount={(items || inventory.items || []).length || 0}
                 headerHeight={32}
                 onRowClick={this._rowClick}
                 rowStyle={{ cursor: 'pointer' }}
