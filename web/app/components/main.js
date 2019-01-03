@@ -91,6 +91,7 @@ class Main extends Component {
     if (!inventory.items && !this._fetched) {
       this._fetched = true;
       actions.fetchItems();
+      actions.fetchCustomers();
     }
   }
 

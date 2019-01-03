@@ -11,6 +11,7 @@ import moment from 'moment';
 import FormInput from 'components/formInput';
 import filter from 'lodash/filter';
 import find from 'lodash/find';
+import GridCustomer from 'components/gridCustomer';
 
 class Sales extends Component {
   state = {};
@@ -55,11 +56,10 @@ class Sales extends Component {
   };
 
   render() {
-    const { inventory, match, customerID } = this.props;
+    const { inventory, match } = this.props;
     const { searchResults, search } = this.state;
     let data = searchResults ? searchResults : inventory.sales || [];
-    let item = find(inventory.customers || [], { _id: customerID });
-    console.log('logThisYo  ' + item)
+
     return (
       <div
         style={{
@@ -105,7 +105,13 @@ class Sales extends Component {
                 />
                 <Column label="Total" dataKey="total" flexGrow={1} width={80} />
                 <Column label="Tax Rate" dataKey="taxRate" flexGrow={1} width={80} />
-                <Column label="Customer" dataKey="customer" flexGrow={1} width={80} />
+                <Column
+                  label="Customer"
+                  dataKey="customer"
+                  flexGrow={1}
+                  width={80}
+                  cellRenderer={({ cellData }) => <GridCustomer value={cellData} />}
+                />
               </Table>
             )}
           </AutoSizer>

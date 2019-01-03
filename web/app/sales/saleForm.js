@@ -6,6 +6,8 @@ import FormSelect from 'components/formSelect';
 import Button from 'components/button';
 import Totals from './posTotals';
 import POSItems from './posItems';
+import GridCustomer from 'components/gridCustomer';
+import LabelledText from 'components/labelledText';
 
 class SaleForm extends Component {
   state = {};
@@ -26,7 +28,7 @@ class SaleForm extends Component {
   };
 
   render() {
-    const { handleSubmit, closeAction } = this.props;
+    const { handleSubmit, closeAction, initialValues } = this.props;
     const { mode } = this.state;
     return (
       <div style={{ display: 'flex', flexDirection: 'column', minHeight: '400px' }}>
@@ -34,7 +36,13 @@ class SaleForm extends Component {
           <Field name="createdAt" component={FormDate} label="Sale Date" labelledTextMode={!mode} />
           <Field name="createdBy" component={FormInput} label="Sold By" labelledTextMode={!mode} />
         </div>
-        <Field name="customer" component={FormInput} label="Sold To" labelledTextMode={!mode} />
+        {mode ? (
+          <Field name="customer" component={FormInput} label="Sold To" labelledTextMode={!mode} />
+        ) : (
+          <LabelledText label={'Customer'}>
+            <GridCustomer value={initialValues.customer} />
+          </LabelledText>
+        )}
         <div
           style={{
             flex: '1 0 auto',

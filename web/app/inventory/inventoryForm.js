@@ -5,7 +5,7 @@ import FormDate from 'components/formDate';
 import FormInput from 'components/formInput';
 import FormSelect from 'components/formSelect';
 
-const categoryOptions = ['Firearm', 'Ammo', 'Misc'];
+const categoryOptions = ['Firearm', 'Ammo', 'Misc', 'Custom Shop'];
 
 class inventoryForm extends Component {
   submit = (data) => {

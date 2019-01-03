@@ -22,7 +22,7 @@ class SaleDetail extends Component {
     console.log(item);
     return (
       <div>
-        <div style={{ position: 'absolute', top: '23px', right: '30px' }}>
+        <div style={{ position: 'absolute', top: '23px', right: '30px', display: 'flex' }}>
           {saleID !== '_new' && (
             <Icon icon="printer" onClick={this.print} style={{ fontSize: '18px', marginRight: '10px', color: 'blue' }} />
           )}
