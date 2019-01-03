@@ -39,3 +39,5 @@ I fixed the printer Icon's yay!
 
 Did not get sales/index customer names to show up.  I modified the sales/index.js a bit trying to get it to
 work will explain monday if I can't get it sorted.  I feel so close but am probably far away heh.
+
+LOOK at searchChange in inventory/index and build out search functions for sales and customer
