@@ -35,11 +35,11 @@ class Inventory extends Component {
         ? filter(inventory.items || [], (item) => {
             let s = e.target.value.toLowerCase();
             let ret = false;
-            Object.keys(item).map((k) => {
-              if (typeof item[k] === 'string' && item[k].toLowerCase().indexOf(s) > -1) {
+            Object.values(item).map((k) => {
+              if (typeof k === 'string' && k.toLowerCase().indexOf(s) > -1) {
                 ret = true;
               }
-            })
+            });
             return ret;
           })
         : undefined

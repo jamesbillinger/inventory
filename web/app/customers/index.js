@@ -8,8 +8,16 @@ import CustomerDetail from './customerDetail';
 import { AutoSizer, Table, Column } from 'react-virtualized';
 import Dialog from '@material-ui/core/Dialog';
 import moment from 'moment';
+import filter from 'lodash/filter';
+import FormInput from 'components/formInput';
 
 class Customers extends Component {
+  constructor() {
+    super();
+    this.state = {};
+    this.rowClick = ::this.rowClick;
+  }
+
   componentDidMount() {
     const { inventory, actions } = this.props;
     if (!inventory.customers) {
@@ -26,9 +34,29 @@ class Customers extends Component {
     const { history } = this.props;
     history.push('/customers');
   };
+  searchChange = (e) => {
+    const { inventory } = this.props;
+    this.setState({
+      search: e.target.value,
+      customers: e.target.value
+        ? filter(inventory.customers || [], (item) => {
+            let s = e.target.value.toLowerCase();
+            let ret = false;
+            console.log(item);
+            Object.values(item).map((k) => {
+              if (typeof k === 'string' && k.toLowerCase().indexOf(s) > -1) {
+                ret = true;
+              }
+            });
+            return ret;
+          })
+        : undefined
+    });
+  };
 
   render() {
     const { inventory, match } = this.props;
+    const { search, customers } = this.state;
     return (
       <div
         style={{
@@ -46,7 +74,8 @@ class Customers extends Component {
             alignItems: 'center',
             justifyContent: 'space-between'
           }}>
-          <Button>search</Button>
+          <FormInput placeholder={'search'} input={{ value: search, onChange: this.searchChange }} />
+
           <div>
             <Link to="/customers/_new">
               <Button>Add Customer</Button>
@@ -59,8 +88,8 @@ class Customers extends Component {
               <Table
                 height={height}
                 rowHeight={32}
-                rowGetter={({ index }) => (inventory.customers || [])[index]}
-                rowCount={(inventory.customers || []).length || 0}
+                rowGetter={({ index }) => (customers || inventory.customers || [])[index]}
+                rowCount={(customers || inventory.customers || []).length || 0}
                 headerHeight={32}
                 onRowClick={this.rowClick}
                 rowStyle={{ cursor: 'pointer' }}
