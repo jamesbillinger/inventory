@@ -14,15 +14,18 @@ import find from 'lodash/find';
 import GridCustomer from 'components/gridCustomer';
 
 class Sales extends Component {
-  state = {};
-
+  constructor() {
+    super();
+    this.state = {};
+    this.rowClick = ::this.rowClick;
+  }
   componentDidMount() {
     const { inventory, actions } = this.props;
     if (!inventory.sales) {
       actions.fetchSales();
     }
   }
-
+/*
   componentDidUpdate(prevProps, prevState) {
     const { inventory } = this.props;
     const { search } = this.state;
@@ -36,10 +39,37 @@ class Sales extends Component {
       });
     }
   }
-
+*/
   rowClick = ({ event, rowData }) => {
     const { history } = this.props;
     history.push('/sales/' + rowData._id);
+  };
+
+  searchChange = (e) => {
+    const { inventory } = this.props;
+    this.setState({
+      search: e.target.value,
+      items: e.target.value
+        ? filter(inventory.sales || [], (item) => {
+            let s = e.target.value.toLowerCase();
+            let ret = false;
+            Object.values(item).map((k) => {
+              if (typeof k === 'string' && k.toLowerCase().indexOf(s) > -1 ) {
+                ret = true;
+              } else {
+                if (typeof k === 'object'){
+                  Object.values(k).map((f) => {
+                    if (typeof f === 'string' && f.toLowerCase().indexOf(s) > -1 ){
+                      ret = true;
+                    }
+                  })
+                }
+              }
+            });
+            return ret;
+          })
+        : undefined
+    });
   };
 
   close = () => {
@@ -47,18 +77,21 @@ class Sales extends Component {
     history.push('/sales');
   };
 
+  /*
   search = (e, v) => {
+
     if ((v || '') !== (this.state.search || '')) {
       this.setState({
         search: v
       });
     }
   };
+*/
 
   render() {
     const { inventory, match } = this.props;
-    const { searchResults, search } = this.state;
-    let data = searchResults ? searchResults : inventory.sales || [];
+    const { searchResults, search, sales} = this.state;
+    //let data = searchResults ? searchResults : inventory.sales || [];
 
     return (
       <div
@@ -77,7 +110,7 @@ class Sales extends Component {
             alignItems: 'center',
             justifyContent: 'space-between'
           }}>
-          <FormInput input={{ value: search, onChange: this.search }} placeholder="Search Sales" />
+          <FormInput input={{ value: search, onChange: this.searchChange }} placeholder="Search Sales" />
           <div>
             <Link to="/">
               <Button>Add Sale</Button>
@@ -90,8 +123,8 @@ class Sales extends Component {
               <Table
                 height={height}
                 rowHeight={32}
-                rowGetter={({ index }) => data[index]}
-                rowCount={data.length || 0}
+                rowGetter={({ index }) => (sales || inventory.sales || [])[index]}
+                rowCount={(sales || inventory.sales || []).length || 0}
                 headerHeight={32}
                 onRowClick={this.rowClick}
                 rowStyle={{ cursor: 'pointer' }}
