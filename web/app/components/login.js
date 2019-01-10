@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from 'shared/actions';
-import Button from '@material-ui/core/Button';
+import Button from 'components/button';
 import { Link } from 'react-router-dom';
 
 class Login extends Component {

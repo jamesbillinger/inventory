@@ -6,7 +6,7 @@ import Button from 'components/button';
 import { Switch, Route, Link } from 'react-router-dom';
 import CustomerDetail from './customerDetail';
 import { AutoSizer, Table, Column } from 'react-virtualized';
-import Dialog from '@material-ui/core/Dialog';
+import Modal from 'components/modal';
 import moment from 'moment';
 import filter from 'lodash/filter';
 import FormInput from 'components/formInput';
@@ -100,9 +100,9 @@ class Customers extends Component {
             )}
           </AutoSizer>
         </div>
-        <Dialog modal={false} open={!!match.params.customerID} onRequestClose={this.close} autoScrollBodyContent={true}>
+        <Modal show={!!match.params.customerID} closeAction={this.close}>
           {match.params.customerID && <CustomerDetail customerID={match.params.customerID} close={this.close} />}
-        </Dialog>
+        </Modal>
       </div>
     );
   }

@@ -74,7 +74,7 @@ export default class MyModal extends Component {
       )
     };
     return (
-      <Modal isOpen={show || props.open || false} onRequestClose={closeAction} style={style} {...props}>
+      <Modal isOpen={show || props.open || false} closeAction={closeAction} style={style} {...props}>
         {hideFooter && children}
         {!hideFooter && (
           <div

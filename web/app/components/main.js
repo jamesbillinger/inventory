@@ -10,7 +10,7 @@ import Customers from 'customers';
 import Reports from './reports';
 import Users from './users';
 import POS from 'sales/pos';
-import Button from '@material-ui/core/Button';
+import Button from 'components/button';
 import Popover from 'material-ui/Popover';
 import Menu from '@material-ui/core/Menu';
 import PopoverContainer from 'components/popoverContainer';
@@ -53,7 +53,7 @@ class _MyMenuItem extends Component {
             anchorEl={anchorEl}
             anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
             targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-            onRequestClose={this._close}>
+            closeAction={this._close}>
             {children}
           </Popover>
         </div>

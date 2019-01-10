@@ -5,7 +5,7 @@ import POSSearch from './posSearch';
 import LabelledText from 'components/labelledText';
 import FatButton from 'components/fatButton';
 import Totals from './posTotals';
-import Dialog from '@material-ui/core/Dialog';
+import Modal from 'components/modal';
 import Payments from './posPayments';
 import { withRouter } from 'react-router-dom';
 import POSItems from './posItems';
@@ -130,7 +130,7 @@ class POS extends Component {
             </div>
           </div>
         </div>
-        <Dialog open={pay} onRequestClose={this.pay}>
+        <Modal show={pay} closeAction={this.pay}>
           {pay && (
             <Fields
               names={['payments', 'taxRate', 'items', 'discount']}
@@ -141,7 +141,7 @@ class POS extends Component {
               submitting={submitting}
             />
           )}
-        </Dialog>
+        </Modal>
       </div>
     );
   }

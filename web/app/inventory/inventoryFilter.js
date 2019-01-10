@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
+import Button from 'components/button';
 
 export default class InventoryFilter extends Component {
   render() {
@@ -14,7 +14,9 @@ export default class InventoryFilter extends Component {
           padding: '10px'
         }}>
         <div>Inventory Filter</div>
-        <Button label="filter cat" />
+          <Button>
+            Inventory Filter
+          </Button>
       </div>
     );
   }

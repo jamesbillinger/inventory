@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from 'shared/actions';
-import Button from '@material-ui/core/Button';
+import Button from 'components/button';
 import { Switch, Route, Link } from 'react-router-dom';
 import InventoryDetail from 'inventory/inventoryDetail';
 import { AutoSizer, Table, Column } from 'react-virtualized';
-import Dialog from '@material-ui/core/Dialog';
+import Modal from 'components/modal';
 import FormInput from 'components/formInput';
 import filter from 'lodash/filter';
 
@@ -110,9 +110,9 @@ class Inventory extends Component {
             )}
           </AutoSizer>
         </div>
-        <Dialog modal={false} open={!!match.params.itemID} onRequestClose={this.close} autoScrollBodyContent={true}>
+        <Modal show={!!match.params.itemID} closeAction={this.close}>
           {match.params.itemID && <InventoryDetail itemID={match.params.itemID} close={this.close} />}
-        </Dialog>
+        </Modal>
       </div>
     );
   }

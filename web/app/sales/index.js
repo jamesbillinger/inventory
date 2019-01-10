@@ -6,12 +6,15 @@ import Button from 'components/button';
 import { Switch, Route, Link } from 'react-router-dom';
 import SaleDetail from './saleDetail';
 import { AutoSizer, Table, Column } from 'react-virtualized';
-import Dialog from '@material-ui/core/Dialog';
+import Modal from 'components/modal';
 import moment from 'moment';
 import FormInput from 'components/formInput';
 import filter from 'lodash/filter';
 import find from 'lodash/find';
 import GridCustomer from 'components/gridCustomer';
+import { filterDonuts } from 'shared/utils';
+import findIndex from 'lodash/findIndex';
+
 
 class Sales extends Component {
   constructor() {
@@ -47,29 +50,23 @@ class Sales extends Component {
 
   searchChange = (e) => {
     const { inventory } = this.props;
-    this.setState({
-      search: e.target.value,
-      items: e.target.value
-        ? filter(inventory.sales || [], (item) => {
-            let s = e.target.value.toLowerCase();
-            let ret = false;
-            Object.values(item).map((k) => {
-              if (typeof k === 'string' && k.toLowerCase().indexOf(s) > -1 ) {
-                ret = true;
-              } else {
-                if (typeof k === 'object'){
-                  Object.values(k).map((f) => {
-                    if (typeof f === 'string' && f.toLowerCase().indexOf(s) > -1 ){
-                      ret = true;
-                    }
-                  })
-                }
-              }
-            });
-            return ret;
-          })
-        : undefined
-    });
+    if (e.target.value) {
+      let search = e.target.value.toLowerCase();
+      let matchingItems = filterDonuts(inventory.items, search);
+      this.setState({
+        search: e.target.value,
+        sales: filterDonuts(inventory.sales, search, (s) => {
+          return findIndex(s.items || [], (i) => {
+            return findIndex(matchingItems, {_id:i.item}) > -1;
+          }) > -1;
+        })
+      })
+    } else {
+      this.setState({
+        search: e.target.value,
+        sales: undefined
+      })
+    }
   };
 
   close = () => {
@@ -90,8 +87,7 @@ class Sales extends Component {
 
   render() {
     const { inventory, match } = this.props;
-    const { searchResults, search, sales} = this.state;
-    //let data = searchResults ? searchResults : inventory.sales || [];
+    const { search, sales} = this.state;
 
     return (
       <div
@@ -166,9 +162,9 @@ class Sales extends Component {
             )}
           </AutoSizer>
         </div>
-        <Dialog modal={false} open={!!match.params.saleID} onRequestClose={this.close} autoScrollBodyContent={true}>
+        <Modal show={!!match.params.saleID} closeAction={this.close}>
           {match.params.saleID ? <SaleDetail saleID={match.params.saleID} close={this.close} /> : <div />}
-        </Dialog>
+        </Modal>
       </div>
     );
   }

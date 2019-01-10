@@ -8,6 +8,10 @@ import 'public/styles/theme.css';
 import configureStore from 'shared/store';
 import Wrapper from './components/wrapper';
 import 'react-virtualized/styles.css';
+import Modal from 'react-modal';
+
+Modal.setAppElement('#root');
+
 
 const store = configureStore({});
 

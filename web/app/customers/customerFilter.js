@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
+import Button from 'components/button';
 
 export default class InventoryFilter extends Component {
   render() {

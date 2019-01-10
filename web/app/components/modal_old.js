@@ -10,6 +10,6 @@ export default class MyModal extends Component {
     let myStyle = {
       overlay: Object.assign({ zIndex: 10 }, style)
     };
-    return <Modal isOpen={open} onRequestClose={closeAction} contentLabel="" style={myStyle} {...props} />;
+    return <Modal isOpen={open} closeAction={closeAction} contentLabel="" style={myStyle} {...props} />;
   }
 }

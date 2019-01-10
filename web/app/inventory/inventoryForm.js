@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
-import Button from '@material-ui/core/Button';
+import Button from 'components/button';
 import FormDate from 'components/formDate';
 import FormInput from 'components/formInput';
 import FormSelect from 'components/formSelect';
@@ -77,7 +77,7 @@ class inventoryForm extends Component {
           <Button secondary={true} onClick={closeAction}>
             Cancel
           </Button>
-          <Button label={'Sell'} onClick={{}} />
+          <Button label={'Sell'} onClick={this.sell} />
         </div>
       </div>
     );
