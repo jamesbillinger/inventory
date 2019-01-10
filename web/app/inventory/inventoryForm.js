@@ -20,8 +20,7 @@ class inventoryForm extends Component {
   };
 
   render() {
-    const { handleSubmit, closeAction, itemID } = this.props;
-    console.log("llama" + this.ItemID);
+    const { handleSubmit, closeAction } = this.props;
     return (
       <div>
         <div style={{ display: 'flex' }}>
@@ -81,7 +80,7 @@ class inventoryForm extends Component {
             Cancel
           </Button>
           <Button label={'Sell'} onClick={this.sell} />
-          <QRCode value={itemID} />
+          <QRCode value={this.props.initialValues._id} />
 
         </div>
       </div>
