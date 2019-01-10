@@ -4,6 +4,8 @@ import Button from 'components/button';
 import FormDate from 'components/formDate';
 import FormInput from 'components/formInput';
 import FormSelect from 'components/formSelect';
+import QRCode from 'qrcode.react';
+
 
 const categoryOptions = ['Firearm', 'Ammo', 'Misc', 'Custom Shop'];
 
@@ -18,7 +20,8 @@ class inventoryForm extends Component {
   };
 
   render() {
-    const { handleSubmit, closeAction } = this.props;
+    const { handleSubmit, closeAction, itemID } = this.props;
+    console.log("llama" + this.ItemID);
     return (
       <div>
         <div style={{ display: 'flex' }}>
@@ -78,6 +81,8 @@ class inventoryForm extends Component {
             Cancel
           </Button>
           <Button label={'Sell'} onClick={this.sell} />
+          <QRCode value={itemID} />
+
         </div>
       </div>
     );

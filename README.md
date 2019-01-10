@@ -41,3 +41,6 @@ Did not get sales/index customer names to show up.  I modified the sales/index.j
 work will explain monday if I can't get it sorted.  I feel so close but am probably far away heh.
 
 LOOK at searchChange in inventory/index and build out search functions for sales and customer
+
+
+Sales Search not quite right.  search for geGeor does not work

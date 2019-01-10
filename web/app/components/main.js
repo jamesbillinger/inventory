@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import * as InventoryActions from 'shared/actions';
 import { Route, BrowserRouter, Link, Redirect, Switch, withRouter } from 'react-router-dom';
 import Inventory from 'inventory';
-import InventoryFilter from 'inventory/inventoryFilter';
 import Sales from 'sales';
 import Customers from 'customers';
 import Reports from './reports';
@@ -147,9 +146,6 @@ class Main extends Component {
               display: 'flex',
               flexDirection: 'column'
             }}>
-            <Switch>
-              <Route path="/inventory" component={InventoryFilter} />
-            </Switch>
           </div>
           <div
             style={{

@@ -14,6 +14,7 @@ class InventoryDetail extends Component {
     close();
   };
 
+
   render() {
     const { inventory, actions, itemID, close } = this.props;
     let item = find(inventory.items || [], { _id: itemID });
