@@ -13,34 +13,28 @@ to push to fb:
 
 Todo:
     new customers from sale screen (like new inventory item from helpdesk ticket)
-    click customer to see history?
-    fix sell button on inventory details screen
     first entry press enter to select on search
     build reports
         EOD
         purchases by customer
         filters on type sold etc
-    Stock low notifications
+        Stock low notifications
     percent discount
     barcode printing
     receipt print
     cash drawer open?
     mobile
+    make Print screen for barcodes with price name barcode etc
+
+    make firearms be mandatory qty 1 on add inventory and log book address so maybe a "ticket type" like meditech
+    or "other" screen and add auto saleDate on sale
+
+
 
 questions for Jim:
 
-should we tie customers and sales together? maybe along with inventory for when we have an item in the
-store that is under consignment?
-
-
-for names instead of ID's rendered on the page, do we use cellRenderer to look up the ID but display the name?
-
-I fixed the printer Icon's yay!
-
-Did not get sales/index customer names to show up.  I modified the sales/index.js a bit trying to get it to
-work will explain monday if I can't get it sorted.  I feel so close but am probably far away heh.
-
-LOOK at searchChange in inventory/index and build out search functions for sales and customer
-
-
 Sales Search not quite right.  search for geGeor does not work
+
+added QR code.  the add inventory screen was angry because of no ID.  inventoryForm probably a better way of doing it than I used.
+
+notes on items?  for things like layaway?

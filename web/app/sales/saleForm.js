@@ -66,9 +66,7 @@ class SaleForm extends Component {
               Submit
             </Button>
           )}
-          <Button secondary={true} onClick={closeAction}>
-            {mode ? 'Cancel' : 'Close'}
-          </Button>
+
         </div>
       </div>
     );

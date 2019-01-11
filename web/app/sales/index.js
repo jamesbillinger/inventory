@@ -88,7 +88,6 @@ class Sales extends Component {
   render() {
     const { inventory, match } = this.props;
     const { search, sales} = this.state;
-
     return (
       <div
         style={{
