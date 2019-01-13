@@ -3,12 +3,13 @@ import FormSelect from 'components/formSelect';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as InventoryActions from 'shared/actions';
+import { Switch, Route, Link } from 'react-router-dom';
 
 class CustomerForm extends Component {
   change = (val) => {
     const { input } = this.props;
     if (val === '_new') {
-      //create new customer
+      return <Link to="/customers/_new" />
     } else {
       input.onChange(val);
     }

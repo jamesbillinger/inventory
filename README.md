@@ -26,15 +26,17 @@ Todo:
     mobile
     make Print screen for barcodes with price name barcode etc
 
-    make firearms be mandatory qty 1 on add inventory and log book address so maybe a "ticket type" like meditech
-    or "other" screen and add auto saleDate on sale
+    inventory only shows qty >= 1 on POS screen
 
+    Owner field populated from customer list
 
 
 questions for Jim:
 
 Sales Search not quite right.  search for geGeor does not work
 
-added QR code.  the add inventory screen was angry because of no ID.  inventoryForm probably a better way of doing it than I used.
-
 notes on items?  for things like layaway?
+
+customerSelect component?
+
+how to launch new customer from customer dropdown?

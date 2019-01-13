@@ -5,9 +5,10 @@ import FormDate from 'components/formDate';
 import FormInput from 'components/formInput';
 import FormSelect from 'components/formSelect';
 import QRCode from 'qrcode.react';
+import FormCustomer from 'customers/formCustomer';
+
 
 const categoryOptions = ['Firearm', 'Ammo', 'Misc', 'Custom Shop'];
-
 class inventoryForm extends Component {
   submit = (data) => {
     const { actions, closeAction } = this.props;
@@ -19,7 +20,7 @@ class inventoryForm extends Component {
   };
 
   render() {
-    const { handleSubmit, closeAction } = this.props;
+    const { handleSubmit, closeAction, initialValues } = this.props;
     return (
       <div>
         <div style={{ display: 'flex' }}>
@@ -30,7 +31,7 @@ class inventoryForm extends Component {
             <Field name="category" component={FormSelect} label="Category" options={categoryOptions} />
             <Field name="purchaseDate" component={FormDate} label="Purchase Date" />
             <Field name="saleDate" component={FormDate} label="Sale Date" />
-            <Field name="owner" component={FormInput} label="Owner" />
+            <Field name="owner" component={FormCustomer} label="Owner"  />
             <Field name="quantity" component={FormInput} label="Quantity" type="number" style={{ width: '100px' }} />
             <Field
               name="lowStock"
@@ -62,6 +63,8 @@ class inventoryForm extends Component {
                 type="currency"
                 style={{ width: '120px' }}
               />
+              <Field name="notes" component={FormInput} label="Notes" />
+              <Field name="log" component={FormInput} label="Log" />
             </div>
           </div>
         </div>
@@ -78,9 +81,7 @@ class inventoryForm extends Component {
             Cancel
           </Button>
           <Button label={'Sell'} onClick={this.sell} />
-          <div>
-            {window.location.pathname === '/inventory/_new' ? '' : <QRCode value={this.props.initialValues._id} />}
-          </div>
+          {window.location.pathname === '/inventory/_new' ? null : <QRCode value={initialValues._id} />}
         </div>
       </div>
     );

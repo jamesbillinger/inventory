@@ -134,7 +134,7 @@ class Payments extends Component {
   };
 
   render() {
-    const { payments, taxRate, items, close, handleSubmit, submitting, customers } = this.props;
+    const { payments, taxRate, items, close, handleSubmit, submitting, customers, onClick } = this.props;
     const { total } = this.state;
     let paid = (payments.input.value || []).reduce((a, b) => {
       return a + parseFloat(b.value || 0);
