@@ -305,11 +305,12 @@ export function deleteItem(id) {
 export function addCustomer(customer, callback) {
   return dispatch => {
     let newRef = firebaseRef.child("/customers/").push();
-    newRef.set({
+    let nc = {
       _id: newRef.getKey(),
       ...customer
-    });
-    callback && callback(newRef.getValue());
+    };
+    newRef.set(nc);
+    callback && callback(nc);
   };
 }
 export function updateCustomer(customer, callback) {

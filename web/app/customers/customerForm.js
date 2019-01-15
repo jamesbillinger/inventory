@@ -11,7 +11,7 @@ class CustomerForm extends Component {
   };
 
   submit = (data) => {
-    const { actions, closeAction, onAdd } = this.props;
+    const { actions, closeAction, onSubmit, onAdd } = this.props;
     if (data._id) {
       actions.updateCustomer(data, closeAction);
     } else {

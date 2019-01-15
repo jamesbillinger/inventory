@@ -3,13 +3,19 @@ import FormSelect from 'components/formSelect';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as InventoryActions from 'shared/actions';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route, Link, withRouter } from 'react-router-dom';
+import CustomerModal from './customerModal';
 
-class CustomerForm extends Component {
+class FormCustomer extends Component {
   change = (val) => {
-    const { input } = this.props;
+    const { input, actions } = this.props;
     if (val === '_new') {
-      return <Link to="/customers/_new" />
+      actions.openModal(CustomerModal, {
+        customerID: '_new',
+        onSubmit: (newVal) => {
+          input.onChange(newVal._id)
+        }
+      });
     } else {
       input.onChange(val);
     }
@@ -22,7 +28,8 @@ class CustomerForm extends Component {
   }
 }
 
-export default connect(
+export default withRouter(
+connect(
   (state) => ({
     options: [
       {
@@ -38,4 +45,4 @@ export default connect(
   (dispatch) => ({
     actions: bindActionCreators({ ...InventoryActions }, dispatch)
   })
-)(CustomerForm);
+)(FormCustomer));

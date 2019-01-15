@@ -12,7 +12,6 @@ to push to fb:
 
 
 Todo:
-    new customers from sale screen (like new inventory item from helpdesk ticket)
     first entry press enter to select on search
     build reports
         EOD
@@ -28,15 +27,10 @@ Todo:
 
     inventory only shows qty >= 1 on POS screen
 
-    Owner field populated from customer list
 
 
 questions for Jim:
 
 Sales Search not quite right.  search for geGeor does not work
 
-notes on items?  for things like layaway?
-
-customerSelect component?
-
-how to launch new customer from customer dropdown?
+logging specific inventory item changes

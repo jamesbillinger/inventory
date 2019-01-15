@@ -9,15 +9,15 @@ import Icon from 'components/icon';
 
 class CustomerDetail extends Component {
   deleteCustomer = () => {
-    const { actions, customerID, close } = this.props;
+    const { actions, customerID, closeAction } = this.props;
     actions.deleteCustomer(customerID);
-    close();
+    closeAction();
   };
 
   print = () => {};
 
   render() {
-    const { inventory, actions, customerID, close } = this.props;
+    const { inventory, actions, customerID, closeAction, onSubmit } = this.props;
     let item = find(inventory.customers || [], { _id: customerID });
 
     if (!item && customerID === '_new') {
@@ -25,6 +25,7 @@ class CustomerDetail extends Component {
 
 
     }
+    console.log(this.props);
     return (
       <div>
         <div style={{ position: 'absolute', top: '23px', right: '30px' }}>
@@ -35,7 +36,7 @@ class CustomerDetail extends Component {
             <Icon icon="delete" secondary={true} onClick={this.deleteCustomer} style={{ fontSize: '18px' }} />
           )}
         </div>
-        <CustomerForm initialValues={item} closeAction={close} actions={actions} />
+        <CustomerForm initialValues={item} closeAction={closeAction} onSubmit={onSubmit} actions={actions}  />
       </div>
     );
   }
