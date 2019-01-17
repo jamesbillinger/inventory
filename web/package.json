@@ -50,7 +50,7 @@
     "style-loader": "^0.20.3",
     "tracer": "^0.8.12",
     "webpack": "^4.1.1",
-    "webpack-cli": "^2.0.15",
+    "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.1",
     "winston": "^2.4.1"
   },
