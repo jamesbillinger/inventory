@@ -12,77 +12,41 @@ import POS from 'sales/pos';
 import Button from 'components/button';
 import Popover from 'material-ui/Popover';
 import Menu from '@material-ui/core/Menu';
+import Icon from 'components/icon';
 import PopoverContainer from 'components/popoverContainer';
 import MenuItem from '@material-ui/core/MenuItem';
 
-class _MyMenuItem extends Component {
-  constructor() {
-    super();
-    this.state = {};
-    this._click = ::this.click;
-    this._close = ::this.close;
-  }
-
-  click(e) {
-    this.setState({
-      open: !this.state.open,
-      anchorEl: e.currentTarget
-    });
-  }
-
-  close() {
-    this.setState({
-      open: false
-    });
-  }
-
+class AccountMenu extends Component {
   render() {
-    const { label, path, style, children, location } = this.props;
-    const { open, anchorEl } = this.state;
-    if (children) {
-      return (
-        <div>
-          <Button
-            style={Object.assign({ fontSize: '18px', color: 'white', height: '64px' }, style)}
-            onClick={this._click}>
-            {label}
-          </Button>
-          <Popover
-            open={open}
-            anchorEl={anchorEl}
-            anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-            targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-            closeAction={this._close}>
-            {children}
-          </Popover>
-        </div>
-      );
-    } else {
-      let active = path === location.pathname;
-      if (path !== '/') {
-        active = location.pathname.startsWith(path);
-      }
-      return (
-        <Link to={path || '/' + label.toLowerCase()} style={{ flex: '1 1 auto', maxWidth: '120px' }}>
-          <Button
-            style={Object.assign(
-              {
-                fontSize: '18px',
-                color: active ? '#455a64' : 'white',
-                height: '64px',
-                width: '100%',
-                minWidth: 'unset'
-              },
-              style
-            )}>
-            {label}
-          </Button>
-        </Link>
-      );
-    }
+    const { actions } = this.props;
+    return (
+      <div style={{textAlign:'right'}}>
+        <div onClick={actions.logout.bind(this)} className='hoverDiv' style={{padding:'10px'}}>Sign Out</div>
+        <div style={{padding:'10px', fontSize:'12px'}}>© Copyright {new Date().getFullYear()}</div>
+      </div>
+    );
   }
 }
-let MyMenuItem = withRouter(_MyMenuItem);
+
+let linkStyle =  {
+  padding:'10px',
+  fontSize:'15px'
+}
+
+class MenuMenu extends Component {
+  render() {
+    return (
+      <div style={{textAlign:'right', display:'flex', flexDirection:'column'}}>
+        <Link style={linkStyle} to="/" className='hoverDiv'>POS</Link>
+        <Link style={linkStyle} to="/sales" className='hoverDiv'>Sales</Link>
+        <Link style={linkStyle} to="/inventory" className='hoverDiv'>Inventory</Link>
+        <Link style={linkStyle} to="/customers" className='hoverDiv'>Customers</Link>
+        <Link style={linkStyle} to="/users" className='hoverDiv'>Users</Link>
+        <Link style={linkStyle} to="/reports" className='hoverDiv'>Reports</Link>
+      </div>
+    )
+  }
+}
 
 class Main extends Component {
   componentDidMount() {
@@ -92,6 +56,22 @@ class Main extends Component {
       actions.fetchItems();
       actions.fetchCustomers();
     }
+  }
+
+  userClick = (e) => {
+    const { actions } = this.props;
+    actions.openPopover(AccountMenu, {
+      anchorEl: e.target,
+      actions
+    });
+  };
+
+  menuClick = (e) => {
+    const { actions } = this.props;
+    actions.openPopover(MenuMenu, {
+      anchorEl: e.target,
+      actions
+    });
   }
 
   render() {
@@ -124,19 +104,15 @@ class Main extends Component {
                   flex: '1 1 auto',
                   marginRight: '30px'
                 }}>
-                <MyMenuItem label="POS" path="/" />
+                {/*<MyMenuItem label="POS" path="/" />
                 <MyMenuItem label="Sales" path="/sales" />
                 <MyMenuItem label="Inventory" path="/inventory" />
                 <MyMenuItem label="Customers" path="/customers" />
                 <MyMenuItem label="Users" path="/users" />
-                <MyMenuItem label="Reports" path="/reports" />
+                <MyMenuItem label="Reports" path="/reports" />*/}
               </div>
-              <MyMenuItem label={inventory.user.name} style={{ fontSize: '14px', padding: '0 10px' }}>
-                <Menu style={{ textAlign: 'right' }}>
-                  <MenuItem primaryText="Sign out" onClick={actions.logout.bind(this)} />
-                  <MenuItem primaryText={'© Copyright ' + new Date().getFullYear()} style={{ fontSize: '0.85em' }} />
-                </Menu>
-              </MyMenuItem>
+              <Icon icon="account-circle" style={{ color: 'white', fontSize:'18px' }} onClick={this.userClick} />
+              <Icon icon='dots-vertical'style={{ color: 'white', fontSize:'18px' }} onClick={this.menuClick} />
             </div>
           </div>
           <div
@@ -145,8 +121,8 @@ class Main extends Component {
               gridColumn: '1',
               display: 'flex',
               flexDirection: 'column'
-            }}>
-          </div>
+            }}
+          />
           <div
             style={{
               gridRow: '2',
