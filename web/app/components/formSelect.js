@@ -5,7 +5,6 @@ import Async from 'react-select/lib/Async';
 import Creatable from 'react-select/lib/Creatable';
 import AsyncCreatable from 'react-select/lib/AsyncCreatable';
 import LabelledText from 'components/labelledText';
-//import api from 'globals/api';
 import find from 'lodash/find';
 import isEqual from 'lodash/isEqual';
 import omit from 'lodash/omit';
@@ -295,7 +294,8 @@ export default class FormSelect extends Component {
           zIndex: '5',
           ...(menuStyle || {})
         }),
-        placeholder: (base) => Object.assign({}, base, placeholderStyle)
+        placeholder: (base) => Object.assign({}, base, placeholderStyle),
+        menuPortal: (base) => ({ ...base, zIndex: 9999 })
         //list here https://github.com/JedWatson/react-select/blob/v2/src/styles.js
       };
       if (short) {
@@ -344,6 +344,7 @@ export default class FormSelect extends Component {
               cacheOptions={true}
               isClearable={clearable}
               isMulti={multi}
+              menuPortalTarget={document.body}
               menuPlacement={menuPlacement}
               getOptionLabel={getOptionLabel || this.getOptionLabel}
               getOptionValue={getOptionValue || this.getOptionValue}
@@ -368,6 +369,7 @@ export default class FormSelect extends Component {
               cacheOptions={true}
               isClearable={clearable}
               isMulti={multi}
+              menuPortalTarget={document.body}
               menuPlacement={menuPlacement}
               getOptionLabel={getOptionLabel || this.getOptionLabel}
               getOptionValue={getOptionValue || this.getOptionValue}
@@ -393,6 +395,7 @@ export default class FormSelect extends Component {
             placeholder={placeholder || label}
             styles={styles}
             menuPlacement={menuPlacement}
+            menuPortalTarget={document.body}
             getOptionLabel={getOptionLabel || this.getOptionLabel}
             getOptionValue={getOptionValue || this.getOptionValue}
             value={myValue}
@@ -414,6 +417,7 @@ export default class FormSelect extends Component {
             isClearable={clearable}
             placeholder={placeholder || label}
             styles={styles}
+            menuPortalTarget={document.body}
             menuPlacement={menuPlacement}
             getOptionLabel={getOptionLabel || this.getOptionLabel}
             getOptionValue={getOptionValue || this.getOptionValue}
@@ -433,19 +437,18 @@ export default class FormSelect extends Component {
             </label>
           )}
           {selectControl}
-          {touched &&
-            error && (
-              <div
-                style={{
-                  color: 'red',
-                  fontSize: '13px',
-                  whiteSpace: 'nowrap',
-                  marginTop: '3px'
-                }}
-                onClick={this.focus}>
-                {error}
-              </div>
-            )}
+          {touched && error && (
+            <div
+              style={{
+                color: 'red',
+                fontSize: '13px',
+                whiteSpace: 'nowrap',
+                marginTop: '3px'
+              }}
+              onClick={this.focus}>
+              {error}
+            </div>
+          )}
         </div>
       );
     }

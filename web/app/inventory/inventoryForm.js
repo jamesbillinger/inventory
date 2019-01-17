@@ -31,7 +31,7 @@ class inventoryForm extends Component {
             <Field name="category" component={FormSelect} label="Category" options={categoryOptions} />
             <Field name="purchaseDate" component={FormDate} label="Purchase Date" />
             <Field name="saleDate" component={FormDate} label="Sale Date" />
-            <Field name="owner" component={FormCustomer} label="Owner"  />
+            <Field name="owner" component={FormCustomer} label="Consignment Owner"  />
             <Field name="quantity" component={FormInput} label="Quantity" type="number" style={{ width: '100px' }} />
             <Field
               name="lowStock"

@@ -130,7 +130,7 @@ class POS extends Component {
             </div>
           </div>
         </div>
-        <Modal show={pay} closeAction={this.pay}>
+        <Modal show={pay} closeAction={this.pay} hideFooter={true}>
           {pay && (
             <Fields
               names={['payments', 'taxRate', 'items', 'discount']}

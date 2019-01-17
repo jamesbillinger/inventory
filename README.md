@@ -34,3 +34,18 @@ questions for Jim:
 Sales Search not quite right.  search for geGeor does not work
 
 logging specific inventory item changes
+
+
+remove item from POS
+
+Beta blocking items
+
+build out POS search with details showing by default
+
+item owner after new addition
+
+add customer not closing on submit
+
+ consignment
+
+
