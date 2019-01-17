@@ -110,7 +110,7 @@ class Inventory extends Component {
             )}
           </AutoSizer>
         </div>
-        <Modal show={!!match.params.itemID} closeAction={this.close}>
+        <Modal show={!!match.params.itemID} closeAction={this.close} hideFooter={true}>
           {match.params.itemID && <InventoryDetail itemID={match.params.itemID} close={this.close} />}
         </Modal>
       </div>
