@@ -68,9 +68,9 @@ export default class MyModal extends Component {
           bottom: '5vh',
           left: '5vw',
           maxWidth: '1060px',
-          background:'none',
-          alignItems:'center',
-          justifyContent:'center',
+          background:hideFooter ? 'none' : 'white',
+          alignItems:hideFooter ? 'center' : 'stretch',
+          justifyContent: hideFooter ? 'center' : 'stretch',
           margin: 'auto'
         },
         contentStyle
