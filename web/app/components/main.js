@@ -18,33 +18,46 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 class AccountMenu extends Component {
   render() {
-    const { actions } = this.props;
+    const { actions, closeAction } = this.props;
     return (
-      <div style={{textAlign:'right'}}>
-        <div onClick={actions.logout.bind(this)} className='hoverDiv' style={{padding:'10px'}}>Sign Out</div>
-        <div style={{padding:'10px', fontSize:'12px'}}>© Copyright {new Date().getFullYear()}</div>
+      <div style={{ textAlign: 'right' }} onClick={closeAction}>
+        <div onClick={actions.logout.bind(this)} className="hoverDiv" style={{ padding: '10px' }}>
+          Sign Out
+        </div>
+        <div style={{ padding: '10px', fontSize: '12px' }}>© Copyright {new Date().getFullYear()}</div>
       </div>
     );
   }
 }
 
-let linkStyle =  {
-  padding:'10px',
-  fontSize:'15px'
-}
+let linkStyle = {
+  padding: '12px 20px',
+  fontSize: '15px',
+  color:'#555'
+};
 
 class MenuMenu extends Component {
   render() {
+    const { closeAction } = this.props;
     return (
-      <div style={{textAlign:'right', display:'flex', flexDirection:'column'}}>
-        <Link style={linkStyle} to="/" className='hoverDiv'>POS</Link>
-        <Link style={linkStyle} to="/sales" className='hoverDiv'>Sales</Link>
-        <Link style={linkStyle} to="/inventory" className='hoverDiv'>Inventory</Link>
-        <Link style={linkStyle} to="/customers" className='hoverDiv'>Customers</Link>
-        <Link style={linkStyle} to="/users" className='hoverDiv'>Users</Link>
-        <Link style={linkStyle} to="/reports" className='hoverDiv'>Reports</Link>
+      <div style={{ display: 'flex', flexDirection: 'column' }} onClick={closeAction}>
+        <Link style={linkStyle} to="/sales" className="hoverDiv">
+          Sales
+        </Link>
+        <Link style={linkStyle} to="/inventory" className="hoverDiv">
+          Inventory
+        </Link>
+        <Link style={linkStyle} to="/customers" className="hoverDiv">
+          Customers
+        </Link>
+        <Link style={linkStyle} to="/users" className="hoverDiv">
+          Users
+        </Link>
+        <Link style={linkStyle} to="/reports" className="hoverDiv">
+          Reports
+        </Link>
       </div>
-    )
+    );
   }
 }
 
@@ -72,7 +85,7 @@ class Main extends Component {
       anchorEl: e.target,
       actions
     });
-  }
+  };
 
   render() {
     const { actions, inventory } = this.props;
@@ -95,8 +108,11 @@ class Main extends Component {
                 justifyContent: 'space-between',
                 backgroundColor: '#607d8b',
                 color: 'white',
-                padding: '0 20px'
+                padding: '2px 20px'
               }}>
+              <Link to="/">
+                <Icon icon="home" style={{ color: 'white', fontSize: '24px', cursor: 'pointer' }} />
+              </Link>
               <div
                 style={{
                   display: 'flex',
@@ -111,8 +127,16 @@ class Main extends Component {
                 <MyMenuItem label="Users" path="/users" />
                 <MyMenuItem label="Reports" path="/reports" />*/}
               </div>
-              <Icon icon="account-circle" style={{ color: 'white', fontSize:'18px' }} onClick={this.userClick} />
-              <Icon icon='dots-vertical'style={{ color: 'white', fontSize:'18px' }} onClick={this.menuClick} />
+              <Icon
+                icon="dots-vertical"
+                style={{ color: 'white', fontSize: '24px', marginLeft: '5px' }}
+                onClick={this.menuClick}
+              />
+              <Icon
+                icon="account-circle"
+                style={{ color: 'white', fontSize: '24px', marginLeft: '5px' }}
+                onClick={this.userClick}
+              />
             </div>
           </div>
           <div
