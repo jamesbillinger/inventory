@@ -196,13 +196,13 @@ class Payments extends Component {
               alignItems: 'center',
               justifyContent: 'center'
             }}>
-            <FatButton icon="attach_money" color="green" onClick={this.addPayment.bind(this, 'cash')} disabled={valid}>
+            <FatButton icon="cash-usd" color="green" onClick={this.addPayment.bind(this, 'cash')} disabled={valid}>
               Cash
             </FatButton>
-            <FatButton icon="credit_card" color="red" onClick={this.addPayment.bind(this, 'credit')} disabled={valid}>
+            <FatButton icon="credit-card" color="red" onClick={this.addPayment.bind(this, 'credit')} disabled={valid}>
               Credit
             </FatButton>
-            <FatButton icon="swap_vert" color="blue" onClick={this.addPayment.bind(this, 'trade')} disabled={valid}>
+            <FatButton icon="swap-horizontal-bold" color="blue" onClick={this.addPayment.bind(this, 'trade')} disabled={valid}>
               Trade
             </FatButton>
           </div>
