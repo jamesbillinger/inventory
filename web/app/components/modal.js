@@ -68,6 +68,9 @@ export default class MyModal extends Component {
           bottom: '5vh',
           left: '5vw',
           maxWidth: '1060px',
+          background:'none',
+          alignItems:'center',
+          justifyContent:'center',
           margin: 'auto'
         },
         contentStyle

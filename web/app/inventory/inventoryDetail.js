@@ -19,7 +19,7 @@ class InventoryDetail extends Component {
     const { inventory, actions, itemID, close } = this.props;
     let item = find(inventory.items || [], { _id: itemID });
     return (
-      <div>
+      <div style={{flex:'0 0 auto', backgroundColor:'white', borderRadius:'3px', position:'relative', padding:'15px 20px'}}>
         <div style={{ position: 'absolute', top: '23px', right: '30px' }}>
           {itemID !== '_new' && (
             <Icon icon="delete" secondary={true} onClick={this.deleteItem} style={{ fontSize: '18px' }} />

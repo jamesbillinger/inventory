@@ -7,7 +7,6 @@ import FormSelect from 'components/formSelect';
 import QRCode from 'qrcode.react';
 import FormCustomer from 'customers/formCustomer';
 
-
 const categoryOptions = ['Firearm', 'Ammo', 'Misc', 'Custom Shop'];
 class inventoryForm extends Component {
   submit = (data) => {
@@ -31,7 +30,7 @@ class inventoryForm extends Component {
             <Field name="category" component={FormSelect} label="Category" options={categoryOptions} />
             <Field name="purchaseDate" component={FormDate} label="Purchase Date" />
             <Field name="saleDate" component={FormDate} label="Sale Date" />
-            <Field name="owner" component={FormCustomer} label="Consignment Owner"  />
+            <Field name="owner" component={FormCustomer} label="Consignment Owner" />
             <Field name="quantity" component={FormInput} label="Quantity" type="number" style={{ width: '100px' }} />
             <Field
               name="lowStock"
@@ -66,13 +65,18 @@ class inventoryForm extends Component {
               <Field name="notes" component={FormInput} label="Notes" />
               <Field name="log" component={FormInput} label="Log" />
             </div>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px' }}>
+              {window.location.pathname === '/inventory/_new' ? null : (
+                <QRCode value={initialValues._id} style={{ width: '80px', height: '80px' }} />
+              )}
+            </div>
           </div>
         </div>
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'flex-end'
+            justifyContent: 'center'
           }}>
           <Button primary={true} onClick={handleSubmit(this.submit)}>
             Submit
@@ -81,7 +85,6 @@ class inventoryForm extends Component {
             Cancel
           </Button>
           <Button label={'Sell'} onClick={this.sell} />
-          {window.location.pathname === '/inventory/_new' ? null : <QRCode value={initialValues._id} />}
         </div>
       </div>
     );
