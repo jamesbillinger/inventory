@@ -100,8 +100,8 @@ class Customers extends Component {
             )}
           </AutoSizer>
         </div>
-        <Modal show={!!match.params.customerID} closeAction={this.close}>
-          {match.params.customerID && <CustomerDetail customerID={match.params.customerID} close={this.close} />}
+        <Modal show={!!match.params.customerID} closeAction={this.close} hideFooter={true}>
+          {match.params.customerID && <CustomerDetail customerID={match.params.customerID} closeAction={this.close} />}
         </Modal>
       </div>
     );

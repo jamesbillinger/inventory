@@ -40,24 +40,21 @@ class CustomerForm extends Component {
     const { mode } = this.state;
     return (
       <div style={{ display: 'flex', flexDirection: 'column', minHeight: '200px' }}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', flex: '0 0 auto' }}>
-          <Field name="createdAt" component={FormDate} label="Customer Date" labelledTextMode={!mode} />
           <Field name="name" component={FormInput} label="Name" labelledTextMode={!mode} />
           <Field name="phone" component={FormInput} label="Phone" labelledTextMode={!mode} />
-        </div>
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'flex-end'
           }}>
-          <Button onClick={this.click}>Sales History</Button>
         </div>
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'flex-end'
+            justifyContent: 'center',
+            marginTop: '20px'
           }}>
           {mode && (
             <Button primary={true} onClick={handleSubmit(this.submit)}>

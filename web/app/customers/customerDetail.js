@@ -27,7 +27,7 @@ class CustomerDetail extends Component {
     }
     console.log(this.props);
     return (
-      <div>
+      <div style={{background: 'white', borderRadius: '3px', padding: '15px 20px', position: 'relative'}}>
         <div style={{ position: 'absolute', top: '23px', right: '30px' }}>
           {customerID !== '_new' && (
             <Icon icon="printer" onClick={this.print} style={{ fontSize: '18px', marginRight: '10px', color: 'blue' }} />
