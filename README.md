@@ -48,4 +48,13 @@ add customer not closing on submit
 
  consignment
 
+ ////Todo by monday////
+
+ on Pos search if ID then automatically add
+
+ on item add, display details by default
+
+start building report screen
+
+
 

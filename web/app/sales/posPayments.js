@@ -147,7 +147,10 @@ class Payments extends Component {
           flexDirection: 'column',
           justifyContent: 'space-between',
           height: '80vh',
-          width: '100%'
+          width: '100%',
+          backgroundColor: 'white',
+          paddingTop: '15px',
+          borderRadius: '3px'
         }}>
         <div
           style={{
@@ -169,7 +172,7 @@ class Payments extends Component {
             }}>
             Customer
           </div>
-          <Field name="customer" component={FormCustomer} allowCreate={true} label="Customer" />
+          <Field name="customer" component={FormCustomer} allowCreate={true} style={{marginTop: '0'}}/>
         </div>
         <div
           style={{
