@@ -15,7 +15,6 @@ import GridCustomer from 'components/gridCustomer';
 import { filterDonuts } from 'shared/utils';
 import findIndex from 'lodash/findIndex';
 
-
 class Sales extends Component {
   constructor() {
     super();
@@ -28,7 +27,7 @@ class Sales extends Component {
       actions.fetchSales();
     }
   }
-/*
+  /*
   componentDidUpdate(prevProps, prevState) {
     const { inventory } = this.props;
     const { search } = this.state;
@@ -56,16 +55,18 @@ class Sales extends Component {
       this.setState({
         search: e.target.value,
         sales: filterDonuts(inventory.sales, search, (s) => {
-          return findIndex(s.items || [], (i) => {
-            return findIndex(matchingItems, {_id:i.item}) > -1;
-          }) > -1;
+          return (
+            findIndex(s.items || [], (i) => {
+              return findIndex(matchingItems, { _id: i.item }) > -1;
+            }) > -1
+          );
         })
-      })
+      });
     } else {
       this.setState({
         search: e.target.value,
         sales: undefined
-      })
+      });
     }
   };
 
@@ -87,7 +88,7 @@ class Sales extends Component {
 
   render() {
     const { inventory, match } = this.props;
-    const { search, sales} = this.state;
+    const { search, sales } = this.state;
     return (
       <div
         style={{

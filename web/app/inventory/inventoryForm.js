@@ -46,14 +46,15 @@ class inventoryForm extends Component {
                 backgroundColor: '#f2f2f2',
                 borderRadius: '6px',
                 paddingBottom: '10px',
-                marginTop: '10px'
+                marginTop: '10px',
+                paddingLeft: '10px'
               }}>
               <Field
                 name="purchasePrice"
                 component={FormInput}
                 label="Purchase Price"
                 type="currency"
-                style={{ width: '120px' }}
+                style={{ width: '120px'}}
               />
               <Field
                 name="salePrice"
