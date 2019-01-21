@@ -155,6 +155,7 @@ class Search extends Component {
         onSuggestionSelected={this.onSuggestionSelected}
         inputProps={inputProps}
         theme={theme}
+        highlightFirstSuggestion={true}
       />
     );
   }

@@ -48,9 +48,12 @@ add customer not closing on submit
 
  consignment
 
+ fix sale screen to have ability to remove items
+
  ////Todo by monday////
 
  on Pos search if ID then automatically add
+ ... apparently it already does this...  I... brain
 
  on item add, display details by default
 
