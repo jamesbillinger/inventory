@@ -9,6 +9,7 @@ import Modal from 'components/modal';
 import Payments from './posPayments';
 import { withRouter } from 'react-router-dom';
 import POSItems from './posItems';
+import InventoryBrief from 'inventory/inventoryBrief'
 
 
 class POS extends Component {
@@ -48,6 +49,8 @@ class POS extends Component {
     reset();
     history.push('/sales/' + r._id);
   };
+  
+
 
   render() {
     const { pristine, valid, submitting, handleSubmit } = this.props;
@@ -75,7 +78,7 @@ class POS extends Component {
               justifyContent: 'space-between',
               alignItems: 'center'
             }}>
-            <FieldArray name="items" component={POSSearch} />
+            <FieldArray name="items" component={POSSearch} selectItem={this.selectItem}/>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <FatButton icon="close" secondary={true} disabled={pristine} onClick={this.clear}>
                 Clear
@@ -102,7 +105,7 @@ class POS extends Component {
               borderRadius: '6px',
               padding: '10px 5px'
             }}>
-            <LabelledText label="Make">{itemID}</LabelledText>
+            <InventoryBrief itemID={itemID} />
           </div>
         )}
         <div

@@ -45,7 +45,7 @@ build out POS search with details showing by default
 item owner after new addition
 
 add customer not closing on submit
-
+=
  consignment
 
  fix sale screen to have ability to remove items
@@ -60,6 +60,9 @@ add customer not closing on submit
     <FieldArray /> on 94 of pos is where this calls items which calls item.
 
 start building report screen
+
+
+multiple scanns just increase quantity unless firearm
 
 
 

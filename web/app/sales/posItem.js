@@ -4,6 +4,7 @@ import FormInput from 'components/formInput';
 import find from 'lodash/find';
 import LabelledText from 'components/labelledText';
 import get from 'lodash/get';
+import Icon from 'components/icon'
 
 class _POSItem extends Component {
   state = {};
@@ -48,7 +49,7 @@ class _POSItem extends Component {
   };
 
   render() {
-    const { items, index, selectItem, labelledTextMode } = this.props;
+    const { items, index, selectItem, labelledTextMode, removeItem } = this.props;
     let price = items[index].price;
     let quantity = items[index].quantity;
     let totalPrice = items[index].totalPrice;
@@ -60,7 +61,15 @@ class _POSItem extends Component {
             display: 'flex',
             alignItems: 'center',
             backgroundColor: index % 2 ? '#f2f2f2' : 'none'
+          }}><div
+          style={{
+            flex: '0 0 25px',
+            fontWeight: 'bold',
+            fontSize: '18px',
+            color: '#bbb'
           }}>
+          <Icon icon='delete' secondary={true} onClick={removeItem} />
+        </div>
           <div
             style={{
               flex: '0 0 25px',

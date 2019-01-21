@@ -128,13 +128,14 @@ class Search extends Component {
   };
 
   pushItem(item) {
-    const { fields } = this.props;
+    const { fields, selectItem } = this.props;
     fields.push({
       item: item._id,
       price: item.salePrice || 0,
       quantity: 1,
       totalPrice: item.salePrice || 0
     });
+    selectItem(item._id);
   }
 
   render() {
