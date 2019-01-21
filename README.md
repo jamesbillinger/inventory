@@ -53,9 +53,11 @@ add customer not closing on submit
  ////Todo by monday////
 
  on Pos search if ID then automatically add
- ... apparently it already does this...  I... brain
+ ... apparently it already does this.
 
  on item add, display details by default
+    line 80 of posItem is the onclick for switching out the "make" screen.
+    <FieldArray /> on 94 of pos is where this calls items which calls item.
 
 start building report screen
 

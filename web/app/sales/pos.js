@@ -10,11 +10,11 @@ import Payments from './posPayments';
 import { withRouter } from 'react-router-dom';
 import POSItems from './posItems';
 
+
 class POS extends Component {
   state = {
     pay: false
   };
-
   clear = () => {
     const { reset } = this.props;
     reset();
@@ -25,6 +25,7 @@ class POS extends Component {
       this.setState({
         itemID
       });
+      console.log(this.state);
     } else {
       this.setState({
         itemID: undefined
