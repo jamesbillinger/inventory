@@ -6,7 +6,7 @@ import { Route, BrowserRouter, Link, Redirect, Switch, withRouter } from 'react-
 import Inventory from 'inventory';
 import Sales from 'sales';
 import Customers from 'customers';
-import Reports from './reports';
+import Reports from 'reports';
 import Users from './users';
 import POS from 'sales/pos';
 import Button from 'components/button';
