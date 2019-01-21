@@ -27,7 +27,7 @@ class Reports extends Component {
           flex: '0 0 100%',
           display: 'grid',
           gridTemplateColumns: '1fr auto ',
-          gridTemplateRows: 'auto 1fr auto',
+          gridTemplateRows: 'auto 1fr 1fr',
           gridGap: '10px'
         }}>
         <div
@@ -57,6 +57,14 @@ class Reports extends Component {
             borderRadius: '6px'
           }}>
           lobsters
+        </div>
+        <div style={{
+          gridColumn: '1/4',
+          gridRow: '3',
+          backgroundColor: 'white',
+          borderRadius: '6px'
+        }}>
+chickens
         </div>
       </div>
     );
