@@ -19,7 +19,7 @@ class Wrapper extends Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path="/register" component={Register} />
+          <Route path="/register" render={() => <Register />} />
           <Route
             path="/login"
             render={(props) => {
