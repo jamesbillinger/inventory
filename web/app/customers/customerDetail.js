@@ -25,7 +25,6 @@ class CustomerDetail extends Component {
 
 
     }
-    console.log(this.props);
     return (
       <div style={{background: 'white', borderRadius: '3px', padding: '15px 20px', position: 'relative'}}>
         <div style={{ position: 'absolute', top: '23px', right: '30px' }}>

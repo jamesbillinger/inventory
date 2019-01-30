@@ -6,7 +6,6 @@ import LabelledText from 'components/labelledText';
 class InventoryBrief extends Component {
   render() {
     const { item } = this.props;
-    console.log(item);
     return (
       <div
         style={{

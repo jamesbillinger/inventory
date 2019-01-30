@@ -4,6 +4,7 @@ import debounce from 'lodash/debounce';
 import Autosuggest from 'react-autosuggest';
 import filter from 'lodash/filter';
 import find from 'lodash/find';
+import findIndex from 'lodash/findIndex';
 
 const theme = {
   container: {
@@ -128,13 +129,23 @@ class Search extends Component {
   };
 
   pushItem(item) {
-    const { fields, selectItem } = this.props;
-    fields.push({
-      item: item._id,
-      price: item.salePrice || 0,
-      quantity: 1,
-      totalPrice: item.salePrice || 0
-    });
+    const { fields, selectItem, change } = this.props;
+    let items = fields.getAll();
+    let i = findIndex(items, { item: item._id });
+    if (i > -1) {
+      console.log(items[i].quantity);
+      change(`items.${i}.quantity`, (fieldValue, allValues) => {
+        console.log(fieldValue);
+        return fieldValue + 1;
+      } );
+    } else {
+      fields.push({
+        item: item._id,
+        price: item.salePrice || 0,
+        quantity: 1,
+        totalPrice: item.salePrice || 0
+      });
+    }
     selectItem(item._id);
   }
 

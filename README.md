@@ -12,7 +12,6 @@ to push to fb:
 
 
 Todo:
-    first entry press enter to select on search
     build reports
         EOD
         purchases by customer
@@ -33,31 +32,11 @@ questions for Jim:
 
 Sales Search not quite right.  search for geGeor does not work
 
-logging specific inventory item changes
-
-
-remove item from POS
-
 Beta blocking items
-
-build out POS search with details showing by default
-
-item owner after new addition
 
 add customer not closing on submit
 =
  consignment
-
- fix sale screen to have ability to remove items
-
- ////Todo by monday////
-
- on Pos search if ID then automatically add
- ... apparently it already does this.
-
- on item add, display details by default
-    line 80 of posItem is the onclick for switching out the "make" screen.
-    <FieldArray /> on 94 of pos is where this calls items which calls item.
 
 start building report screen
 

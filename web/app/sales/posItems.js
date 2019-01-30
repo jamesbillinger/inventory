@@ -5,7 +5,6 @@ import { Fields } from 'redux-form';
 export default class POSItems extends Component {
   render() {
     const { fields, meta, ...props } = this.props;
-    console.log(this.props);
     return (
       <div>
         {(fields || []).map((f, fi) => (

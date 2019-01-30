@@ -26,7 +26,6 @@ class POS extends Component {
       this.setState({
         itemID
       });
-      console.log(this.state);
     } else {
       this.setState({
         itemID: undefined
@@ -53,7 +52,7 @@ class POS extends Component {
 
 
   render() {
-    const { pristine, valid, submitting, handleSubmit } = this.props;
+    const { pristine, valid, submitting, handleSubmit, change } = this.props;
     const { itemID, pay } = this.state;
     return (
       <div
@@ -78,7 +77,7 @@ class POS extends Component {
               justifyContent: 'space-between',
               alignItems: 'center'
             }}>
-            <FieldArray name="items" component={POSSearch} selectItem={this.selectItem}/>
+            <FieldArray name="items" component={POSSearch} selectItem={this.selectItem} change={change}/>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <FatButton icon="close" secondary={true} disabled={pristine} onClick={this.clear}>
                 Clear
@@ -123,6 +122,7 @@ class POS extends Component {
               padding: '5px 15px'
             }}>
             <Fields names={['items', 'discount', 'total', 'taxRate']} component={Totals} />
+
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <FatButton
                 icon="currency-usd"
