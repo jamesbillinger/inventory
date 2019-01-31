@@ -42,7 +42,6 @@ class Customers extends Component {
         ? filter(inventory.customers || [], (item) => {
             let s = e.target.value.toLowerCase();
             let ret = false;
-            console.log(item);
             Object.values(item).map((k) => {
               if (typeof k === 'string' && k.toLowerCase().indexOf(s) > -1) {
                 ret = true;

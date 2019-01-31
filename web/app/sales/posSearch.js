@@ -86,11 +86,17 @@ class Search extends Component {
     } else if (value) {
       this.setState({
         suggestions: filter(items || [], (it) => {
-          return (
-            (it.make || '').toLowerCase().indexOf(value.toLowerCase()) > -1 ||
-            (it.calibre || '').toLowerCase().indexOf(value.toLowerCase()) > -1 ||
-            (it.model || '').toLowerCase().indexOf(value.toLowerCase()) > -1
-          );
+          if (it.quantity > 0) {
+            return (
+              (it.make || '').toLowerCase().indexOf(value.toLowerCase()) > -1 ||
+              (it.calibre || '').toLowerCase().indexOf(value.toLowerCase()) > -1 ||
+              (it.model || '').toLowerCase().indexOf(value.toLowerCase()) > -1
+            );
+          } else if ((suggestions || []).length > 0) {
+            this.setState({
+              suggestions: []
+            });
+          }
         })
       });
     } else if ((suggestions || []).length > 0) {
@@ -115,6 +121,7 @@ class Search extends Component {
       <div style={{ display: 'flex' }}>
         <div>{suggestion.make}</div>
         <div style={{ marginLeft: '10px' }}>{suggestion.model}</div>
+        <div style={{ marginLeft: '10px' }}>Qty=({suggestion.quantity})</div>
       </div>
     );
   }
@@ -133,11 +140,9 @@ class Search extends Component {
     let items = fields.getAll();
     let i = findIndex(items, { item: item._id });
     if (i > -1) {
-      console.log(items[i].quantity);
       change(`items.${i}.quantity`, (fieldValue, allValues) => {
-        console.log(fieldValue);
         return fieldValue + 1;
-      } );
+      });
     } else {
       fields.push({
         item: item._id,
