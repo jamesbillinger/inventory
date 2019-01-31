@@ -5,11 +5,13 @@ import Autosuggest from 'react-autosuggest';
 import filter from 'lodash/filter';
 import find from 'lodash/find';
 import findIndex from 'lodash/findIndex';
+import 'react-autosuggest/dist/'
 
 const theme = {
   container: {
     position: 'relative',
-    paddingTop: '5px'
+    paddingTop: '5px',
+    width:'100%'
   },
   input: {
     width: '100%',
@@ -102,11 +104,8 @@ class Search extends Component {
           }
         }
       });
-      s = Object.keys(s).map((k) => {
-        return s[k];
-      });
       this.setState({
-        suggestions: s
+        suggestions: Object.values(s)
       });
     } else if ((suggestions || []).length > 0) {
       this.setState({
@@ -129,10 +128,10 @@ class Search extends Component {
     return (
       <div style={{ display: 'flex' }} className="ReactVirtualized__Table__row">
         <div className="ReactVirtualized__Table__rowColumn" style={{flex:'0 0 80px'}}>{suggestion.make}</div>
-        <div className="ReactVirtualized__Table__rowColumn" style={{ flex:'1 0 120px', marginLeft: '10px' }}>
+        <div className="ReactVirtualized__Table__rowColumn" style={{ flex:'1 0 120px' }}>
           {suggestion.model}
         </div>
-        <div className="ReactVirtualized__Table__rowColumn" style={{ flex:'0 0 50px', marginLeft: '10px', textAlign:'right' }}>
+        <div className="ReactVirtualized__Table__rowColumn" style={{ flex:'0 0 50px', textAlign:'right' }}>
           {suggestion.quantity}
         </div>
       </div>
@@ -169,10 +168,10 @@ class Search extends Component {
 
   renderTitle = (section) => {
     return (
-      <div style={{ display: 'flex' }} className="ReactVirtualized__Table__headerRow">
+      <div style={{ display: 'flex', padding:'5px 15px 5px 10px', backgroundColor:'#f6f6f6' }} className="ReactVirtualized__Table__headerRow">
         <div className="ReactVirtualized__Table__rowColumn" style={{flex:'1 0 80px'}}>{section.title}</div>
-        <div className="ReactVirtualized__Table__rowColumn" style={{ flex:'0 0 50px', marginLeft: '10px' }}>
-          Quantity
+        <div className="ReactVirtualized__Table__rowColumn" style={{ flex:'0 0 50px', textAlign:'right' }}>
+          QTY
         </div>
       </div>
     )
