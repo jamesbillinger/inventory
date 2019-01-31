@@ -35,7 +35,9 @@ Sales Search not quite right.  search for geGeor does not work
 
 start building report screen
 
+add sale date on sale to items directly.  then I can pull reports from inventory?
 
 
+(itemTotal - getItem.purchasePrice) x tax) x quantity = profit
 
 

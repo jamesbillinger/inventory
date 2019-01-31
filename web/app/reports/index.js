@@ -22,9 +22,24 @@ class Reports extends Component {
 
   render() {
     const list = [
-      { model: 'ar-15', make: 'blackhawk', name: 'fred' },
-      { model: 'pewpew', make: 'frogs', name: 'joe' },
-      { model: 'bangstick', make: 'bangin', name: 'yoMom' }
+      { model: 'ar-15', make: 'blackhawk', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
+      { model: 'pewpew', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
+      { model: 'bangstick', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' },
+      { model: 'ar-15', make: 'blackhawk', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
+      { model: 'pewpew', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
+      { model: 'bangstick', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' },
+      { model: 'ar-15', make: 'blackhawk', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
+      { model: 'pewpew', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
+      { model: 'bangstick', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' },
+      { model: 'ar-15', make: 'blackhawk', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
+      { model: 'pewpew', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
+      { model: 'bangstick', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' },
+      { model: 'ar-15', make: 'blackhawk', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
+      { model: 'pewpew', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
+      { model: 'bangstick', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' },
+      { model: 'ar-15', make: 'blackhawk', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
+      { model: 'pewpew', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
+      { model: 'bangstick', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' }
     ];
 
     return (
@@ -57,22 +72,33 @@ class Reports extends Component {
         </div>
         <div
           style={{
-            gridColumn: '1 / 4',
+            gridTemplateColumns: 'auto auto auto auto',
+            gridColumn: '1 / 2',
             gridRow: '2',
             backgroundColor: 'white',
-            borderRadius: '6px'
+            borderRadius: '6px',
+            display: 'flex'
           }}>
-          <Table
-            width={300}
-            height={300}
-            headerHeight={20}
-            rowHeight={30}
-            rowCount={list.length}
-            rowGetter={({ index }) => list[index]}>
-            <Column dataKey="model" label="model" width={100} />
-            <Column dataKey="make" label="make" width={100} />
-            <Column dataKey="name" label="name" width={100} />
-          </Table>
+          <div style={{ flex: '1 0 auto' }}>
+            <AutoSizer>
+              {({ height, width }) => (
+                <Table
+                  width={width}
+                  height={height}
+                  headerHeight={20}
+                  rowHeight={30}
+                  rowCount={list.length}
+                  rowGetter={({ index }) => list[index]}>
+                  <Column dataKey="model" label="model" width={100} />
+                  <Column dataKey="make" label="make" width={100} />
+                  <Column dataKey="buyer" label="buyer" width={100} />
+                  <Column dataKey="qty" label="qty" width={100} />
+                  <Column dataKey="profit" label="profit" width={100} />
+                  <Column dataKey="log" label="log" width={100} />
+                </Table>
+              )}
+            </AutoSizer>
+          </div>
         </div>
         <div
           style={{
