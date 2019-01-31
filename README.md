@@ -24,7 +24,7 @@ Todo:
     mobile
     make Print screen for barcodes with price name barcode etc
 
-
+tracking money for returns, consignment payouts, or purchases.
 
 questions for Jim:
 

@@ -21,7 +21,12 @@ class Reports extends Component {
   };
 
   render() {
-    console.log(this.props);
+    const list = [
+      { model: 'ar-15', make: 'blackhawk', name: 'fred' },
+      { model: 'pewpew', make: 'frogs', name: 'joe' },
+      { model: 'bangstick', make: 'bangin', name: 'yoMom' }
+    ];
+
     return (
       <div
         style={{
@@ -56,7 +61,18 @@ class Reports extends Component {
             gridRow: '2',
             backgroundColor: 'white',
             borderRadius: '6px'
-          }}>cats
+          }}>
+          <Table
+            width={300}
+            height={300}
+            headerHeight={20}
+            rowHeight={30}
+            rowCount={list.length}
+            rowGetter={({ index }) => list[index]}>
+            <Column dataKey="model" label="model" width={100} />
+            <Column dataKey="make" label="make" width={100} />
+            <Column dataKey="name" label="name" width={100} />
+          </Table>
         </div>
         <div
           style={{
