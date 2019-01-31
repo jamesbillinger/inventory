@@ -21,6 +21,7 @@ class Reports extends Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <div
         style={{
@@ -55,16 +56,16 @@ class Reports extends Component {
             gridRow: '2',
             backgroundColor: 'white',
             borderRadius: '6px'
-          }}>
-          lobsters
+          }}>cats
         </div>
-        <div style={{
-          gridColumn: '1/4',
-          gridRow: '3',
-          backgroundColor: 'white',
-          borderRadius: '6px'
-        }}>
-chickens
+        <div
+          style={{
+            gridColumn: '1/4',
+            gridRow: '3',
+            backgroundColor: 'white',
+            borderRadius: '6px'
+          }}>
+          Money Breakdown?
         </div>
       </div>
     );
