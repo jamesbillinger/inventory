@@ -84,20 +84,29 @@ class Search extends Component {
         value: ''
       });
     } else if (value) {
-      this.setState({
-        suggestions: filter(items || [], (it) => {
-          if (it.quantity > 0) {
-            return (
-              (it.make || '').toLowerCase().indexOf(value.toLowerCase()) > -1 ||
-              (it.calibre || '').toLowerCase().indexOf(value.toLowerCase()) > -1 ||
-              (it.model || '').toLowerCase().indexOf(value.toLowerCase()) > -1
-            );
-          } else if ((suggestions || []).length > 0) {
-            this.setState({
-              suggestions: []
-            });
+      let s = {};
+      (items || []).map((it) => {
+        if (it.quantity > 0) {
+          if (
+            (it.make || '').toLowerCase().indexOf(value.toLowerCase()) > -1 ||
+            (it.calibre || '').toLowerCase().indexOf(value.toLowerCase()) > -1 ||
+            (it.model || '').toLowerCase().indexOf(value.toLowerCase()) > -1
+          ) {
+            if (!s[it.category]) {
+              s[it.category] = {
+                title: it.category,
+                suggestions: []
+              };
+            }
+            s[it.category].suggestions.push(it);
           }
-        })
+        }
+      });
+      s = Object.keys(s).map((k) => {
+        return s[k];
+      });
+      this.setState({
+        suggestions: s
       });
     } else if ((suggestions || []).length > 0) {
       this.setState({
@@ -118,10 +127,14 @@ class Search extends Component {
 
   renderSuggestion(suggestion) {
     return (
-      <div style={{ display: 'flex' }}>
-        <div>{suggestion.make}</div>
-        <div style={{ marginLeft: '10px' }}>{suggestion.model}</div>
-        <div style={{ marginLeft: '10px' }}>Qty=({suggestion.quantity})</div>
+      <div style={{ display: 'flex' }} className="ReactVirtualized__Table__row">
+        <div className="ReactVirtualized__Table__rowColumn" style={{flex:'0 0 80px'}}>{suggestion.make}</div>
+        <div className="ReactVirtualized__Table__rowColumn" style={{ flex:'1 0 120px', marginLeft: '10px' }}>
+          {suggestion.model}
+        </div>
+        <div className="ReactVirtualized__Table__rowColumn" style={{ flex:'0 0 50px', marginLeft: '10px', textAlign:'right' }}>
+          {suggestion.quantity}
+        </div>
       </div>
     );
   }
@@ -154,6 +167,21 @@ class Search extends Component {
     selectItem(item._id);
   }
 
+  renderTitle = (section) => {
+    return (
+      <div style={{ display: 'flex' }} className="ReactVirtualized__Table__headerRow">
+        <div className="ReactVirtualized__Table__rowColumn" style={{flex:'1 0 80px'}}>{section.title}</div>
+        <div className="ReactVirtualized__Table__rowColumn" style={{ flex:'0 0 50px', marginLeft: '10px' }}>
+          Quantity
+        </div>
+      </div>
+    )
+  };
+
+  getSectionSuggestions(section) {
+    return section.suggestions;
+  }
+
   render() {
     const { value, suggestions } = this.state;
     const inputProps = {
@@ -172,7 +200,10 @@ class Search extends Component {
         onSuggestionSelected={this.onSuggestionSelected}
         inputProps={inputProps}
         theme={theme}
+        multiSection={true}
+        renderSectionTitle={this.renderTitle}
         highlightFirstSuggestion={true}
+        getSectionSuggestions={this.getSectionSuggestions}
       />
     );
   }
