@@ -19,6 +19,13 @@ class Reports extends Component {
     const { history } = this.props;
     history.push('/reports');
   };
+  componentDidMount(){
+    const { inventory, actions } = this.props;
+    if (!inventory.sales) {
+      actions.fetchSales();
+    }
+    console.log(inventory.sales);
+  }
 
   render() {
     const list = [
@@ -83,7 +90,7 @@ class Reports extends Component {
             <AutoSizer>
               {({ height, width }) => (
                 <Table
-                  width={width}
+                  width={650}
                   height={height}
                   headerHeight={20}
                   rowHeight={30}
