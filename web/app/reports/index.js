@@ -8,6 +8,7 @@ import Modal from 'components/modal';
 import FormInput from 'components/formInput';
 import FatButton from '../components/fatButton';
 import Button from 'components/button';
+import _ from 'lodash';
 
 class Reports extends Component {
   constructor() {
@@ -24,31 +25,39 @@ class Reports extends Component {
     if (!inventory.sales) {
       actions.fetchSales();
     }
-    console.log(inventory.sales);
   }
+makeSaleReport(){
+    const {inventory } = this.props;
+    const list = [];
+    if (inventory.sales[index]){
 
+    }
+}
   render() {
     const list = [
-      { model: 'ar-15', make: 'blackhawk', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
-      { model: 'pewpew', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
-      { model: 'bangstick', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' },
-      { model: 'ar-15', make: 'blackhawk', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
-      { model: 'pewpew', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
-      { model: 'bangstick', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' },
-      { model: 'ar-15', make: 'blackhawk', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
-      { model: 'pewpew', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
-      { model: 'bangstick', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' },
-      { model: 'ar-15', make: 'blackhawk', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
-      { model: 'pewpew', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
-      { model: 'bangstick', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' },
-      { model: 'ar-15', make: 'blackhawk', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
-      { model: 'pewpew', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
-      { model: 'bangstick', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' },
-      { model: 'ar-15', make: 'blackhawk', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
-      { model: 'pewpew', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
-      { model: 'bangstick', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' }
+      { model: 'e', make: 'chicken', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
+      { model: 'c', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
+      { model: 's', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' },
+      { model: 'b', make: 'blackhawk', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
+      { model: 'a', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
+      { model: 'd', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' },
+      { model: 'k', make: 'blackhawk', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
+      { model: 'p', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
+      { model: 'h', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' },
+      { model: 'f', make: 'blackhawk', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
+      { model: 'k', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
+      { model: 'i', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' },
+      { model: 'g', make: 'blackhawk', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
+      { model: 'o', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
+      { model: 'y', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' },
+      { model: 'h', make: 'blackhawk', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
+      { model: 'l', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
+      { model: 'f', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' }
     ];
+    const newList = _.orderBy(list, ['model'], ['desc']);
 
+
+    console.log(newList);
     return (
       <div
         style={{
@@ -95,7 +104,7 @@ class Reports extends Component {
                   headerHeight={20}
                   rowHeight={30}
                   rowCount={list.length}
-                  rowGetter={({ index }) => list[index]}>
+                  rowGetter={({ index }) => newList[index]}>
                   <Column dataKey="model" label="model" width={100} />
                   <Column dataKey="make" label="make" width={100} />
                   <Column dataKey="buyer" label="buyer" width={100} />

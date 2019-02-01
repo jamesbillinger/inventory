@@ -14,6 +14,7 @@ import find from 'lodash/find';
 import GridCustomer from 'components/gridCustomer';
 import { filterDonuts } from 'shared/utils';
 import findIndex from 'lodash/findIndex';
+import _ from 'lodash';
 
 class Sales extends Component {
   constructor() {
@@ -89,6 +90,7 @@ class Sales extends Component {
   render() {
     const { inventory, match } = this.props;
     const { search, sales } = this.state;
+    const sortedSales = _.orderBy((sales || inventory.sales || []), ['createdAt'],['desc']);
     return (
       <div
         style={{
@@ -119,7 +121,7 @@ class Sales extends Component {
               <Table
                 height={height}
                 rowHeight={32}
-                rowGetter={({ index }) => (sales || inventory.sales || [])[index]}
+                rowGetter={({ index }) => (sortedSales)[index]}
                 rowCount={(sales || inventory.sales || []).length || 0}
                 headerHeight={32}
                 onRowClick={this.rowClick}
