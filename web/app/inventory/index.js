@@ -86,7 +86,7 @@ class Inventory extends Component {
                 rowStyle={{ cursor: 'pointer' }}
                 width={width}>
                 <Column label="Qty" dataKey="quantity" flexGrow={1} width={5} />
-                <Column label="Calibre" dataKey="calibre" flexGrow={1} width={40} />
+                <Column label="CalibRRREEE" dataKey="calibre" flexGrow={1} width={40} />
                 <Column label="Category" dataKey="category" flexGrow={1} width={80} />
                 <Column label="Make" dataKey="make" flexGrow={1} width={50} />
                 <Column label="Model" dataKey="model" flexGrow={1} width={50} />
