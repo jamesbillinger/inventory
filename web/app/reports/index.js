@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
+import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import * as Actions from 'shared/actions';
 import moment from 'moment/moment';
@@ -9,6 +10,7 @@ import FormInput from 'components/formInput';
 import FatButton from '../components/fatButton';
 import Button from 'components/button';
 import _ from 'lodash';
+import ReportForm from 'reports/reportForm';
 
 class Reports extends Component {
   constructor() {
@@ -20,19 +22,12 @@ class Reports extends Component {
     const { history } = this.props;
     history.push('/reports');
   };
-  componentDidMount(){
+  componentDidMount() {
     const { inventory, actions } = this.props;
     if (!inventory.sales) {
       actions.fetchSales();
     }
   }
-makeSaleReport(){
-    const {inventory } = this.props;
-    const list = [];
-    if (inventory.sales[index]){
-
-    }
-}
   render() {
     const list = [
       { model: 'e', make: 'chicken', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
@@ -56,8 +51,13 @@ makeSaleReport(){
     ];
     const newList = _.orderBy(list, ['model'], ['desc']);
 
+    const { inventory, close } = this.props;
+    const list1 = _.filter(inventory.sales, (item) => {
+      if (item.createdAt > 1548902225602) {
+        return item;
+      }
+    });
 
-    console.log(newList);
     return (
       <div
         style={{
@@ -74,17 +74,7 @@ makeSaleReport(){
             backgroundColor: 'white',
             borderRadius: '6px',
             padding: '5px 15px'
-          }}>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'flex-start',
-              alignItems: 'center'
-            }}>
-            <Button>End of Day</Button>
-            <Button>Custom Reports</Button>
-            <Button>Saved Reports</Button>
-          </div>
+          }}><ReportForm closeAction={close} />
         </div>
         <div
           style={{

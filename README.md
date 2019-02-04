@@ -41,3 +41,7 @@ add sale date on sale to items directly.  then I can pull reports from inventory
 (itemTotal - getItem.purchasePrice) x tax) x quantity = profit
 
 
+Have Jim look over my sorting on sales page
+
+change calculator.  using cash currently won't let you proceed with sale
+
