@@ -18,7 +18,6 @@ class reportForm extends Component {
     this.state = {
       startDate: new Date()
     }
-    console.log(this.state);
   }
   render() {
     return (

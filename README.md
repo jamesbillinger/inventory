@@ -26,10 +26,7 @@ Todo:
 
 tracking money for returns, consignment payouts, or purchases.
 
-questions for Jim:
-
 Sales Search not quite right.  search for geGeor does not work
-
 
  consignment
 
