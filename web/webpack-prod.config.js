@@ -12,7 +12,8 @@ var cssInclude = [
   path.resolve(__dirname, '../public/fonts'),
   path.resolve(__dirname, '../public/styles'),
   path.resolve(__dirname, 'node_modules/react-select'),
-  path.resolve(__dirname, 'node_modules/react-virtualized')
+  path.resolve(__dirname, 'node_modules/react-virtualized'),
+  path.resolve(__dirname, 'node_modules/react-datepicker/dist/react-datepicker.css')
 ];
 
 module.exports = {
