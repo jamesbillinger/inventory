@@ -42,3 +42,5 @@ Have Jim look over my sorting on sales page
 
 change calculator.  using cash currently won't let you proceed with sale
 
+list component for reports screen
+
