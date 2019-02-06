@@ -16,11 +16,11 @@ export default class FormDate extends Component {
   changeRaw(e) {
     const { format, time, input } = this.props;
     let v = e.target.value;
-    let f = format || (time ? 'ddd MMM DD [at] h:mm a' : 'MM/DD/YYYY');
+    let f = format || (time ? 'ddd MMM dd [at] h:mm a' : 'MM/dd/YYYY');
     let m = moment(v, format);
     let oldValue = moment(input.value);
     if (!m._isValid && !format && time && v.indexOf('at') > -1) {
-      f = 'MMM DD YYYY h:mm a';
+      f = 'MMM dd YYYY h:mm a';
       let tmp = v.split('at');
       let tmpD = tmp[0].trim().split(' ');
       m = moment(tmpD[1] + ' ' + tmpD[2] + ' ' + oldValue.year() + ' ' + tmp[1].trim(), f);
@@ -112,7 +112,7 @@ export default class FormDate extends Component {
           </label>
           {(
             <DatePicker
-              dateFormat={format || dateFormat || (time ? 'ddd MMM DD [at] h:mm a' : 'MM/DD/YYYY')}
+              dateFormat={format || dateFormat || (time ? 'ddd MMM dd [at] h:mm a' : 'MM/dd/YYYY')}
               timeFormat={timeFormat}
               shouldCloseOnSelect={typeof shouldCloseOnSelect === 'undefined' ? !time : shouldCloseOnSelect}
               onChangeRaw={this._changeRaw}

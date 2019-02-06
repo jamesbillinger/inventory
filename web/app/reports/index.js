@@ -13,30 +13,6 @@ import _ from 'lodash';
 import ReportForm from 'reports/reportForm';
 import FormDate from 'components/formDate';
 
-const newList = _.orderBy(
-  [
-    { model: 'e', make: 'chicken', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
-    { model: 'c', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
-    { model: 's', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' },
-    { model: 'b', make: 'blackhawk', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
-    { model: 'a', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
-    { model: 'd', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' },
-    { model: 'k', make: 'blackhawk', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
-    { model: 'p', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
-    { model: 'h', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' },
-    { model: 'f', make: 'blackhawk', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
-    { model: 'k', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
-    { model: 'i', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' },
-    { model: 'g', make: 'blackhawk', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
-    { model: 'o', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
-    { model: 'y', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' },
-    { model: 'h', make: 'blackhawk', buyer: 'fred', qty: '1', profit: '$6', log: 'a47' },
-    { model: 'l', make: 'frogs', buyer: 'joe', qty: '1', profit: '$2', log: 'b22' },
-    { model: 'f', make: 'bangin', buyer: 'yoMom', qty: '1', profit: '$1', log: 'x91' }
-  ],
-  ['model'],
-  ['desc']
-);
 
 class Reports extends Component {
   state = {
@@ -80,7 +56,6 @@ class Reports extends Component {
         return item;
       }
     });
-console.log(begin);
     return (
       <div
         style={{
