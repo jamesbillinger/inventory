@@ -14,7 +14,6 @@ import ReportForm from 'reports/reportForm';
 import FormDate from 'components/formDate';
 import SaleList from './saleList';
 
-
 class Reports extends Component {
   state = {
     begin: moment().startOf('day')._d,
@@ -36,9 +35,9 @@ class Reports extends Component {
   beginChange = (val) => {
     let newState = {
       begin: val
-    }
-    if(moment(val).isSameOrAfter(moment(this.state.end))) {
-      newState.end = moment(val).endOf('day')._d
+    };
+    if (moment(val).isSameOrAfter(moment(this.state.end))) {
+      newState.end = moment(val).endOf('day')._d;
     }
     this.setState(newState);
   };
@@ -114,7 +113,7 @@ class Reports extends Component {
             backgroundColor: 'white',
             borderRadius: '6px'
           }}>
-          <SaleList list={list1}/>
+          <AutoSizer>{({ height, width }) => <SaleList list={list1} height={height} width={width} />}</AutoSizer>
         </div>
       </div>
     );
