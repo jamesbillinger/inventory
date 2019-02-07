@@ -12,6 +12,7 @@ import Button from 'components/button';
 import _ from 'lodash';
 import ReportForm from 'reports/reportForm';
 import FormDate from 'components/formDate';
+import SaleList from './saleList';
 
 
 class Reports extends Component {
@@ -113,7 +114,7 @@ class Reports extends Component {
             backgroundColor: 'white',
             borderRadius: '6px'
           }}>
-          Money Breakdown?
+          <SaleList list={list1}/>
         </div>
       </div>
     );
