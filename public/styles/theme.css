@@ -422,3 +422,7 @@ header nav a.active:after{
   -moz-border-radius: 5px;
   border-radius: 5px;
 }
+
+.react-datepicker__input-container > input {
+  width: 100px;
+}

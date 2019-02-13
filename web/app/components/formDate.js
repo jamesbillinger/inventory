@@ -69,7 +69,6 @@ export default class FormDate extends Component {
     let newStyle = {
       fontSize: '16px',
       lineHeight: '24px',
-      width: '256px',
       //height: '72px',
       display: 'inline-block',
       position: 'relative',
@@ -110,7 +109,7 @@ export default class FormDate extends Component {
             }}>
             {label}
           </label>
-          {(
+          {
             <DatePicker
               dateFormat={format || dateFormat || (time ? 'ddd MMM dd [at] h:mm a' : 'MM/dd/YYYY')}
               timeFormat={timeFormat}
@@ -132,7 +131,7 @@ export default class FormDate extends Component {
                 }
               }}
             />
-          )}
+          }
           {meta.touched && meta.error ? (
             <span
               className="help-block"
@@ -142,41 +141,8 @@ export default class FormDate extends Component {
           ) : (
             ''
           )}
-          {underline && (
-            <div
-              style={{
-                position: 'relative'
-              }}>
-              <hr
-                style={{
-                  border: 'none',
-                  borderBottom: 'solid 1px',
-                  borderColor: '#b6b6b6',
-                  bottom: '0',
-                  boxSizing: 'content-box',
-                  margin: '0px',
-                  position: 'absolute',
-                  width: '100%'
-                }}
-              />
-              <hr
-                style={{
-                  borderStyle: 'none none solid',
-                  borderBottomWidth: '2px',
-                  borderColor: 'rgb(158, 158, 158)',
-                  bottom: '0',
-                  boxSizing: 'content-box',
-                  margin: '0px',
-                  position: 'absolute',
-                  width: '100%',
-                  transform: 'scaleX(0)',
-                  transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms'
-                }}
-              />
-            </div>
-          )}
-          {touched &&
-          error && (
+
+          {touched && error && (
             <div style={{ color: 'red', fontSize: '13px', whiteSpace: 'nowrap', marginTop: '3px' }}>{error}</div>
           )}
         </div>

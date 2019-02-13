@@ -165,10 +165,14 @@ class Reports extends Component {
                 );
               }
             })}
-            <LabelledText label="Total">{(totals || {}).total.toLocaleString('en-US', {
-              style: 'currency',
-              currency: 'USD'
-            })}</LabelledText>
+            {totals && (
+              <LabelledText label="Total">
+                {totals.total.toLocaleString('en-US', {
+                  style: 'currency',
+                  currency: 'USD'
+                })}
+              </LabelledText>
+            )}
           </div>
         </div>
         <div
