@@ -13,6 +13,7 @@ import _ from 'lodash';
 import ReportForm from 'reports/reportForm';
 import FormDate from 'components/formDate';
 import SaleListItem from './saleListItem';
+import LabelledText from '../components/labelledText';
 
 class Reports extends Component {
   state = {
@@ -26,7 +27,11 @@ class Reports extends Component {
     if (!inventory.sales) {
       actions.fetchSales();
     } else {
-      this.filterList(this.state.begin, this.state.end);
+      let list = this.filterList(this.state.begin, this.state.end);
+      this.setState({
+        list,
+        totals: this.calcTotals(list)
+      });
     }
     if (!inventory.users) {
       actions.fetchUsers();
@@ -36,7 +41,11 @@ class Reports extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { inventory } = this.props;
     if (inventory.sales && !prevProps.inventory.sales) {
-      this.filterList(this.state.begin, this.state.end);
+      let list = this.filterList(this.state.begin, this.state.end);
+      this.setState({
+        list,
+        totals: this.calcTotals(list)
+      });
     }
   }
 
@@ -53,15 +62,31 @@ class Reports extends Component {
       newState.end = moment(val).endOf('day')._d;
     }
     newState.list = this.filterList(val, this.state.end);
+    newState.totals = this.calcTotals(newState.list);
     this.setState(newState);
   };
 
   endChange = (val) => {
+    let list = this.filterList(this.state.begin, val);
     this.setState({
       end: val,
-      list: this.filterList(this.state.begin, val)
+      list,
+      totals: this.calcTotals(list)
     });
   };
+
+  calcTotals(list) {
+    let totals = {};
+    list.map((l) => {
+      l.payments.map((p) => {
+        totals[p.method] = (totals[p.method] || 0) + parseFloat(p.value || 0);
+      });
+    });
+    totals.total = Object.values(totals).reduce((tot, t) => {
+      return tot + (t || 0);
+    }, 0);
+    return totals;
+  }
 
   filterList(begin, end) {
     const { inventory } = this.props;
@@ -98,8 +123,9 @@ class Reports extends Component {
   }
 
   render() {
-    const { begin, end, list } = this.state;
+    const { begin, end, list, totals } = this.state;
     let myTest = this.test.bind(this, begin, end);
+    console.log(totals);
     return (
       <div
         style={{
@@ -115,10 +141,35 @@ class Reports extends Component {
             gridRow: '1',
             backgroundColor: 'white',
             borderRadius: '6px',
-            padding: '5px 15px'
+            padding: '5px 15px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between'
           }}>
-          <FormDate label="Report Begin" input={{ value: begin, onChange: this.beginChange }} />
-          <FormDate label="Report End" input={{ value: end, onChange: this.endChange }} />
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <FormDate label="Report Begin" input={{ value: begin, onChange: this.beginChange }} />
+            <FormDate label="Report End" input={{ value: end, onChange: this.endChange }} />
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            {Object.keys(totals || {}).map((k) => {
+              if (k === 'total') {
+                return null;
+              } else {
+                return (
+                  <LabelledText key={k} label={k}>
+                    {totals[k].toLocaleString('en-US', {
+                      style: 'currency',
+                      currency: 'USD'
+                    })}
+                  </LabelledText>
+                );
+              }
+            })}
+            <LabelledText label="Total">{(totals || {}).total.toLocaleString('en-US', {
+              style: 'currency',
+              currency: 'USD'
+            })}</LabelledText>
+          </div>
         </div>
         <div
           style={{
@@ -148,7 +199,7 @@ class Reports extends Component {
               Model
             </div>
           </div>
-          <div style={{flex:'0 0 auto'}}>
+          <div style={{ flex: '0 0 auto' }}>
             <button onClick={myTest.bind(this, 1)}>test1</button>
             <button onClick={myTest.bind(this, 2)}>test2</button>
           </div>
