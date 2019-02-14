@@ -9,9 +9,10 @@ import CustomerModal from './customerModal';
 class FormCustomer extends Component {
   change = (val) => {
     const { input, actions } = this.props;
-    if (val === '_new') {
+    if (val === '_new' || val.length !== 20 || val.substring(0,1) !== '-') {
       actions.openModal(CustomerModal, {
         customerID: '_new',
+        defaultName: val === '_new' ? '' : val,
         onSubmit: (newVal) => {
           input.onChange(newVal._id)
         }

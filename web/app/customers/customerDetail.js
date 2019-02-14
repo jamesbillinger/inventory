@@ -17,13 +17,13 @@ class CustomerDetail extends Component {
   print = () => {};
 
   render() {
-    const { inventory, actions, customerID, closeAction, onSubmit } = this.props;
+    const { inventory, actions, customerID, closeAction, onSubmit, defaultName } = this.props;
     let item = find(inventory.customers || [], { _id: customerID });
 
     if (!item && customerID === '_new') {
-      item = {};
-
-
+      item = {
+        name: defaultName || ''
+      };
     }
     return (
       <div style={{background: 'white', borderRadius: '3px', padding: '15px 20px', position: 'relative'}}>
@@ -35,7 +35,7 @@ class CustomerDetail extends Component {
             <Icon icon="delete" secondary={true} onClick={this.deleteCustomer} style={{ fontSize: '18px' }} />
           )}
         </div>
-        <CustomerForm initialValues={item} closeAction={closeAction} onSubmit={onSubmit} actions={actions}  />
+        <CustomerForm initialValues={item} closeAction={closeAction} onAdd={onSubmit} actions={actions}  />
       </div>
     );
   }

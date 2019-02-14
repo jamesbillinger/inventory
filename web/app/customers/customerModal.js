@@ -5,10 +5,10 @@ import CustomerDetail from './customerDetail';
 
 export default class CustomerModal extends Component {
   render() {
-    const { customerID, closeAction, onSubmit, ...props } = this.props
+    const { customerID, closeAction, onSubmit, defaultName, ...props } = this.props
     return (
       <Modal show={true} closeAction={closeAction} hideFooter={true} {...props}>
-        <CustomerDetail customerID={customerID} onSubmit={onSubmit} closeAction={closeAction}/>
+        <CustomerDetail customerID={customerID} onSubmit={onSubmit} closeAction={closeAction} defaultName={defaultName} />
       </Modal>
     );
   }
