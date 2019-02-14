@@ -57,6 +57,73 @@ class PaymentsList extends Component {
   }
 }
 
+class Change extends Component {
+  state = {
+    paid: 0
+  };
+
+  changePaid = (e) => {
+    this.setState({
+      paid: parseFloat((e.target.value || '').trim() || 0)
+    });
+  };
+
+  render() {
+    const { input } = this.props;
+    const { paid } = this.state;
+    let cash = (input.value || []).reduce((ret, v) => {
+      return ret + parseFloat(v.value || 0);
+    }, 0);
+    if (cash) {
+      return (
+        <div
+          style={{
+            flex: '0 0 auto',
+            display: 'flex',
+            alignItems: 'flex-end',
+            backgroundColor: '#f2f2f2',
+            borderRadius: '6px',
+            justifyContent: 'space-evenly',
+            padding: '10px',
+            position: 'relative'
+          }}>
+          <div
+            style={{
+              position: 'absolute',
+              top: '-20px',
+              left: '10px',
+              fontSize: '16px',
+              color: '#999',
+              fontWeight: 'bold'
+            }}>
+            Change
+          </div>
+          <FormInput
+            input={{ value: paid, onChange: this.changePaid }}
+            label="Handed"
+            type="number"
+            style={{ width: '100px' }}
+          />
+          <LabelledText label="Cash">
+            {cash.toLocaleString('en-US', {
+              style: 'currency',
+              currency: 'USD'
+            })}
+          </LabelledText>
+          <LabelledText label="Change Due" style={{ color: 'blue' }}>
+            {(paid - cash).toLocaleString('en-US', {
+              style: 'currency',
+              currency: 'USD'
+            })}
+          </LabelledText>
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
+}
+
 class Payments extends Component {
   state = {
     total: 0
@@ -97,7 +164,6 @@ class Payments extends Component {
 
   submit = (data) => {
     const { actions, onSubmit, user, inventoryItems } = this.props;
-    console.log(data);
     actions.submitSale(
       Object.assign({}, data, {
         createdAt: moment().valueOf(),
@@ -172,7 +238,7 @@ class Payments extends Component {
             }}>
             Customer
           </div>
-          <Field name="customer" component={FormCustomer} allowCreate={true} style={{marginTop: '0'}}/>
+          <Field name="customer" component={FormCustomer} allowCreate={true} style={{ marginTop: '0' }} />
         </div>
         <div
           style={{
@@ -205,7 +271,11 @@ class Payments extends Component {
             <FatButton icon="credit-card" color="red" onClick={this.addPayment.bind(this, 'credit')} disabled={valid}>
               Credit
             </FatButton>
-            <FatButton icon="swap-horizontal-bold" color="blue" onClick={this.addPayment.bind(this, 'trade')} disabled={valid}>
+            <FatButton
+              icon="swap-horizontal-bold"
+              color="blue"
+              onClick={this.addPayment.bind(this, 'trade')}
+              disabled={valid}>
               Trade
             </FatButton>
           </div>
@@ -239,6 +309,7 @@ class Payments extends Component {
             <div style={valid ? {} : { color: 'red' }}>${(total - paid).toFixed(2)}</div>
           </LabelledText>
         </div>
+        <Field name="payments" component={Change} />
         <div
           style={{
             flex: '0 0 auto',
