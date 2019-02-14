@@ -80,11 +80,11 @@ class Change extends Component {
           style={{
             flex: '0 0 auto',
             display: 'flex',
-            alignItems: 'flex-end',
+            alignItems: 'center',
             backgroundColor: '#f2f2f2',
             borderRadius: '6px',
             justifyContent: 'space-evenly',
-            padding: '10px',
+            padding: '5px 10px',
             position: 'relative'
           }}>
           <div
@@ -102,15 +102,15 @@ class Change extends Component {
             input={{ value: paid, onChange: this.changePaid }}
             label="Handed"
             type="number"
-            style={{ width: '100px' }}
+            style={{ marginTop:'0', width: '100px' }}
           />
-          <LabelledText label="Cash">
+          <LabelledText label="Cash" style={{marginTop:'0'}}>
             {cash.toLocaleString('en-US', {
               style: 'currency',
               currency: 'USD'
             })}
           </LabelledText>
-          <LabelledText label="Change Due" style={{ color: 'blue' }}>
+          <LabelledText label="Change Due" style={{ color: 'blue', marginTop:'0' }}>
             {(paid - cash).toLocaleString('en-US', {
               style: 'currency',
               currency: 'USD'
